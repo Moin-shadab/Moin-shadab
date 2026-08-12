@@ -1,0 +1,205 @@
+{
+  "profile": {
+    "name": "Moin Shadab",
+    "handle": "moin-shadab",
+    "role": "Backend Developer & Systems Builder",
+    "tagline": "Creator of MSERP & Dual-DB International Email Client. Architecting enterprise infrastructure & protocol engines.",
+    "location": "India",
+    "availability": "Available for high-impact backend & systems engineering roles",
+    "yearsExperience": "3+",
+    "projectsCompleted": "8+",
+    "bio": "Backend Developer at Advanced Microdevices Pvt. Ltd. with 3+ years of experience building enterprise platforms. Landmark engineering achievements include MSERP (a completely free, open-source enterprise ERP) and a ground-up International Email Client engineered with dual database architecture (MySQL for relational metadata & CouchDB for NoSQL mail documents), raw IMAP sockets, queue workers, and MIME parsers.",
+    "hobbies": ["🏃 Running", "⚽ Sports", "📚 Reading", "🍳 Cooking", "💡 Building Systems", "🔧 Hardware Tinkering"],
+    "github": "https://github.com/Moin-shadab",
+    "linkedin": "https://www.linkedin.com/in/moin-shadab-8a491b1b1/",
+    "email": "moinshadab.dev@gmail.com"
+  },
+  "stats": [
+    { "label": "Years Experience", "value": "3+", "sub": "Enterprise Backend" },
+    { "label": "Dual DB Architecture", "value": "MySQL+CouchDB", "sub": "Custom Email Client" },
+    { "label": "Open Source ERP", "value": "MSERP", "sub": "All Modules Working" },
+    { "label": "Protocol Engineering", "value": "IMAP Sockets", "sub": "Ground-Up RFC-3501" }
+  ],
+  "experiences": [
+    {
+      "id": "exp-1",
+      "company": "Advanced Microdevices Pvt. Ltd.",
+      "role": "Backend Developer",
+      "period": "2023 — Present · 3 Years",
+      "location": "India",
+      "badge": "Full-Time",
+      "description": "Architect and lead backend developer for enterprise applications. Engineered custom ERP modules, hospital management suites, accounting tracking platforms, and barcode inventory systems.",
+      "highlight": "Engineered an International Email Client from scratch with Dual-Database architecture (MySQL for metadata/indexing + CouchDB for raw NoSQL message documents), bypassing third-party SaaS wrappers to handle raw IMAP/SMTP stream sockets, background queue workers, and cross-server mail delivery.",
+      "tags": ["PHP", "Laravel", "MySQL", "CouchDB", "IMAP Protocol", "PhonePe API", "REST APIs", "MSERP", "Barcode Tech"]
+    },
+    {
+      "id": "exp-2",
+      "company": "Freelance & Industrial Systems",
+      "role": "PLC Programmer",
+      "period": "2020 — 2022 · 2 Years",
+      "location": "India",
+      "badge": "Industrial",
+      "description": "Programmed Programmable Logic Controllers (PLCs) for manufacturing and industrial automation line logic. Built deterministic, high-reliability control routines operating under strict hardware constraints.",
+      "highlight": "Developed zero-tolerance safety interlocking logic and sensor data polling systems for factory automation lines.",
+      "tags": ["PLC Programming", "Industrial Control", "Ladder Logic", "Hardware Interfacing", "Automation Protocols"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-mserp",
+      "title": "MSERP — Open Source Enterprise ERP",
+      "icon": "🏭",
+      "category": "Backend",
+      "featured": true,
+      "description": "Completely free, open-source enterprise ERP platform featuring fully functional working modules: Multi-Warehouse Inventory, GST-Compliant Billing, Hospital & Healthcare Suite, B2B CRM Pipeline, and Employee Payroll.",
+      "tags": ["MSERP", "Open Source ERP", "Laravel", "MySQL", "CouchDB", "GST Billing", "Hospital Module"],
+      "link": "https://github.com/Moin-shadab/MSERP",
+      "github": "https://github.com/Moin-shadab/MSERP"
+    },
+    {
+      "id": "proj-email-client",
+      "title": "Dual-DB International Email Client",
+      "icon": "📧",
+      "category": "Backend",
+      "featured": true,
+      "description": "Ground-up enterprise email client built with dual database architecture combining MySQL (relational metadata, indexing, accounts) & CouchDB (NoSQL message body documents, headers, dynamic tags). Features raw IMAP/SMTP stream sockets, MIME multi-part parser, Redis queue dispatch, rich draft composer, multi-folder sync, and full-text search.",
+      "tags": ["Dual DB (MySQL+CouchDB)", "IMAP Protocol", "PHP Sockets", "MIME Parser", "Redis Queues", "NoSQL"],
+      "link": "https://moin-shadab.github.io/email-work-flow/",
+      "github": "https://github.com/Moin-shadab/email-work-flow"
+    },
+    {
+      "id": "proj-1",
+      "title": "DSA Master Roadmap",
+      "icon": "🗺️",
+      "category": "Web",
+      "featured": true,
+      "description": "A comprehensive, structured roadmap for mastering Data Structures & Algorithms. Features interactive topic stages, visual complexity cheat-sheets, problem tracks, and interview preparation guides.",
+      "tags": ["Data Structures", "Algorithms", "JavaScript", "System Design"],
+      "link": "https://moin-shadab.github.io/dsa-roadmap/",
+      "github": "https://github.com/Moin-shadab/dsa-roadmap"
+    },
+    {
+      "id": "proj-2",
+      "title": "ATS Resume Builder",
+      "icon": "📄",
+      "category": "Tools",
+      "featured": false,
+      "description": "Browser-based resume generator tailored for Applicant Tracking Systems (ATS). Uses algorithmically optimized formatting, semantic structure, real-time preview, and pixel-perfect PDF export.",
+      "tags": ["JavaScript", "ATS Engine", "PDF Export", "LocalStorage UI"],
+      "link": "https://moin-shadab.github.io/resume-builder/",
+      "github": "https://github.com/Moin-shadab/resume-builder"
+    },
+    {
+      "id": "proj-4",
+      "title": "IMAP & PhonePe Integration Guide",
+      "icon": "💳",
+      "category": "Backend",
+      "featured": false,
+      "description": "Production-proven reference guide for two backend challenges: handling raw IMAP connections securely and integrating Indian PhonePe payment gateway API with webhook verification.",
+      "tags": ["PhonePe API", "IMAP Protocol", "Payment Gateways", "REST Security"],
+      "link": "https://moin-shadab.github.io/imap-protocol-and-payment-integration-guide/",
+      "github": "https://github.com/Moin-shadab/imap-protocol-and-payment-integration-guide"
+    },
+    {
+      "id": "proj-5",
+      "title": "Synthesizer Web Piano",
+      "icon": "🎹",
+      "category": "Creative",
+      "featured": false,
+      "description": "Polyphonic browser piano powered by the Web Audio API. Supports real-time touch keyboard, pitch synthesis, keyboard mappings, and zero latency audio buffers.",
+      "tags": ["Web Audio API", "Polyphony", "JavaScript", "Spatial UI"],
+      "link": "https://moin-shadab.github.io/web-piano/",
+      "github": "https://github.com/Moin-shadab/web-piano"
+    },
+    {
+      "id": "proj-6",
+      "title": "Text to Handwriting Generator",
+      "icon": "✍️",
+      "category": "Tools",
+      "featured": false,
+      "description": "Python utility that transforms digital text into customized realistic handwritten notebook pages with line noise, natural ink variance, and custom font mapping.",
+      "tags": ["Python", "OpenCV", "Image Processing", "Automation"],
+      "link": "https://github.com/Moin-shadab/Text_To_Hand-Writing",
+      "github": "https://github.com/Moin-shadab/Text_To_Hand-Writing"
+    },
+    {
+      "id": "proj-7",
+      "title": "Interactive Birthday Wish UI",
+      "icon": "🎂",
+      "category": "Creative",
+      "featured": false,
+      "description": "Vibrant interactive celebration experience featuring canvas particle physics, confetti triggers, audio playback, and custom dynamic greeting elements.",
+      "tags": ["HTML5 Canvas", "Particles", "Audio FX", "CSS Animations"],
+      "link": "https://moin-shadab.github.io/girlfriend-friend-birthday-wish/",
+      "github": "https://github.com/Moin-shadab/girlfriend-friend-birthday-wish"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Backend Engineering",
+      "icon": "⚙️",
+      "items": [
+        { "name": "PHP 8+", "level": 94, "color": "#7c8cf8" },
+        { "name": "Laravel Framework", "level": 90, "color": "#f43f5e" },
+        { "name": "RESTful API Architecture", "level": 92, "color": "#06b6d4" },
+        { "name": "Raw IMAP / SMTP Sockets", "level": 88, "color": "#a855f7" },
+        { "name": "Queue & Background Workers", "level": 86, "color": "#10b981" }
+      ]
+    },
+    {
+      "category": "Databases & Storage",
+      "icon": "🗄️",
+      "items": [
+        { "name": "MySQL / MariaDB", "level": 92, "color": "#f59e0b" },
+        { "name": "CouchDB (NoSQL)", "level": 85, "color": "#34d399" },
+        { "name": "Dual-DB Architecture", "level": 90, "color": "#00f0ff" },
+        { "name": "Redis Caching & PubSub", "level": 82, "color": "#ef4444" }
+      ]
+    },
+    {
+      "category": "Programming Languages",
+      "icon": "💻",
+      "items": [
+        { "name": "JavaScript (ES6+)", "level": 88, "color": "#eab308" },
+        { "name": "Core Java", "level": 80, "color": "#ea580c" },
+        { "name": "C++ Systems", "level": 75, "color": "#8b5cf6" },
+        { "name": "Python Scripting", "level": 74, "color": "#10b981" }
+      ]
+    },
+    {
+      "category": "Specialized Domains",
+      "icon": "🛡️",
+      "items": [
+        { "name": "MSERP Architecture", "level": 95, "color": "#00f0ff" },
+        { "name": "Custom Email Client Engine", "level": 92, "color": "#a855f7" },
+        { "name": "Payment Integration (PhonePe)", "level": 88, "color": "#10b981" },
+        { "name": "PLC & Industrial Automation", "level": 82, "color": "#f59e0b" }
+      ]
+    }
+  ],
+  "codeSnippets": [
+    {
+      "title": "imap_socket_parser.php",
+      "language": "php",
+      "code": "<?php\nnamespace App\\Services\\Mail;\n\n// Dual DB: MySQL (relational metadata) + CouchDB (NoSQL raw mail docs)\nclass ImapSocketClient {\n    private $stream;\n    private int $tagCount = 0;\n\n    public function connect(string $host, int $port = 993): bool {\n        $context = stream_context_create(['ssl' => ['verify_peer' => false]]);\n        $this->stream = @stream_socket_client(\n            \"ssl://{$host}:{$port}\", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context\n        );\n        if (!$this->stream) throw new \\RuntimeException(\"IMAP socket failed: {$errstr}\");\n        return true;\n    }\n\n    public function fetchMessageToCouchDB(string $msgId, \\App\\Services\\CouchDbClient $couch) {\n        $rawPayload = $this->command(\"FETCH {$msgId} (BODY[])\");\n        $parsed = \\App\\Services\\MimeParser::decode($rawPayload);\n        // Store raw document payload into CouchDB NoSQL bucket\n        return $couch->insertDocument([\n            'msg_id' => $msgId,\n            'headers' => $parsed['headers'],\n            'html_body' => $parsed['html'],\n            'plain_body' => $parsed['text'],\n            'attachments' => $parsed['attachments']\n        ]);\n    }\n}"
+    },
+    {
+      "title": "MsErpCoreController.php",
+      "language": "php",
+      "code": "<?php\nnamespace App\\Http\\Controllers\\Api;\n\n// MSERP — Open Source Enterprise ERP Core Controller\nuse App\\Models\\Inventory;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\DB;\n\nclass MsErpCoreController extends Controller {\n    public function deductStock(Request $req) {\n        $validated = $req->validate([\n            'sku' => 'required|string',\n            'qty' => 'required|integer|min:1'\n        ]);\n\n        return DB::transaction(function() use ($validated) {\n            $item = Inventory::where('sku', $validated['sku'])->lockForUpdate()->firstOrFail();\n            if ($item->stock_qty < $validated['qty']) {\n                return response()->json(['error' => 'Insufficient Stock'], 422);\n            }\n            $item->decrement('stock_qty', $validated['qty']);\n            return response()->json(['status' => 'MSERP_SUCCESS', 'remaining' => $item->stock_qty]);\n        });\n    }\n}"
+    },
+    {
+      "title": "plc_ladder_interlock.cpp",
+      "language": "cpp",
+      "code": "// Industrial PLC Motor Interlock Logic\n#include <iostream>\n\nstruct SafetySensors {\n    bool emergencyStop;\n    bool thermalOverload;\n    bool pressureOk;\n};\n\nbool evaluateMotorRunPermission(SafetySensors s, bool startCmd) {\n    bool safetyChain = (!s.emergencyStop) && (!s.thermalOverload) && s.pressureOk;\n    static bool motorLatched = false;\n    if (!safetyChain) {\n        motorLatched = false;\n    } else if (startCmd) {\n        motorLatched = true;\n    }\n    return motorLatched;\n}"
+    }
+  ],
+  "terminalCommands": {
+    "help": "Available commands:\n  • mserp     - Details on MSERP Open Source ERP\n  • email     - Architecture of Dual DB International Email Client\n  • projects  - List all shipped projects\n  • exp       - Show work experience history\n  • skills    - Display core technical stack\n  • bio       - Print developer manifesto\n  • contact   - Print contact handles & email\n  • stats     - Show live engineering telemetry\n  • sudo hire - Launch hiring protocol & contact action\n  • json      - View full raw portfolio dataset\n  • clear     - Clear terminal buffer",
+    "mserp": "MSERP — Open Source Enterprise ERP\nGitHub: https://github.com/Moin-shadab/MSERP\nModules: Inventory, GST Billing & Accounting, Hospital Suite, CRM, Payroll",
+    "email": "Dual DB International Email Client\nArchitecture: MySQL (relational indexing, folders) + CouchDB (NoSQL mail documents, MIME)\nSockets: Direct IMAP/SMTP raw stream sockets (RFC-3501 compliance)",
+    "bio": "Moin Shadab — Backend Developer & Systems Builder\n3+ years architecting enterprise software, creator of MSERP and ground-up Dual-DB International Email Client. Low-level PLC industrial discipline.",
+    "contact": "Email: moinshadab.dev@gmail.com\nGitHub: https://github.com/Moin-shadab\nLinkedIn: https://www.linkedin.com/in/moin-shadab-8a491b1b1/\nStatus: Available for backend opportunities",
+    "sudo hire": ">>> ACCESS GRANTED <<<\nExecuting hiring protocol...\nOpening direct communication path to moinshadab.dev@gmail.com!\nStatus: READY TO SHIP CODE"
+  }
+}
