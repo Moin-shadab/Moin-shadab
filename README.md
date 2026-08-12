@@ -139,8 +139,6 @@ DevOps & Tools      : Git, Docker, Postman, Swagger, Linux CLI, Vite, VS Code
 
 Open to backend engineering roles, custom enterprise software architecture, and high-concurrency systems design.
 
-- **Email**: [moinshadab.dev@gmail.com](mailto:moinshadab.dev@gmail.com)
-- **LinkedIn**: [linkedin.com/in/moin-shadab](https://www.linkedin.com/in/moin-shadab-8a491b1b1/)
 - **GitHub**: [github.com/Moin-shadab](https://github.com/Moin-shadab)
 - **Live Portfolio**: [moin-shadab.github.io/Moin-shadab](https://moin-shadab.github.io/Moin-shadab/)
 

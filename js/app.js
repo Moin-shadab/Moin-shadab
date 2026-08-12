@@ -234,7 +234,7 @@
 
     // On HTTP / HTTPS (GitHub Pages live environment), fetch portfolio-data.json
     try {
-      const res = await fetch('data/portfolio-data.json');
+      const res = await fetch('./data/portfolio-data.json');
       if (res.ok) {
         portfolioData = await res.json();
       } else {
