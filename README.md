@@ -4,7 +4,7 @@
 ### **Creator of MSERP & Dual-DB International Email Client**
 **Full Stack Developer · Enterprise ERP Architect · Backend Protocol Engineer**
 
-[![GitHub Portfolio](https://img.shields.io/badge/Live%20Portfolio-moin--shadab.github.io-00f0ff?style=for-the-badge&logo=github&logoColor=black)](https://moin-shadab.github.io/ms_portfolio/)
+[![GitHub Portfolio](https://img.shields.io/badge/Live%20Portfolio-moin--shadab.github.io-00f0ff?style=for-the-badge&logo=github&logoColor=black)](https://moin-shadab.github.io/Moin-shadab/)
 [![MSERP Open Source](https://img.shields.io/badge/MSERP-Free%20Open%20Source%20ERP-10b981?style=for-the-badge&logo=github)](https://github.com/Moin-shadab/MSERP)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Moin%20Shadab-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/moin-shadab-8a491b1b1/)
 [![Primary Stack](https://img.shields.io/badge/Primary%20Stack-PHP%208%2B%20%7C%20MySQL%20%7C%20CouchDB%20%7C%20Redis-8b5cf6?style=for-the-badge)](#-tech-stack--engineering-radar)
@@ -142,7 +142,7 @@ Open to backend engineering roles, custom enterprise software architecture, and 
 - **Email**: [moinshadab.dev@gmail.com](mailto:moinshadab.dev@gmail.com)
 - **LinkedIn**: [linkedin.com/in/moin-shadab](https://www.linkedin.com/in/moin-shadab-8a491b1b1/)
 - **GitHub**: [github.com/Moin-shadab](https://github.com/Moin-shadab)
-- **Live Portfolio**: [moin-shadab.github.io/ms_portfolio](https://moin-shadab.github.io/ms_portfolio/)
+- **Live Portfolio**: [moin-shadab.github.io/Moin-shadab](https://moin-shadab.github.io/Moin-shadab/)
 
 ---
 
