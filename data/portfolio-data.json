@@ -2,13 +2,13 @@
   "profile": {
     "name": "Moin Shadab",
     "handle": "moin-shadab",
-    "role": "Backend Developer & Systems Builder",
-    "tagline": "Architecting enterprise platforms, MSERP ERP, & Dual-DB International Email Client.",
+    "role": "Backend Engineer & Systems Architect",
+    "tagline": "Building high-concurrency backend software, open-source enterprise ERPs, and ground-up protocol engines.",
     "location": "India",
     "availability": "Available for high-impact backend & systems engineering roles",
     "yearsExperience": "3+",
     "projectsCompleted": "8+",
-    "bio": "Backend Developer at Advanced Microdevices Pvt. Ltd. with 3+ years of experience building enterprise platforms. Landmark achievements include MSERP (open-source enterprise ERP) and a ground-up International Email Client engineered with dual database architecture (MySQL for metadata & CouchDB for NoSQL mail documents), raw IMAP/SMTP sockets, and background queue workers.",
+    "bio": "I don't build superficial wrappers. I build raw backend platforms: an open-source enterprise ERP (MSERP) handling multi-warehouse stock, GST billing, and payroll, plus an international email engine built from scratch with raw IMAP stream sockets and a hybrid MySQL + CouchDB architecture. My code runs where failure isn't an option — backed by 2 years of industrial PLC safety automation discipline.",
     "hobbies": ["🏃 Running", "⚽ Sports", "📚 Reading", "🍳 Cooking", "💡 Building Systems", "🔧 Hardware Tinkering"],
     "github": "https://github.com/Moin-shadab",
     "linkedin": "https://www.linkedin.com/in/moin-shadab-8a491b1b1/",
@@ -28,8 +28,8 @@
       "period": "2023 — Present · 3 Years",
       "location": "India",
       "badge": "Full-Time",
-      "description": "Architect and lead backend developer for enterprise applications. Engineered custom ERP modules, hospital management suites, accounting tracking platforms, and barcode inventory systems.",
-      "highlight": "Engineered an International Email Client from scratch with Dual-Database architecture (MySQL for metadata/indexing + CouchDB for raw NoSQL message documents), bypassing third-party SaaS wrappers to handle raw IMAP/SMTP stream sockets, background queue workers, and cross-server mail delivery.",
+      "description": "Lead backend developer for core enterprise suites. Built multi-warehouse stock controllers, hospital management systems, accounting tracking modules, and barcode inventory tools.",
+      "highlight": "Built an International Email Client completely from scratch with Dual-Database architecture (MySQL for relational indexing + CouchDB for NoSQL mail documents), bypassing third-party SaaS wrappers to handle raw IMAP/SMTP sockets, background queue workers, and cross-server mail delivery.",
       "tags": ["PHP", "Laravel", "MySQL", "CouchDB", "IMAP Protocol", "PhonePe API", "REST APIs", "MSERP", "Barcode Tech"]
     },
     {
@@ -39,8 +39,8 @@
       "period": "2020 — 2022 · 2 Years",
       "location": "India",
       "badge": "Industrial",
-      "description": "Programmed Programmable Logic Controllers (PLCs) for manufacturing and industrial automation line logic. Built deterministic, high-reliability control routines operating under strict hardware constraints.",
-      "highlight": "Developed zero-tolerance safety interlocking logic and sensor data polling systems for factory automation lines.",
+      "description": "Programmed Programmable Logic Controllers (PLCs) for manufacturing automation lines. Designed deterministic control logic under tight hardware execution limits.",
+      "highlight": "Engineered zero-tolerance safety interlocking logic and sensor data polling systems for factory automation lines.",
       "tags": ["PLC Programming", "Industrial Control", "Ladder Logic", "Hardware Interfacing", "Automation Protocols"]
     }
   ],
@@ -51,7 +51,7 @@
       "icon": "🏭",
       "category": "Backend",
       "featured": true,
-      "description": "Completely free, open-source enterprise ERP platform featuring fully functional working modules: Multi-Warehouse Inventory, GST-Compliant Billing, Hospital & Healthcare Suite, B2B CRM Pipeline, and Employee Payroll.",
+      "description": "A completely free, open-source enterprise ERP platform featuring fully functional working modules: Multi-Warehouse Inventory with pessimistic database locks, GST Billing, EMR Hospital Management, B2B CRM Pipeline, and Payroll.",
       "tags": ["MSERP", "Open Source ERP", "Laravel", "MySQL", "CouchDB", "GST Billing", "Hospital Module"],
       "link": "https://github.com/Moin-shadab/MSERP",
       "github": "https://github.com/Moin-shadab/MSERP"
@@ -62,7 +62,7 @@
       "icon": "📧",
       "category": "Backend",
       "featured": true,
-      "description": "Ground-up enterprise email client built with dual database architecture combining MySQL (relational metadata, indexing, accounts) & CouchDB (NoSQL message body documents, headers, dynamic tags). Features raw IMAP/SMTP stream sockets, MIME multi-part parser, Redis queue dispatch, rich draft composer, multi-folder sync, and full-text search.",
+      "description": "Ground-up email client built with dual database architecture: MySQL for relational metadata, indexing, and folder accounts, combined with CouchDB for NoSQL message documents and attachments. Connects directly to raw IMAP/SMTP stream sockets with MIME multi-part decoders and Redis background queues.",
       "tags": ["Dual DB (MySQL+CouchDB)", "IMAP Protocol", "PHP Sockets", "MIME Parser", "Redis Queues", "NoSQL"],
       "link": "https://moin-shadab.github.io/email-work-flow/",
       "github": "https://github.com/Moin-shadab/email-work-flow"
@@ -73,7 +73,7 @@
       "icon": "🗺️",
       "category": "Web",
       "featured": true,
-      "description": "A comprehensive, structured roadmap for mastering Data Structures & Algorithms. Features interactive topic stages, visual complexity cheat-sheets, problem tracks, and interview preparation guides.",
+      "description": "A structured roadmap for mastering Data Structures & Algorithms. Features interactive topic stages, visual complexity cheat-sheets, problem tracks, and system design guides.",
       "tags": ["Data Structures", "Algorithms", "JavaScript", "System Design"],
       "link": "https://moin-shadab.github.io/dsa-roadmap/",
       "github": "https://github.com/Moin-shadab/dsa-roadmap"
@@ -95,7 +95,7 @@
       "icon": "💳",
       "category": "Backend",
       "featured": false,
-      "description": "Production-proven reference guide for two backend challenges: handling raw IMAP connections securely and integrating Indian PhonePe payment gateway API with webhook verification.",
+      "description": "Production-proven reference guide for two backend challenges: handling raw IMAP stream sockets securely and integrating Indian PhonePe payment gateway API with webhook verification.",
       "tags": ["PhonePe API", "IMAP Protocol", "Payment Gateways", "REST Security"],
       "link": "https://moin-shadab.github.io/imap-protocol-and-payment-integration-guide/",
       "github": "https://github.com/Moin-shadab/imap-protocol-and-payment-integration-guide"
@@ -179,24 +179,26 @@
   ],
   "codeSnippets": [
     {
+      "title": "MoinShadabSystemArchitecture.php",
+      "language": "php",
+      "code": "<?php\nnamespace Developer\\MoinShadab;\n\n// Complete Systems Architecture & Profile Specification\nclass SystemsArchitect {\n    public string $name = \"Moin Shadab\";\n    public string $role = \"Backend Engineer & Systems Builder\";\n    public string $email = \"moinshadab.dev@gmail.com\";\n    public int $yearsExperience = 3;\n\n    public array $landmarkSystems = [\n        'MSERP' => [\n            'type' => 'Open Source Enterprise ERP',\n            'modules' => ['Inventory', 'GST Billing', 'EMR Hospital', 'CRM', 'Payroll'],\n            'repo' => 'https://github.com/Moin-shadab/MSERP'\n        ],\n        'DualDbEmailEngine' => [\n            'type' => 'International Mail Client',\n            'storage' => 'MySQL (Metadata) + CouchDB (NoSQL Message Documents)',\n            'protocol' => 'Raw Stream Sockets (RFC-3501 IMAP/SMTP)'\n        ]\n    ];\n\n    public function executeCoreStack(): array {\n        return [\n            'Languages' => ['PHP 8+', 'JavaScript (ES6+)', 'C++', 'Java', 'Python'],\n            'Frameworks' => ['Laravel', 'REST APIs', 'Node'],\n            'Databases' => ['MySQL', 'CouchDB', 'Redis'],\n            'Automation' => ['PLC Ladder Logic', 'Safety Interlocks']\n        ];\n    }\n\n    public function getSystemStatus(): string {\n        return \"SYSTEM_ONLINE_READY_TO_SHIP_CODE\";\n    }\n}"
+    },
+    {
       "title": "imap_socket_parser.php",
       "language": "php",
-      "code": "<?php\nnamespace App\\Services\\Mail;\n\n// Dual DB: MySQL (relational metadata) + CouchDB (NoSQL raw mail docs)\nclass ImapSocketClient {\n    private $stream;\n    private int $tagCount = 0;\n\n    public function connect(string $host, int $port = 993): bool {\n        $context = stream_context_create(['ssl' => ['verify_peer' => false]]);\n        $this->stream = @stream_socket_client(\n            \"ssl://{$host}:{$port}\", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context\n        );\n        if (!$this->stream) throw new \\RuntimeException(\"IMAP socket failed: {$errstr}\");\n        return true;\n    }\n\n    public function fetchMessageToCouchDB(string $msgId, \\App\\Services\\CouchDbClient $couch) {\n        $rawPayload = $this->command(\"FETCH {$msgId} (BODY[])\");\n        $parsed = \\App\\Services\\MimeParser::decode($rawPayload);\n        // Store raw document payload into CouchDB NoSQL bucket\n        return $couch->insertDocument([\n            'msg_id' => $msgId,\n            'headers' => $parsed['headers'],\n            'html_body' => $parsed['html'],\n            'plain_body' => $parsed['text'],\n            'attachments' => $parsed['attachments']\n        ]);\n    }\n}"
+      "code": "<?php\nnamespace App\\Services\\Mail;\n\nclass ImapSocketClient {\n    private $stream;\n    private int $tagCount = 0;\n\n    public function connect(string $host, int $port = 993): bool {\n        $context = stream_context_create(['ssl' => ['verify_peer' => false]]);\n        $this->stream = @stream_socket_client(\n            \"ssl://{$host}:{$port}\", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context\n        );\n        if (!$this->stream) throw new \\RuntimeException(\"IMAP socket failed: {$errstr}\");\n        return true;\n    }\n\n    public function fetchMessageToCouchDB(string $msgId, \\App\\Services\\CouchDbClient $couch) {\n        $rawPayload = $this->command(\"FETCH {$msgId} (BODY[])\");\n        $parsed = \\App\\Services\\MimeParser::decode($rawPayload);\n        return $couch->insertDocument([\n            'msg_id' => $msgId,\n            'headers' => $parsed['headers'],\n            'html_body' => $parsed['html'],\n            'plain_body' => $parsed['text'],\n            'attachments' => $parsed['attachments']\n        ]);\n    }\n}"
     },
     {
       "title": "MsErpCoreController.php",
       "language": "php",
-      "code": "<?php\nnamespace App\\Http\\Controllers\\Api;\n\n// MSERP — Open Source Enterprise ERP Core Controller\nuse App\\Models\\Inventory;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\DB;\n\nclass MsErpCoreController extends Controller {\n    public function deductStock(Request $req) {\n        $validated = $req->validate([\n            'sku' => 'required|string',\n            'qty' => 'required|integer|min:1'\n        ]);\n\n        return DB::transaction(function() use ($validated) {\n            $item = Inventory::where('sku', $validated['sku'])->lockForUpdate()->firstOrFail();\n            if ($item->stock_qty < $validated['qty']) {\n                return response()->json(['error' => 'Insufficient Stock'], 422);\n            }\n            $item->decrement('stock_qty', $validated['qty']);\n            return response()->json(['status' => 'MSERP_SUCCESS', 'remaining' => $item->stock_qty]);\n        });\n    }\n}"
-    },
-    {
-      "title": "plc_ladder_interlock.cpp",
-      "language": "cpp",
-      "code": "// Industrial PLC Motor Interlock Logic\n#include <iostream>\n\nstruct SafetySensors {\n    bool emergencyStop;\n    bool thermalOverload;\n    bool pressureOk;\n};\n\nbool evaluateMotorRunPermission(SafetySensors s, bool startCmd) {\n    bool safetyChain = (!s.emergencyStop) && (!s.thermalOverload) && s.pressureOk;\n    static bool motorLatched = false;\n    if (!safetyChain) {\n        motorLatched = false;\n    } else if (startCmd) {\n        motorLatched = true;\n    }\n    return motorLatched;\n}"
+      "code": "<?php\nnamespace App\\Http\\Controllers\\Api;\n\nuse App\\Models\\Inventory;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\DB;\n\nclass MsErpCoreController extends Controller {\n    public function deductStock(Request $req) {\n        $validated = $req->validate([\n            'sku' => 'required|string',\n            'qty' => 'required|integer|min:1'\n        ]);\n\n        return DB::transaction(function() use ($validated) {\n            $item = Inventory::where('sku', $validated['sku'])->lockForUpdate()->firstOrFail();\n            if ($item->stock_qty < $validated['qty']) {\n                return response()->json(['error' => 'Insufficient Stock'], 422);\n            }\n            $item->decrement('stock_qty', $validated['qty']);\n            return response()->json(['status' => 'MSERP_SUCCESS', 'remaining' => $item->stock_qty]);\n        });\n    }\n}"
     }
   ],
   "terminalCommands": {
-    "help": "Available commands:\n  • cv / ats  - Print plain-text ATS resume for applications\n  • mserp     - Details on MSERP Open Source ERP\n  • email     - Architecture of Dual DB International Email Client\n  • projects  - List all shipped projects\n  • exp       - Show work experience history\n  • skills    - Display core technical stack\n  • bio       - Print developer manifesto\n  • contact   - Print contact handles & email\n  • stats     - Show live engineering telemetry\n  • sudo hire - Launch hiring protocol & contact action\n  • clear     - Clear terminal buffer",
-    "cv": "MOIN SHADAB — BACKEND DEVELOPER & SYSTEMS BUILDER\nEmail: moinshadab.dev@gmail.com | Phone/India | GitHub: github.com/Moin-shadab | LinkedIn: linkedin.com/in/moin-shadab-8a491b1b1/\n\nPROFESSIONAL SUMMARY:\nBackend Developer with 3+ years of experience building high-performance enterprise platforms and protocol engines. Creator of MSERP (open-source ERP) and a Dual-DB International Email Client (MySQL + CouchDB).\n\nEXPERIENCE:\n• Backend Developer @ Advanced Microdevices Pvt. Ltd. (2023 - Present)\n  - Engineered ERP modules, hospital suites, barcode inventory tools.\n  - Built Dual-DB Email Client with raw IMAP stream sockets and NoSQL CouchDB storage.\n• PLC Programmer @ Industrial Automation (2020 - 2022)\n  - Built zero-tolerance safety interlocking logic for manufacturing plants.",
+    "help": "Available commands:\n  • dino / play - Launch Playable Neo-Brutalist 2D Dino Runner Game!\n  • matrix      - Toggle Live Digital Matrix Rain Effect\n  • cv / ats    - Print plain-text ATS resume for job portals\n  • mserp       - Details on MSERP Open Source ERP\n  • email       - Architecture of Dual DB International Email Client\n  • projects    - List all shipped projects\n  • exp         - Show work experience history\n  • skills      - Display core technical stack\n  • bio         - Print developer manifesto\n  • contact     - Print contact handles & email\n  • stats       - Show live engineering telemetry\n  • sudo hire   - Launch hiring protocol & contact action\n  • clear       - Clear terminal buffer",
+    "dino": "🎮 LAUNCHING PLAYABLE DINO RUNNER GAME...",
+    "matrix": "🟢 TOGGLING MATRIX DIGITAL RAIN EFFECT...",
+    "cv": "MOIN SHADAB — BACKEND DEVELOPER & SYSTEMS BUILDER\nEmail: moinshadab.dev@gmail.com | Phone/India | GitHub: github.com/Moin-shadab | LinkedIn: linkedin.com/in/moin-shadab-8a491b1b1/\n\nPROFESSIONAL SUMMARY:\nBackend Developer with 3+ years of experience building high-concurrency enterprise platforms and protocol engines. Creator of MSERP (open-source ERP) and a Dual-DB International Email Client (MySQL + CouchDB).\n\nEXPERIENCE:\n• Backend Developer @ Advanced Microdevices Pvt. Ltd. (2023 - Present)\n  - Engineered ERP modules, hospital suites, barcode inventory tools.\n  - Built Dual-DB Email Client with raw IMAP stream sockets and NoSQL CouchDB storage.\n• PLC Programmer @ Industrial Automation (2020 - 2022)\n  - Built zero-tolerance safety interlocking logic for manufacturing plants.",
     "ats": "MOIN SHADAB ATS RESUME SUMMARY:\nCore Stack: PHP 8+, Laravel, MySQL, CouchDB, Redis, JavaScript, C++, IMAP RFC-3501, REST APIs, PhonePe API.\nKey Landmark Systems: MSERP (Open Source ERP), Dual-DB International Email Engine.\nStatus: Ready to ship high-impact backend code.",
     "mserp": "MSERP — Open Source Enterprise ERP\nGitHub: https://github.com/Moin-shadab/MSERP\nModules: Inventory, GST Billing & Accounting, Hospital Suite, CRM, Payroll",
     "email": "Dual DB International Email Client\nArchitecture: MySQL (relational indexing, folders) + CouchDB (NoSQL mail documents, MIME)\nSockets: Direct IMAP/SMTP raw stream sockets (RFC-3501 compliance)",

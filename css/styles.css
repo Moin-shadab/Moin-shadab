@@ -1,20 +1,14 @@
 /* ==========================================================================
-   MOIN SHADAB — NEO-BRUTALIST BACKEND & SYSTEMS PORTFOLIO ENGINE
-   Features:
-   - High-Contrast Neo-Brutalist Visual System (Bold Borders, Hard Shadows, Neon Accents)
-   - Interactive ATS-Friendly Resume Studio (Zoom Controls, Print/Download PDF, Copy Text)
-   - Dynamic Bento Grid Project Filter & Landmark Architecture Showcase
-   - Interactive Hacker Terminal CLI Console
-   - Web Audio Tactile Sound Engine
+   MOIN SHADAB — HIGH-IMPACT NEO-BRUTALIST PORTFOLIO ENGINE (SMOOTH & STABLE)
    ========================================================================== */
 
 /* ─── 0. DESIGN TOKENS & COLOR THEME ────────────────────────────────────── */
 :root {
-  /* Neo-Brutalist Palette */
-  --bg-dark: #0a0b10;
-  --bg-card: #12141d;
+  /* Neo-Brutalist Core Colors */
+  --bg-dark: #08090e;
+  --bg-card: #11131c;
   --bg-surface: #181b26;
-  --bg-elevated: #202433;
+  --bg-elevated: #222636;
   --border-color: #000000;
   
   /* High-Contrast Neon Accents */
@@ -25,38 +19,35 @@
   --neon-purple: #A855F7;
   --neon-orange: #FF914D;
 
-  /* Classic Theme Compatibility Mapping */
+  /* Classic Token Compatibility */
   --accent-cyan: var(--neon-cyan);
   --accent-emerald: var(--neon-green);
   --accent-violet: var(--neon-purple);
   --accent-amber: var(--neon-yellow);
   --accent-rose: var(--neon-pink);
   
-  /* Text Tokens */
+  /* Text */
   --text-main: #f8fafc;
-  --text-muted: #a0aec0;
+  --text-muted: #94a3b8;
   --text-dim: #64748b;
   --text-dark: #000000;
 
-  /* Brutalist Shadow Tokens */
-  --brutal-border: 3px solid #000000;
+  /* Brutalist Shadows & Borders */
   --brutal-border-sm: 2px solid #000000;
-  --brutal-border-lg: 4px solid #000000;
+  --brutal-border: 3.5px solid #000000;
+  --brutal-border-lg: 5px solid #000000;
 
   --brutal-shadow-sm: 3px 3px 0px #000000;
-  --brutal-shadow: 5px 5px 0px #000000;
-  --brutal-shadow-lg: 8px 8px 0px #000000;
-  --brutal-shadow-yellow: 5px 5px 0px var(--neon-yellow);
-  --brutal-shadow-cyan: 5px 5px 0px var(--neon-cyan);
-  --brutal-shadow-pink: 5px 5px 0px var(--neon-pink);
-  --brutal-shadow-green: 5px 5px 0px var(--neon-green);
+  --brutal-shadow: 6px 6px 0px #000000;
+  --brutal-shadow-lg: 10px 10px 0px #000000;
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
 
-  /* Spatial Z-Index Map */
+  /* Z-Index Hierarchy */
   --z-bg: 0;
+  --z-matrix: 5;
   --z-content: 10;
   --z-floating: 50;
   --z-nav: 9000;
@@ -94,6 +85,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   cursor: default;
+  padding-top: 64px; /* Fixed navbar height clearance */
 }
 
 a {
@@ -107,7 +99,7 @@ button {
   background: none;
 }
 
-a, button, select, [role="button"], .bento-card, .skeuo-btn-toggle, .project-filter-btn, .timeline-content, .sandbox-tab, .cli-drawer-toggle, .btn-brutal, .btn-secondary {
+a, button, select, [role="button"], .bento-card, .skeuo-btn-toggle, .project-filter-btn, .timeline-content, .sandbox-tab, .cli-drawer-toggle, .btn-brutal, .btn-secondary, .cv-btn, .arch-tab-btn {
   cursor: pointer !important;
 }
 
@@ -127,17 +119,17 @@ a, button, select, [role="button"], .bento-card, .skeuo-btn-toggle, .project-fil
   background: var(--neon-cyan);
 }
 
-/* ─── 2. SPATIAL UI CURSOR & BACKGROUND CANVAS ──────────────────────────── */
+/* ─── 2. SPATIAL CURSOR & BACKGROUND CANVAS ────────────────────────────── */
 #spatial-cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: var(--neon-yellow);
   border: 2px solid #000000;
-  border-radius: 0; /* Brutalist Square Cursor */
-  pointer-events: none;
+  border-radius: 0;
+  pointer-events: none !important;
   z-index: var(--z-cursor);
   transform: translate(-50%, -50%);
   transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease;
@@ -148,56 +140,69 @@ a, button, select, [role="button"], .bento-card, .skeuo-btn-toggle, .project-fil
   position: fixed;
   top: 0;
   left: 0;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border: 2px solid var(--neon-cyan);
   border-radius: 0;
-  pointer-events: none;
+  pointer-events: none !important;
   z-index: calc(var(--z-cursor) - 1);
   transform: translate(-50%, -50%);
-  transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 body.cursor-hover #spatial-cursor {
-  width: 22px;
-  height: 22px;
+  width: 26px;
+  height: 26px;
   background: var(--neon-pink);
 }
 
 body.cursor-hover #spatial-cursor-follower {
-  width: 56px;
-  height: 56px;
+  width: 60px;
+  height: 60px;
   border-color: var(--neon-yellow);
   background: rgba(255, 222, 89, 0.15);
 }
 
-/* Background Cyber Grid */
+/* Background Cyber Grid & Matrix Canvas */
 .bg-mesh-canvas {
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  pointer-events: none !important;
   z-index: var(--z-bg);
   background: 
-    radial-gradient(circle at 15% 20%, rgba(255, 222, 89, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 85% 75%, rgba(0, 229, 255, 0.05) 0%, transparent 45%);
+    radial-gradient(circle at 12% 18%, rgba(255, 222, 89, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 88% 82%, rgba(0, 229, 255, 0.06) 0%, transparent 45%);
 }
 
 .bg-cyber-grid {
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  pointer-events: none !important;
   z-index: var(--z-bg);
   background-image: 
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-size: 44px 44px;
 }
 
-/* CRT Overlay */
+#matrix-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none !important;
+  z-index: var(--z-matrix);
+  display: none;
+  opacity: 0.85;
+}
+
+body.matrix-active #matrix-canvas {
+  display: block;
+}
+
+/* CRT Scanlines Overlay */
 .crt-overlay {
   position: fixed;
   inset: 0;
-  pointer-events: none;
+  pointer-events: none !important;
   z-index: 9995;
   background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
   background-size: 100% 4px;
@@ -209,63 +214,21 @@ body.crt-enabled .crt-overlay {
   opacity: 0.75;
 }
 
-/* ─── 3. MARQUEE TICKER BANNER ─────────────────────────────────────────── */
-.marquee-wrapper {
-  background: var(--neon-yellow);
-  color: #000000;
-  border-bottom: var(--brutal-border);
-  padding: 10px 0;
-  overflow: hidden;
-  white-space: nowrap;
-  font-family: var(--font-mono);
-  font-weight: 800;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  z-index: 9001;
-  position: relative;
-  margin-top: 76px;
-}
-
-.marquee-content {
-  display: inline-block;
-  animation: marquee-scroll 25s linear infinite;
-}
-
-.marquee-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  margin-right: 32px;
-}
-
-.marquee-separator {
-  color: var(--neon-pink);
-  font-weight: 900;
-}
-
-@keyframes marquee-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* ─── 4. NEO-BRUTALIST TOP NAVIGATION BAR ───────────────────────────────── */
+/* ─── 3. TOP NAVIGATION BAR ────────────────────────────────────────────── */
 .navbar {
   position: fixed;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 24px);
-  max-width: 1280px;
-  height: 60px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
   z-index: var(--z-nav);
   background: var(--bg-card);
-  border: var(--brutal-border);
-  box-shadow: var(--brutal-shadow);
+  border-bottom: var(--brutal-border);
+  box-shadow: 0px 4px 0px #000000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 24px;
 }
 
 .nav-brand {
@@ -290,17 +253,17 @@ body.crt-enabled .crt-overlay {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .nav-link {
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   padding: 6px 14px;
   border: 2px solid transparent;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition: all 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .nav-link:hover, .nav-link.active {
@@ -308,7 +271,6 @@ body.crt-enabled .crt-overlay {
   color: #000000;
   border: 2px solid #000000;
   box-shadow: 2px 2px 0px #000000;
-  transform: translate(-1px, -1px);
 }
 
 .nav-actions {
@@ -333,69 +295,103 @@ body.crt-enabled .crt-overlay {
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  transition: all 0.1s ease;
+  transition: background-color 0.15s ease;
 }
 
 .skeuo-btn-toggle:hover, .skeuo-btn-toggle.active {
   background: var(--neon-yellow);
   color: #000000;
-  transform: translate(2px, 2px);
   box-shadow: 0px 0px 0px #000000;
 }
 
-/* ─── 5. BUTTONS & STICKER BADGES ────────────────────────────────────────── */
+/* ─── 4. MARQUEE TICKER BANNER ─────────────────────────────────────────── */
+.marquee-wrapper {
+  background: var(--neon-yellow);
+  color: #000000;
+  border-bottom: var(--brutal-border);
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 10;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee-scroll 28s linear infinite;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-right: 36px;
+}
+
+.marquee-separator {
+  color: var(--neon-pink);
+  font-weight: 900;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── 5. BUTTONS & STICKERS ────────────────────────────────────────────── */
 .btn-brutal {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: var(--neon-yellow);
   color: #000000;
   border: var(--brutal-border);
   box-shadow: var(--brutal-shadow);
-  padding: 12px 24px;
-  font-weight: 800;
+  padding: 12px 26px;
+  font-weight: 900;
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition: all 0.1s ease;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-brutal:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0px #000000;
+  box-shadow: 8px 8px 0px #000000;
   background: var(--neon-green);
 }
 
 .btn-brutal:active {
-  transform: translate(3px, 3px);
   box-shadow: 2px 2px 0px #000000;
 }
 
 .btn-secondary {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: var(--bg-card);
   color: var(--text-main);
   border: var(--brutal-border);
   box-shadow: var(--brutal-shadow);
-  padding: 12px 24px;
-  font-weight: 800;
+  padding: 12px 26px;
+  font-weight: 900;
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition: all 0.1s ease;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 }
 
 .btn-secondary:hover {
   background: var(--neon-cyan);
   color: #000000;
-  transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0px #000000;
+  box-shadow: 8px 8px 0px #000000;
 }
 
 .btn-secondary:active {
-  transform: translate(3px, 3px);
   box-shadow: 2px 2px 0px #000000;
 }
 
@@ -430,24 +426,26 @@ body.crt-enabled .crt-overlay {
   height: 10px;
   background: #000000;
   border-radius: 50%;
-  animation: pulse-led 1.5s infinite alternate;
+  animation: pulse-led 1.4s infinite alternate;
 }
 
 @keyframes pulse-led {
-  0% { transform: scale(0.8); opacity: 0.7; }
+  0% { transform: scale(0.8); opacity: 0.6; }
   100% { transform: scale(1.2); opacity: 1; }
 }
 
-/* ─── 6. LAYOUT & CONTAINERS ─────────────────────────────────────────────── */
+/* ─── 6. LAYOUT & CONTAINERS ────────────────────────────────────────────── */
 .container {
-  max-width: 1280px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
 .section {
-  padding: 80px 0;
+  padding: 85px 0;
   border-bottom: var(--brutal-border);
+  position: relative;
+  overflow: hidden;
 }
 
 .section-header {
@@ -465,45 +463,45 @@ body.crt-enabled .crt-overlay {
   background: var(--neon-cyan);
   border: var(--brutal-border-sm);
   box-shadow: 3px 3px 0px #000000;
-  padding: 4px 12px;
+  padding: 4px 14px;
   text-transform: uppercase;
   margin-bottom: 12px;
 }
 
 .section-title {
-  font-size: 2.8rem;
+  font-size: 3rem;
   font-weight: 900;
   letter-spacing: -1px;
-  line-height: 1.1;
+  line-height: 1.05;
   text-transform: uppercase;
 }
 
 .section-desc {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   color: var(--text-muted);
-  max-width: 720px;
+  max-width: 740px;
   margin-top: 12px;
 }
 
-/* ─── 7. HERO SECTION ────────────────────────────────────────────────────── */
+/* ─── 7. HERO SECTION & HERO CODE ARCHITECTURE FILE VIEWER ───────────────── */
 #hero {
-  padding: 80px 0 60px;
+  padding: 70px 0 65px;
   border-bottom: var(--brutal-border);
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 40px;
-  align-items: center;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 36px;
+  align-items: start;
 }
 
 .hero-title {
-  font-size: 3.8rem;
+  font-size: 4.2rem;
   font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -1.5px;
-  margin: 20px 0 16px;
+  line-height: 1.02;
+  letter-spacing: -2px;
+  margin: 20px 0 18px;
   text-transform: uppercase;
 }
 
@@ -515,18 +513,18 @@ body.crt-enabled .crt-overlay {
 }
 
 .hero-sub {
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--neon-cyan);
   margin-bottom: 16px;
 }
 
 .hero-bio {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   color: var(--text-muted);
   line-height: 1.7;
-  margin-bottom: 32px;
-  max-width: 640px;
+  margin-bottom: 36px;
+  max-width: 660px;
 }
 
 .hero-actions {
@@ -535,103 +533,119 @@ body.crt-enabled .crt-overlay {
   gap: 16px;
 }
 
-/* Terminal Spatial Card */
+/* Spatial Card Container (Smooth Transform Layout) */
 .spatial-card {
   background: var(--bg-card);
   border: var(--brutal-border);
   box-shadow: var(--brutal-shadow-lg);
-  padding: 24px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  padding: 26px;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  will-change: transform;
 }
 
 .spatial-card:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 11px 11px 0px #000000;
+  box-shadow: 12px 12px 0px #000000;
 }
 
-.skeuo-terminal-header {
+/* Hero Code Architecture File Viewer Container */
+.hero-code-card {
+  background: var(--bg-card);
+  border: var(--brutal-border-lg);
+  box-shadow: var(--brutal-shadow-lg);
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-code-header {
+  background: #000000;
+  color: #ffffff;
+  padding: 10px 16px;
+  border-bottom: var(--brutal-border-sm);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #000000;
-  color: #ffffff;
-  padding: 8px 14px;
-  border: var(--brutal-border-sm);
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  margin-bottom: 16px;
+  font-size: 0.82rem;
+  flex-shrink: 0;
 }
 
-.terminal-dots {
+.hero-code-filename {
   display: flex;
+  align-items: center;
   gap: 8px;
-}
-
-.tdot {
-  width: 12px;
-  height: 12px;
-  border: 1px solid #000;
-}
-.tdot-red { background: var(--neon-pink); }
-.tdot-yellow { background: var(--neon-yellow); }
-.tdot-green { background: var(--neon-green); }
-
-.brutal-code-box {
-  background: #000000;
-  color: #00FF66;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  padding: 16px;
-  border: var(--brutal-border-sm);
-  margin-bottom: 16px;
-  line-height: 1.5;
-  overflow-x: auto;
-}
-
-.brutal-code-box .kw { color: var(--neon-pink); font-weight: bold; }
-.brutal-code-box .func { color: var(--neon-yellow); }
-.brutal-code-box .str { color: var(--neon-cyan); }
-.brutal-code-box .comment { color: #64748b; font-style: italic; }
-
-.telemetry-strip {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.telemetry-cell {
-  background: var(--bg-surface);
-  border: var(--brutal-border-sm);
-  box-shadow: 3px 3px 0px #000000;
-  padding: 12px;
-  text-align: center;
-}
-
-.telemetry-val {
-  font-size: 1.6rem;
-  font-weight: 900;
-  font-family: var(--font-mono);
+  font-weight: 800;
   color: var(--neon-yellow);
 }
 
-.telemetry-lbl {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--text-muted);
+.hero-code-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
+
+.hero-code-btn {
+  background: var(--bg-surface);
+  color: var(--neon-cyan);
+  border: 1px solid var(--neon-cyan);
+  padding: 2px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: background-color 0.15s ease;
+}
+
+.hero-code-btn:hover {
+  background: var(--neon-cyan);
+  color: #000000;
+}
+
+.hero-code-body {
+  background: #000000;
+  padding: 16px;
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  overflow: auto;
+  max-height: 440px;
+  flex: 1;
+}
+
+.hero-line-nums {
+  color: #475569;
+  user-select: none;
+  text-align: right;
+  padding-right: 16px;
+  border-right: 1px solid #1e293b;
+  margin-right: 16px;
+}
+
+.hero-code-content {
+  color: #00FF66;
+  white-space: pre;
+}
+
+/* Syntax Highlighting */
+.php-kw { color: var(--neon-pink); font-weight: bold; }
+.php-var { color: var(--neon-cyan); }
+.php-str { color: var(--neon-yellow); }
+.php-num { color: var(--neon-orange); }
+.php-comment { color: #64748b; font-style: italic; }
 
 /* ─── 8. IMPACT TELEMETRY BAR ────────────────────────────────────────────── */
 .impact-bar {
   background: var(--neon-pink);
   color: #ffffff;
   border-bottom: var(--brutal-border);
-  padding: 24px 0;
+  padding: 26px 0;
 }
 
 .impact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
@@ -639,7 +653,7 @@ body.crt-enabled .crt-overlay {
   background: #000000;
   border: 2px solid #ffffff;
   box-shadow: 4px 4px 0px #ffffff;
-  padding: 16px;
+  padding: 18px;
   text-align: center;
 }
 
@@ -657,7 +671,7 @@ body.crt-enabled .crt-overlay {
   letter-spacing: 0.5px;
 }
 
-/* ─── 9. LANDMARK SHOWCASE SECTION ───────────────────────────────────────── */
+/* ─── 9. LANDMARK SHOWCASE & ARCHITECTURE VISUALIZER ─────────────────────── */
 .landmark-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -668,17 +682,18 @@ body.crt-enabled .crt-overlay {
   background: var(--bg-card);
   border: var(--brutal-border-lg);
   box-shadow: var(--brutal-shadow-lg);
-  padding: 32px;
+  padding: 34px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
   overflow: hidden;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  will-change: transform;
 }
 
 .landmark-card.featured-mserp {
-  border-color: #000000;
-  background: linear-gradient(135deg, #161a29 0%, #10121d 100%);
+  background: linear-gradient(135deg, #151826 0%, #0d0f18 100%);
 }
 
 .landmark-card.featured-mserp::before {
@@ -712,27 +727,27 @@ body.crt-enabled .crt-overlay {
 }
 
 .landmark-badge {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 16px;
 }
 
 .landmark-title {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   font-weight: 900;
   margin-bottom: 12px;
 }
 
 .landmark-desc {
   color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin-bottom: 22px;
 }
 
 .architect-box {
   background: #000000;
   border: var(--brutal-border-sm);
-  padding: 16px;
+  padding: 18px;
   margin-bottom: 24px;
 }
 
@@ -741,18 +756,18 @@ body.crt-enabled .crt-overlay {
   font-size: 0.8rem;
   color: var(--neon-cyan);
   font-weight: 800;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   text-transform: uppercase;
 }
 
 .architect-list {
   list-style: none;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--text-main);
 }
 
 .architect-list li {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -761,6 +776,87 @@ body.crt-enabled .crt-overlay {
 .architect-list li::before {
   content: "⚡";
   color: var(--neon-yellow);
+}
+
+/* System Architecture Visualizer Box */
+.arch-visualizer-container {
+  background: var(--bg-card);
+  border: var(--brutal-border-lg);
+  box-shadow: var(--brutal-shadow-lg);
+  padding: 32px;
+  margin-top: 48px;
+}
+
+.arch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #000000;
+  padding-bottom: 16px;
+}
+
+.arch-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.arch-tab-btn {
+  background: var(--bg-surface);
+  color: var(--text-main);
+  border: var(--brutal-border-sm);
+  padding: 8px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.arch-tab-btn.active {
+  background: var(--neon-yellow);
+  color: #000000;
+  box-shadow: 3px 3px 0px #000000;
+}
+
+.arch-flow-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  background: #000000;
+  padding: 32px 20px;
+  border: var(--brutal-border-sm);
+}
+
+.arch-node {
+  background: var(--bg-surface);
+  border: 2px solid var(--neon-cyan);
+  box-shadow: 4px 4px 0px var(--neon-cyan);
+  padding: 16px 20px;
+  text-align: center;
+  min-width: 160px;
+}
+
+.arch-node-title {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: var(--neon-yellow);
+  margin-bottom: 4px;
+}
+
+.arch-node-sub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.arch-arrow {
+  font-size: 1.8rem;
+  color: var(--neon-pink);
+  font-weight: 900;
 }
 
 /* ─── 10. PROJECTS BENTO GRID (FILTERABLE) ───────────────────────────────── */
@@ -777,49 +873,49 @@ body.crt-enabled .crt-overlay {
   background: var(--bg-card);
   border: var(--brutal-border);
   box-shadow: var(--brutal-shadow);
-  padding: 24px;
+  padding: 26px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.15s ease;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  will-change: transform;
 }
 
 .bento-card:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 8px 8px 0px #000000;
+  box-shadow: 9px 9px 0px #000000;
   background: var(--bg-surface);
 }
 
 .bento-icon {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 12px;
 }
 
 .bento-title {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 900;
   margin-bottom: 10px;
 }
 
 .bento-desc {
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   color: var(--text-muted);
   line-height: 1.6;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .clay-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .clay-tag {
   background: #000000;
   color: var(--neon-yellow);
   border: 1px solid #ffffff;
-  padding: 3px 10px;
+  padding: 4px 12px;
   font-size: 0.75rem;
   font-family: var(--font-mono);
   font-weight: 700;
@@ -871,7 +967,7 @@ body.crt-enabled .crt-overlay {
   align-items: center;
   gap: 10px;
   font-family: var(--font-mono);
-  font-weight: 800;
+  font-weight: 900;
   font-size: 0.9rem;
   color: var(--neon-yellow);
 }
@@ -896,7 +992,7 @@ body.crt-enabled .crt-overlay {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.1s ease;
+  transition: background-color 0.15s ease;
 }
 
 .cv-btn:hover {
@@ -927,16 +1023,18 @@ body.crt-enabled .crt-overlay {
 }
 
 .cv-viewport {
-  background: #1e2330;
+  background: #181c27;
   padding: 40px 20px;
   overflow: auto;
-  max-height: 850px;
+  max-height: 860px;
+  min-height: 600px;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .cv-zoom-wrapper {
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
   transform-origin: top center;
 }
 
@@ -963,7 +1061,7 @@ body.crt-enabled .crt-overlay {
 
 .ats-name {
   font-size: 24pt;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: -0.5px;
   text-transform: uppercase;
   color: #000000;
@@ -1087,7 +1185,73 @@ body.crt-enabled .crt-overlay {
   }
 }
 
-/* ─── 12. WORK EXPERIENCE TIMELINE ─────────────────────────────────────── */
+/* ─── 12. DINO RUNNER GAME ARCADE MODAL ─────────────────────────────────── */
+.dino-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.dino-modal.active {
+  display: flex;
+}
+
+.dino-window {
+  width: 100%;
+  max-width: 800px;
+  background: #000000;
+  border: var(--brutal-border-lg);
+  box-shadow: var(--brutal-shadow-lg);
+  padding: 24px;
+  text-align: center;
+}
+
+.dino-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--neon-yellow);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.dino-title {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--neon-yellow);
+}
+
+.dino-score-strip {
+  display: flex;
+  gap: 20px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+#dino-canvas {
+  width: 100%;
+  height: 220px;
+  background: #11141f;
+  border: var(--brutal-border-sm);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.dino-controls-hint {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--neon-cyan);
+  margin-bottom: 16px;
+}
+
+/* ─── 13. WORK EXPERIENCE TIMELINE ─────────────────────────────────────── */
 .timeline {
   display: flex;
   flex-direction: column;
@@ -1100,8 +1264,8 @@ body.crt-enabled .crt-overlay {
 }
 
 .timeline-dot {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   background: var(--neon-yellow);
   border: var(--brutal-border-sm);
   margin-top: 24px;
@@ -1120,14 +1284,14 @@ body.crt-enabled .crt-overlay {
 }
 
 .timeline-role {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 900;
 }
 
 .timeline-co {
   font-size: 1rem;
   color: var(--neon-cyan);
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .timeline-period {
@@ -1142,7 +1306,7 @@ body.crt-enabled .crt-overlay {
 
 .timeline-desc {
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 1.02rem;
   margin-bottom: 16px;
 }
 
@@ -1162,7 +1326,7 @@ body.crt-enabled .crt-overlay {
   margin-bottom: 4px;
 }
 
-/* ─── 13. SKILLS MATRIX & TECHNICAL STACK ──────────────────────────────── */
+/* ─── 14. SKILLS MATRIX & TECHNICAL STACK ──────────────────────────────── */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1173,7 +1337,7 @@ body.crt-enabled .crt-overlay {
   background: var(--bg-card);
   border: var(--brutal-border);
   box-shadow: var(--brutal-shadow);
-  padding: 24px;
+  padding: 26px;
 }
 
 .sc-header {
@@ -1185,10 +1349,10 @@ body.crt-enabled .crt-overlay {
   padding-bottom: 10px;
 }
 
-.sc-icon { font-size: 1.5rem; }
+.sc-icon { font-size: 1.6rem; }
 
 .sc-title {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 900;
   text-transform: uppercase;
 }
@@ -1217,7 +1381,7 @@ body.crt-enabled .crt-overlay {
   transition: width 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* ─── 14. INTERACTIVE CODE ARCHITECTURE SANDBOX ────────────────────────── */
+/* ─── 15. INTERACTIVE CODE ARCHITECTURE SANDBOX ────────────────────────── */
 .code-sandbox-wrapper {
   background: var(--bg-card);
   border: var(--brutal-border-lg);
@@ -1238,9 +1402,9 @@ body.crt-enabled .crt-overlay {
   padding: 12px 20px;
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   border-right: 2px solid #000000;
-  transition: all 0.1s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .sandbox-tab.active {
@@ -1250,17 +1414,17 @@ body.crt-enabled .crt-overlay {
 }
 
 .sandbox-content {
-  padding: 24px;
+  padding: 26px;
   background: #000000;
   color: #00FF66;
   font-family: var(--font-mono);
   font-size: 0.9rem;
   line-height: 1.6;
   overflow-x: auto;
-  max-height: 450px;
+  max-height: 460px;
 }
 
-/* ─── 15. HACKER CLI TERMINAL DRAWER ────────────────────────────────────── */
+/* ─── 16. HACKER CLI TERMINAL DRAWER ────────────────────────────────────── */
 .cli-drawer-toggle {
   position: fixed;
   bottom: 24px;
@@ -1278,12 +1442,12 @@ body.crt-enabled .crt-overlay {
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .cli-drawer-toggle:hover {
   background: var(--neon-cyan);
-  transform: translate(-2px, -2px);
-  box-shadow: 7px 7px 0px #000000;
+  box-shadow: 8px 8px 0px #000000;
 }
 
 .cli-modal {
@@ -1303,13 +1467,13 @@ body.crt-enabled .crt-overlay {
 
 .cli-window {
   width: 100%;
-  max-width: 840px;
+  max-width: 860px;
   background: #000000;
   border: var(--brutal-border-lg);
   box-shadow: var(--brutal-shadow-lg);
   display: flex;
   flex-direction: column;
-  height: 520px;
+  height: 540px;
 }
 
 .cli-body {
@@ -1346,7 +1510,7 @@ body.crt-enabled .crt-overlay {
   outline: none;
 }
 
-/* ─── 16. VISUAL DATA STUDIO ADMIN MODAL ────────────────────────────────── */
+/* ─── 17. VISUAL DATA STUDIO ADMIN MODAL ────────────────────────────────── */
 .admin-modal {
   position: fixed;
   inset: 0;
@@ -1364,7 +1528,7 @@ body.crt-enabled .crt-overlay {
 
 .admin-card {
   width: 100%;
-  max-width: 680px;
+  max-width: 700px;
   background: var(--bg-card);
   border: var(--brutal-border-lg);
   box-shadow: var(--brutal-shadow-lg);
@@ -1383,7 +1547,7 @@ body.crt-enabled .crt-overlay {
 }
 
 .admin-title {
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   font-weight: 900;
   display: flex;
   align-items: center;
@@ -1419,12 +1583,12 @@ body.crt-enabled .crt-overlay {
   margin-top: 24px;
 }
 
-/* ─── 17. FOOTER ─────────────────────────────────────────────────────────── */
+/* ─── 18. FOOTER ─────────────────────────────────────────────────────────── */
 footer {
   background: #000000;
   color: #ffffff;
   border-top: var(--brutal-border-lg);
-  padding: 40px 0;
+  padding: 44px 0;
   text-align: center;
 }
 
@@ -1437,7 +1601,7 @@ footer {
 
 .footer-links {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -1445,7 +1609,7 @@ footer {
 .footer-link {
   font-family: var(--font-mono);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--neon-cyan);
 }
 
@@ -1454,7 +1618,7 @@ footer {
   text-decoration: underline;
 }
 
-/* ─── 18. RESPONSIVE BREAKPOINTS ─────────────────────────────────────────── */
+/* ─── 19. RESPONSIVE BREAKPOINTS ─────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero-grid, .landmark-grid {
     grid-template-columns: 1fr;
@@ -1463,19 +1627,23 @@ footer {
     grid-column: span 12;
   }
   .section-title {
-    font-size: 2.2rem;
+    font-size: 2.3rem;
   }
   .hero-title {
-    font-size: 2.8rem;
+    font-size: 3.2rem;
   }
 }
 
 @media (max-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
   .navbar {
     padding: 0 12px;
+    height: 60px;
   }
   .nav-links {
-    display: none; /* Accessible via scroll and quick links */
+    display: none;
   }
   .ats-cv-document {
     padding: 24px 20px;
