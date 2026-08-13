@@ -3,12 +3,12 @@
     "name": "Moin Shadab",
     "handle": "moin-shadab",
     "role": "Backend Developer & Systems Builder",
-    "tagline": "Creator of MSERP & Dual-DB International Email Client. Architecting enterprise infrastructure & protocol engines.",
+    "tagline": "Architecting enterprise platforms, MSERP ERP, & Dual-DB International Email Client.",
     "location": "India",
     "availability": "Available for high-impact backend & systems engineering roles",
     "yearsExperience": "3+",
     "projectsCompleted": "8+",
-    "bio": "Backend Developer at Advanced Microdevices Pvt. Ltd. with 3+ years of experience building enterprise platforms. Landmark engineering achievements include MSERP (a completely free, open-source enterprise ERP) and a ground-up International Email Client engineered with dual database architecture (MySQL for relational metadata & CouchDB for NoSQL mail documents), raw IMAP sockets, queue workers, and MIME parsers.",
+    "bio": "Backend Developer at Advanced Microdevices Pvt. Ltd. with 3+ years of experience building enterprise platforms. Landmark achievements include MSERP (open-source enterprise ERP) and a ground-up International Email Client engineered with dual database architecture (MySQL for metadata & CouchDB for NoSQL mail documents), raw IMAP/SMTP sockets, and background queue workers.",
     "hobbies": ["🏃 Running", "⚽ Sports", "📚 Reading", "🍳 Cooking", "💡 Building Systems", "🔧 Hardware Tinkering"],
     "github": "https://github.com/Moin-shadab",
     "linkedin": "https://www.linkedin.com/in/moin-shadab-8a491b1b1/",
@@ -16,7 +16,7 @@
   },
   "stats": [
     { "label": "Years Experience", "value": "3+", "sub": "Enterprise Backend" },
-    { "label": "Dual DB Architecture", "value": "MySQL+CouchDB", "sub": "Custom Email Client" },
+    { "label": "Dual DB Architecture", "value": "MySQL+CouchDB", "sub": "Custom Email Engine" },
     { "label": "Open Source ERP", "value": "MSERP", "sub": "All Modules Working" },
     { "label": "Protocol Engineering", "value": "IMAP Sockets", "sub": "Ground-Up RFC-3501" }
   ],
@@ -195,7 +195,9 @@
     }
   ],
   "terminalCommands": {
-    "help": "Available commands:\n  • mserp     - Details on MSERP Open Source ERP\n  • email     - Architecture of Dual DB International Email Client\n  • projects  - List all shipped projects\n  • exp       - Show work experience history\n  • skills    - Display core technical stack\n  • bio       - Print developer manifesto\n  • contact   - Print contact handles & email\n  • stats     - Show live engineering telemetry\n  • sudo hire - Launch hiring protocol & contact action\n  • json      - View full raw portfolio dataset\n  • clear     - Clear terminal buffer",
+    "help": "Available commands:\n  • cv / ats  - Print plain-text ATS resume for applications\n  • mserp     - Details on MSERP Open Source ERP\n  • email     - Architecture of Dual DB International Email Client\n  • projects  - List all shipped projects\n  • exp       - Show work experience history\n  • skills    - Display core technical stack\n  • bio       - Print developer manifesto\n  • contact   - Print contact handles & email\n  • stats     - Show live engineering telemetry\n  • sudo hire - Launch hiring protocol & contact action\n  • clear     - Clear terminal buffer",
+    "cv": "MOIN SHADAB — BACKEND DEVELOPER & SYSTEMS BUILDER\nEmail: moinshadab.dev@gmail.com | Phone/India | GitHub: github.com/Moin-shadab | LinkedIn: linkedin.com/in/moin-shadab-8a491b1b1/\n\nPROFESSIONAL SUMMARY:\nBackend Developer with 3+ years of experience building high-performance enterprise platforms and protocol engines. Creator of MSERP (open-source ERP) and a Dual-DB International Email Client (MySQL + CouchDB).\n\nEXPERIENCE:\n• Backend Developer @ Advanced Microdevices Pvt. Ltd. (2023 - Present)\n  - Engineered ERP modules, hospital suites, barcode inventory tools.\n  - Built Dual-DB Email Client with raw IMAP stream sockets and NoSQL CouchDB storage.\n• PLC Programmer @ Industrial Automation (2020 - 2022)\n  - Built zero-tolerance safety interlocking logic for manufacturing plants.",
+    "ats": "MOIN SHADAB ATS RESUME SUMMARY:\nCore Stack: PHP 8+, Laravel, MySQL, CouchDB, Redis, JavaScript, C++, IMAP RFC-3501, REST APIs, PhonePe API.\nKey Landmark Systems: MSERP (Open Source ERP), Dual-DB International Email Engine.\nStatus: Ready to ship high-impact backend code.",
     "mserp": "MSERP — Open Source Enterprise ERP\nGitHub: https://github.com/Moin-shadab/MSERP\nModules: Inventory, GST Billing & Accounting, Hospital Suite, CRM, Payroll",
     "email": "Dual DB International Email Client\nArchitecture: MySQL (relational indexing, folders) + CouchDB (NoSQL mail documents, MIME)\nSockets: Direct IMAP/SMTP raw stream sockets (RFC-3501 compliance)",
     "bio": "Moin Shadab — Backend Developer & Systems Builder\n3+ years architecting enterprise software, creator of MSERP and ground-up Dual-DB International Email Client. Low-level PLC industrial discipline.",
