@@ -1,21 +1,22 @@
 /* ==========================================================================
-   MOIN SHADAB — CYBER HACKER & BACKEND DEVELOPER PORTFOLIO ENGINE
+   MOIN SHADAB — NEO-BRUTALIST PORTFOLIO & ATS RESUME ENGINE
    Features:
    - Dynamic JSON Renderer & LocalStorage Overrides
+   - Interactive ATS Resume Studio (Zoom In/Out, Reset, Print/Download PDF, Copy Text)
    - Zero-Code Visual Admin Studio (Add/Edit Projects, Exp, Skills & Export JSON)
    - Interactive Hacker Command Line (CLI Terminal Drawer)
-   - Spatial 3D Tilt Physics & Liquid Glass Shimmer Tracking
-   - Synthetic Web Audio API Tactile Sound Feedback
+   - Spatial Tilt Physics & Tactile Synthetic Audio FX
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  // ─── 1. GLOBAL STATE & DEFAULT DATASET ──────────────────────────────────
+  // ─── 1. GLOBAL STATE ────────────────────────────────────────────────────
   let portfolioData = null;
   let activeProjectFilter = 'All';
   let audioContext = null;
   let crtEnabled = false;
+  let currentZoom = 1.0;
 
   // Fallback default dataset (ensures instant offline/file:// rendering)
   const defaultDataset = {
@@ -23,12 +24,12 @@
       name: "Moin Shadab",
       handle: "moin-shadab",
       role: "Backend Developer & Systems Builder",
-      tagline: "Architecting mission-critical backend infrastructure, custom protocol handlers, and enterprise platforms.",
+      tagline: "Architecting enterprise infrastructure, MSERP ERP, & Dual-DB International Email Client.",
       location: "India",
       availability: "Available for high-impact backend & systems engineering roles",
       yearsExperience: "3+",
-      projectsCompleted: "7+",
-      bio: "Backend Developer at Advanced Microdevices Pvt. Ltd. with 3+ years of experience architecting enterprise software—from hospital management suites and accounting platforms to full-scale ERP systems built from scratch. Specializes in low-level protocol engineering, including a ground-up International Email Client using raw IMAP sockets, queue workers, and MIME parsers. Former PLC programmer with deep industrial systems discipline.",
+      projectsCompleted: "8+",
+      bio: "Backend Developer at Advanced Microdevices Pvt. Ltd. with 3+ years of experience building enterprise platforms. Landmark engineering achievements include MSERP (a completely free, open-source enterprise ERP) and a ground-up International Email Client engineered with dual database architecture (MySQL for metadata & CouchDB for NoSQL mail documents), raw IMAP/SMTP stream sockets, and background queue workers.",
       hobbies: ["🏃 Running", "⚽ Sports", "📚 Reading", "🍳 Cooking", "💡 Building Systems", "🔧 Hardware Tinkering"],
       github: "https://github.com/Moin-shadab",
       linkedin: "https://www.linkedin.com/in/moin-shadab-8a491b1b1/",
@@ -36,9 +37,9 @@
     },
     stats: [
       { label: "Years Experience", value: "3+", sub: "Enterprise Backend" },
-      { label: "Shipped Projects", value: "7+", sub: "Live & Production" },
-      { label: "Industrial PLC", value: "2 Yrs", sub: "Automation Logic" },
-      { label: "Protocol Engineering", value: "IMAP", sub: "Raw Socket Client" }
+      { label: "Dual DB Architecture", value: "MySQL+CouchDB", sub: "Custom Email Client" },
+      { label: "Open Source ERP", value: "MSERP", sub: "All Modules Working" },
+      { label: "Protocol Engineering", value: "IMAP Sockets", sub: "Ground-Up RFC-3501" }
     ],
     experiences: [
       {
@@ -48,9 +49,9 @@
         period: "2023 — Present · 3 Years",
         location: "India",
         badge: "Full-Time",
-        description: "Architect and lead backend developer for enterprise-grade applications. Engineered custom ERP modules, hospital management systems, accounting tracking platforms, and barcode inventory software optimized for high-concurrency legacy systems.",
-        highlight: "Engineered an International Email Client from scratch—bypassing third-party SaaS wrappers to handle raw IMAP/SMTP protocol sockets, stream parsing, background queue workers, and cross-server mail delivery.",
-        tags: ["PHP", "Laravel", "MySQL", "CouchDB", "IMAP Protocol", "PhonePe API", "REST APIs", "ERP Systems", "Barcode Tech"]
+        description: "Architect and lead backend developer for enterprise applications. Engineered custom ERP modules, hospital management suites, accounting tracking platforms, and barcode inventory systems.",
+        highlight: "Engineered an International Email Client from scratch with Dual-Database architecture (MySQL for metadata/indexing + CouchDB for raw NoSQL message documents), bypassing third-party SaaS wrappers to handle raw IMAP/SMTP stream sockets, background queue workers, and cross-server mail delivery.",
+        tags: ["PHP", "Laravel", "MySQL", "CouchDB", "IMAP Protocol", "PhonePe API", "REST APIs", "MSERP", "Barcode Tech"]
       },
       {
         id: "exp-2",
@@ -65,6 +66,28 @@
       }
     ],
     projects: [
+      {
+        id: "proj-mserp",
+        title: "MSERP — Open Source Enterprise ERP",
+        icon: "🏭",
+        category: "Backend",
+        featured: true,
+        description: "Completely free, open-source enterprise ERP platform featuring fully functional working modules: Multi-Warehouse Inventory, GST-Compliant Billing, Hospital & Healthcare Suite, B2B CRM Pipeline, and Employee Payroll.",
+        tags: ["MSERP", "Open Source ERP", "Laravel", "MySQL", "CouchDB", "GST Billing", "Hospital Module"],
+        link: "https://github.com/Moin-shadab/MSERP",
+        github: "https://github.com/Moin-shadab/MSERP"
+      },
+      {
+        id: "proj-email-client",
+        title: "Dual-DB International Email Client",
+        icon: "📧",
+        category: "Backend",
+        featured: true,
+        description: "Ground-up enterprise email client built with dual database architecture combining MySQL (relational metadata, indexing, accounts) & CouchDB (NoSQL message body documents, headers, dynamic tags). Features raw IMAP/SMTP stream sockets, MIME multi-part parser, Redis queue dispatch, rich draft composer, multi-folder sync, and full-text search.",
+        tags: ["Dual DB (MySQL+CouchDB)", "IMAP Protocol", "PHP Sockets", "MIME Parser", "Redis Queues", "NoSQL"],
+        link: "https://moin-shadab.github.io/email-work-flow/",
+        github: "https://github.com/Moin-shadab/email-work-flow"
+      },
       {
         id: "proj-1",
         title: "DSA Master Roadmap",
@@ -81,22 +104,11 @@
         title: "ATS Resume Builder",
         icon: "📄",
         category: "Tools",
-        featured: true,
+        featured: false,
         description: "Browser-based resume generator tailored for Applicant Tracking Systems (ATS). Uses algorithmically optimized formatting, semantic structure, real-time preview, and pixel-perfect PDF export.",
         tags: ["JavaScript", "ATS Engine", "PDF Export", "LocalStorage UI"],
         link: "https://moin-shadab.github.io/resume-builder/",
         github: "https://github.com/Moin-shadab/resume-builder"
-      },
-      {
-        id: "proj-3",
-        title: "Custom IMAP Email Engine Flow",
-        icon: "📧",
-        category: "Backend",
-        featured: true,
-        description: "Interactive technical architectural flow explaining ground-up email client creation using raw IMAP sockets, asynchronous queues, stream decoders, and MIME message parsers.",
-        tags: ["IMAP Protocol", "PHP Backend", "Socket API", "Queue Workers"],
-        link: "https://moin-shadab.github.io/email-work-flow/",
-        github: "https://github.com/Moin-shadab/email-work-flow"
       },
       {
         id: "proj-4",
@@ -160,9 +172,9 @@
         icon: "🗄️",
         items: [
           { name: "MySQL / MariaDB", level: 92, color: "#f59e0b" },
-          { name: "CouchDB (NoSQL)", level: 80, color: "#34d399" },
-          { name: "Redis Caching & PubSub", level: 82, color: "#ef4444" },
-          { name: "Database Indexing & Query Tuning", level: 88, color: "#3b82f6" }
+          { name: "CouchDB (NoSQL)", level: 85, color: "#34d399" },
+          { name: "Dual-DB Architecture", level: 90, color: "#00f0ff" },
+          { name: "Redis Caching & PubSub", level: 82, color: "#ef4444" }
         ]
       },
       {
@@ -179,10 +191,10 @@
         category: "Specialized Domains",
         icon: "🛡️",
         items: [
-          { name: "ERP & Enterprise Software", level: 94, color: "#06b6d4" },
+          { name: "MSERP Architecture", level: 95, color: "#00f0ff" },
+          { name: "Custom Email Client Engine", level: 92, color: "#a855f7" },
           { name: "Payment Integration (PhonePe)", level: 88, color: "#10b981" },
-          { name: "PLC & Industrial Automation", level: 82, color: "#f59e0b" },
-          { name: "AI Prompt Engineering", level: 86, color: "#ec4899" }
+          { name: "PLC & Industrial Automation", level: 82, color: "#f59e0b" }
         ]
       }
     ],
@@ -190,22 +202,26 @@
       {
         title: "imap_socket_parser.php",
         language: "php",
-        code: `<?php\nnamespace App\\Services\\Mail;\n\nclass ImapSocketClient {\n    private $stream;\n    private int $tagCount = 0;\n\n    public function connect(string $host, int $port = 993): bool {\n        $context = stream_context_create(['ssl' => ['verify_peer' => false]]);\n        $this->stream = @stream_socket_client(\n            "ssl://{$host}:{$port}", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context\n        );\n        if (!$this->stream) throw new \\RuntimeException("IMAP connection failed: {$errstr}");\n        return true;\n    }\n\n    public function command(string $cmd): array {\n        $tag = 'A' . sprintf('%04d', ++$this->tagCount);\n        fwrite($this->stream, "{$tag} {$cmd}\\r\\n");\n        $response = [];\n        while ($line = fgets($this->stream)) {\n            $response[] = rtrim($line);\n            if (str_starts_with($line, "{$tag} OK")) break;\n        }\n        return $response;\n    }\n}`
+        code: `<?php\nnamespace App\\Services\\Mail;\n\n// Dual DB: MySQL (relational metadata) + CouchDB (NoSQL raw mail docs)\nclass ImapSocketClient {\n    private $stream;\n    private int $tagCount = 0;\n\n    public function connect(string $host, int $port = 993): bool {\n        $context = stream_context_create(['ssl' => ['verify_peer' => false]]);\n        $this->stream = @stream_socket_client(\n            "ssl://{$host}:{$port}", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context\n        );\n        if (!$this->stream) throw new \\RuntimeException("IMAP socket failed: {$errstr}");\n        return true;\n    }\n\n    public function fetchMessageToCouchDB(string $msgId, \\App\\Services\\CouchDbClient $couch) {\n        $rawPayload = $this->command("FETCH {$msgId} (BODY[])");\n        $parsed = \\App\\Services\\MimeParser::decode($rawPayload);\n        // Store raw document payload into CouchDB NoSQL bucket\n        return $couch->insertDocument([\n            'msg_id' => $msgId,\n            'headers' => $parsed['headers'],\n            'html_body' => $parsed['html'],\n            'plain_body' => $parsed['text'],\n            'attachments' => $parsed['attachments']\n        ]);\n    }\n}`
       },
       {
-        title: "ErpInventoryController.php",
+        title: "MsErpCoreController.php",
         language: "php",
-        code: `<?php\nnamespace App\\Http\\Controllers\\Api;\n\nuse App\\Models\\Inventory;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\DB;\n\nclass ErpInventoryController extends Controller {\n    public function deductStock(Request $req) {\n        $validated = $req->validate([\n            'sku' => 'required|string',\n            'qty' => 'required|integer|min:1'\n        ]);\n\n        return DB::transaction(function() use ($validated) {\n            $item = Inventory::where('sku', $validated['sku'])->lockForUpdate()->firstOrFail();\n            if ($item->stock_qty < $validated['qty']) {\n                return response()->json(['error' => 'Insufficient Stock'], 422);\n            }\n            $item->decrement('stock_qty', $validated['qty']);\n            return response()->json(['status' => 'SUCCESS', 'remaining' => $item->stock_qty]);\n        });\n    }\n}`
+        code: `<?php\nnamespace App\\Http\\Controllers\\Api;\n\n// MSERP — Open Source Enterprise ERP Core Controller\nuse App\\Models\\Inventory;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\DB;\n\nclass MsErpCoreController extends Controller {\n    public function deductStock(Request $req) {\n        $validated = $req->validate([\n            'sku' => 'required|string',\n            'qty' => 'required|integer|min:1'\n        ]);\n\n        return DB::transaction(function() use ($validated) {\n            $item = Inventory::where('sku', $validated['sku'])->lockForUpdate()->firstOrFail();\n            if ($item->stock_qty < $validated['qty']) {\n                return response()->json(['error' => 'Insufficient Stock'], 422);\n            }\n            $item->decrement('stock_qty', $validated['qty']);\n            return response()->json(['status' => 'MSERP_SUCCESS', 'remaining' => $item->stock_qty]);\n        });\n    }\n}`
       },
       {
         title: "plc_ladder_interlock.cpp",
         language: "cpp",
-        code: `// Industrial PLC Motor Interlock Logic\n#include <iostream>\n\nstruct SafetySensors {\n    bool emergencyStop;\n    bool thermalOverload;\n    bool pressureOk;\n};\n\nbool evaluateMotorRunPermission(SafetySensors s, bool startCmd) {\n    bool safetyChain = (!s.emergencyStop) && (!s.thermalOverload) && s.pressureOk;\n    static bool motorLatched = false;\n    \n    if (!safetyChain) {\n        motorLatched = false; // Tripped\n    } else if (startCmd) {\n        motorLatched = true; // Latched ON\n    }\n    return motorLatched;\n}`
+        code: `// Industrial PLC Motor Interlock Logic\n#include <iostream>\n\nstruct SafetySensors {\n    bool emergencyStop;\n    bool thermalOverload;\n    bool pressureOk;\n};\n\nbool evaluateMotorRunPermission(SafetySensors s, bool startCmd) {\n    bool safetyChain = (!s.emergencyStop) && (!s.thermalOverload) && s.pressureOk;\n    static bool motorLatched = false;\n    if (!safetyChain) {\n        motorLatched = false;\n    } else if (startCmd) {\n        motorLatched = true;\n    }\n    return motorLatched;\n}`
       }
     ],
     terminalCommands: {
-      "help": "Available commands:\n  • projects  - List all shipped projects\n  • exp       - Show work experience history\n  • skills    - Display core technical stack\n  • bio       - Print developer manifesto\n  • contact   - Print contact handles & email\n  • stats     - Show live engineering telemetry\n  • sudo hire - Launch hiring protocol & contact action\n  • json      - View full raw portfolio dataset\n  • clear     - Clear terminal buffer",
-      "bio": "Moin Shadab — Backend Developer & Systems Builder\n3+ years architecting enterprise software, ERP platforms, custom IMAP mail clients, and payment solutions. Grounded in low-level PLC automation discipline.",
+      "help": "Available commands:\n  • cv / ats  - Print plain-text ATS resume for job portals\n  • mserp     - Details on MSERP Open Source ERP\n  • email     - Architecture of Dual DB International Email Client\n  • projects  - List all shipped projects\n  • exp       - Show work experience history\n  • skills    - Display core technical stack\n  • bio       - Print developer manifesto\n  • contact   - Print contact handles & email\n  • stats     - Show live engineering telemetry\n  • sudo hire - Launch hiring protocol & contact action\n  • clear     - Clear terminal buffer",
+      "cv": "MOIN SHADAB — BACKEND DEVELOPER & SYSTEMS BUILDER\nEmail: moinshadab.dev@gmail.com | Phone/India | GitHub: github.com/Moin-shadab | LinkedIn: linkedin.com/in/moin-shadab-8a491b1b1/\n\nPROFESSIONAL SUMMARY:\nBackend Developer with 3+ years of experience building high-performance enterprise platforms and protocol engines. Creator of MSERP (open-source ERP) and a Dual-DB International Email Client (MySQL + CouchDB).\n\nEXPERIENCE:\n• Backend Developer @ Advanced Microdevices Pvt. Ltd. (2023 - Present)\n  - Engineered ERP modules, hospital suites, barcode inventory tools.\n  - Built Dual-DB Email Client with raw IMAP stream sockets and NoSQL CouchDB storage.\n• PLC Programmer @ Industrial Automation (2020 - 2022)\n  - Built zero-tolerance safety interlocking logic for manufacturing plants.",
+      "ats": "MOIN SHADAB ATS RESUME SUMMARY:\nCore Stack: PHP 8+, Laravel, MySQL, CouchDB, Redis, JavaScript, C++, IMAP RFC-3501, REST APIs, PhonePe API.\nKey Landmark Systems: MSERP (Open Source ERP), Dual-DB International Email Engine.\nStatus: Ready to ship high-impact backend code.",
+      "mserp": "MSERP — Open Source Enterprise ERP\nGitHub: https://github.com/Moin-shadab/MSERP\nModules: Inventory, GST Billing & Accounting, Hospital Suite, CRM, Payroll",
+      "email": "Dual DB International Email Client\nArchitecture: MySQL (relational indexing, folders) + CouchDB (NoSQL mail documents, MIME)\nSockets: Direct IMAP/SMTP raw stream sockets (RFC-3501 compliance)",
+      "bio": "Moin Shadab — Backend Developer & Systems Builder\n3+ years architecting enterprise software, creator of MSERP and ground-up Dual-DB International Email Client. Low-level PLC industrial discipline.",
       "contact": "Email: moinshadab.dev@gmail.com\nGitHub: https://github.com/Moin-shadab\nLinkedIn: https://www.linkedin.com/in/moin-shadab-8a491b1b1/\nStatus: Available for backend opportunities",
       "sudo hire": ">>> ACCESS GRANTED <<<\nExecuting hiring protocol...\nOpening direct communication path to moinshadab.dev@gmail.com!\nStatus: READY TO SHIP CODE"
     }
@@ -213,7 +229,6 @@
 
   // ─── 2. DATA INITIALIZATION ─────────────────────────────────────────────
   async function initData() {
-    // Check LocalStorage overrides first (user edited via Admin Studio)
     const local = localStorage.getItem('ms_portfolio_data');
     if (local) {
       try {
@@ -225,14 +240,12 @@
       }
     }
 
-    // On local file:// protocol, avoid browser CORS fetch errors completely
     if (window.location.protocol === 'file:' || !window.location.protocol.startsWith('http')) {
       portfolioData = defaultDataset;
       renderAll();
       return;
     }
 
-    // On HTTP / HTTPS (GitHub Pages live environment), fetch portfolio-data.json
     try {
       const res = await fetch('./data/portfolio-data.json');
       if (res.ok) {
@@ -265,8 +278,8 @@
     const bioEl = document.getElementById('profile-bio');
     const availEl = document.getElementById('profile-availability');
 
-    if (nameEl) nameEl.textContent = p.name;
-    if (taglineEl) taglineEl.innerHTML = `Backend Developer &amp; <strong>${p.role.split('& ')[1] || 'Systems Builder'}</strong>`;
+    if (nameEl) nameEl.textContent = p.name.toUpperCase();
+    if (taglineEl) taglineEl.innerHTML = `Backend Developer &amp; <strong>${(p.role || '').split('& ')[1] || 'Systems Builder'}</strong>`;
     if (bioEl) bioEl.textContent = p.bio;
     if (availEl) availEl.textContent = p.availability;
   }
@@ -309,7 +322,6 @@
       `;
     }).join('');
 
-    // Re-attach spatial tilt tracking
     initSpatialTilt();
   }
 
@@ -360,7 +372,7 @@
               <span>${item.level}%</span>
             </div>
             <div class="skill-track">
-              <div class="skill-bar" style="width: ${item.level}%; background: ${item.color || 'var(--accent-cyan)'};"></div>
+              <div class="skill-bar" style="width: ${item.level}%; background: ${item.color || 'var(--neon-cyan)'};"></div>
             </div>
           </div>
         `).join('')}
@@ -383,7 +395,7 @@
     contentEl.textContent = snippets[0] ? snippets[0].code : '';
 
     tabsContainer.querySelectorAll('.sandbox-tab').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', () => {
         playSound('click');
         tabsContainer.querySelectorAll('.sandbox-tab').forEach(t => t.classList.remove('active'));
         btn.classList.add('active');
@@ -393,7 +405,85 @@
     });
   }
 
-  // ─── 4. INTERACTIVE CLI TERMINAL DRAWER ──────────────────────────────────
+  // ─── 4. INTERACTIVE ATS CV RESUME VIEWER ENGINE ─────────────────────────
+  function initAtsCvViewer() {
+    const zoomTarget = document.getElementById('cv-zoom-target');
+    const zoomLevelEl = document.getElementById('cv-zoom-level');
+    const zoomInBtn = document.getElementById('cv-zoom-in');
+    const zoomOutBtn = document.getElementById('cv-zoom-out');
+    const zoomResetBtn = document.getElementById('cv-zoom-reset');
+    const copyTextBtn = document.getElementById('cv-copy-text');
+    const downloadPdfBtn = document.getElementById('cv-download-pdf');
+    const fullscreenBtn = document.getElementById('cv-fullscreen');
+    const cvDoc = document.getElementById('ats-cv-document');
+
+    if (!zoomTarget || !zoomLevelEl) return;
+
+    function applyZoom(newZoom) {
+      currentZoom = Math.min(Math.max(newZoom, 0.6), 1.5);
+      zoomTarget.style.transform = `scale(${currentZoom})`;
+      zoomLevelEl.textContent = `${Math.round(currentZoom * 100)}%`;
+      playSound('key');
+    }
+
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener('click', () => applyZoom(currentZoom + 0.1));
+    }
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener('click', () => applyZoom(currentZoom - 0.1));
+    }
+    if (zoomResetBtn) {
+      zoomResetBtn.addEventListener('click', () => applyZoom(1.0));
+    }
+
+    // Download PDF (Triggers Clean Browser Print isolating the ATS Document)
+    if (downloadPdfBtn) {
+      downloadPdfBtn.addEventListener('click', () => {
+        playSound('click');
+        window.print();
+      });
+    }
+
+    // Copy Raw ATS Text to Clipboard
+    if (copyTextBtn) {
+      copyTextBtn.addEventListener('click', () => {
+        playSound('click');
+        let textToCopy = '';
+        if (cvDoc) {
+          textToCopy = cvDoc.innerText;
+        } else if (portfolioData.terminalCommands && portfolioData.terminalCommands.cv) {
+          textToCopy = portfolioData.terminalCommands.cv;
+        }
+
+        if (textToCopy) {
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            alert('📋 ATS Resume Plain Text copied to clipboard!\n\nReady to paste directly into Microsoft, Amazon, or company job portals.');
+          }).catch(() => {
+            alert('CV Text: \n\n' + textToCopy);
+          });
+        }
+      });
+    }
+
+    // Fullscreen Viewport Mode
+    if (fullscreenBtn) {
+      fullscreenBtn.addEventListener('click', () => {
+        playSound('click');
+        const viewport = document.getElementById('cv-viewport-container');
+        if (viewport) {
+          if (!document.fullscreenElement) {
+            viewport.requestFullscreen().catch(err => {
+              alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+            });
+          } else {
+            document.exitFullscreen();
+          }
+        }
+      });
+    }
+  }
+
+  // ─── 5. INTERACTIVE CLI TERMINAL DRAWER ──────────────────────────────────
   function initTerminal() {
     const toggleBtn = document.getElementById('cli-toggle');
     const modal = document.getElementById('cli-modal');
@@ -409,9 +499,17 @@
       input.focus();
     });
 
-    closeBtn.addEventListener('click', () => {
-      playSound('click');
-      modal.classList.remove('active');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        playSound('click');
+        modal.classList.remove('active');
+      });
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        modal.classList.remove('active');
+      }
     });
 
     input.addEventListener('keydown', (e) => {
@@ -442,7 +540,7 @@
         } else if (portfolioData.terminalCommands && portfolioData.terminalCommands[cmd]) {
           appendCliLine(portfolioData.terminalCommands[cmd], 'sys');
         } else {
-          appendCliLine(`Command not recognized: '${cmd}'. Type 'help' for available commands.`, 'err');
+          appendCliLine(`Command not recognized: '${cmd}'. Type 'help' or 'cv' for commands.`, 'err');
         }
 
         output.scrollTop = output.scrollHeight;
@@ -459,7 +557,7 @@
     output.appendChild(line);
   }
 
-  // ─── 5. VISUAL ADMIN STUDIO ENGINE ──────────────────────────────────────
+  // ─── 6. VISUAL ADMIN STUDIO ENGINE ──────────────────────────────────────
   function initAdminStudio() {
     const trigger = document.getElementById('admin-studio-trigger');
     const modal = document.getElementById('admin-modal');
@@ -476,7 +574,6 @@
 
     if (trigger) trigger.addEventListener('click', openAdmin);
 
-    // Global keyboard shortcut: Ctrl + Shift + E
     window.addEventListener('keydown', (e) => {
       if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'e') {
         e.preventDefault();
@@ -491,7 +588,6 @@
       });
     }
 
-    // Save New Project from Admin Form
     if (addProjectBtn) {
       addProjectBtn.addEventListener('click', () => {
         const title = document.getElementById('admin-proj-title').value;
@@ -522,11 +618,10 @@
         localStorage.setItem('ms_portfolio_data', JSON.stringify(portfolioData));
         renderBentoProjects();
         playSound('click');
-        alert('🎉 New project added and rendered live! Click "Download JSON" to save to repository.');
+        alert('🎉 New project added live! Click "Download JSON" to update repository.');
       });
     }
 
-    // Export Updated JSON File for GitHub
     if (exportBtn) {
       exportBtn.addEventListener('click', () => {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(portfolioData, null, 2));
@@ -541,9 +636,9 @@
     }
   }
 
-  // ─── 6. SPATIAL UI 3D TILT & MOUSE PHYSICS ──────────────────────────────
+  // ─── 7. SPATIAL UI 3D TILT & MOUSE PHYSICS ──────────────────────────────
   function initSpatialTilt() {
-    const cards = document.querySelectorAll('.spatial-card, .bento-card');
+    const cards = document.querySelectorAll('.spatial-card, .bento-card, .landmark-card');
     cards.forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -552,16 +647,14 @@
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        const rotateX = ((y - centerY) / centerY) * -8;
-        const rotateY = ((x - centerX) / centerX) * 8;
+        const rotateX = ((y - centerY) / centerY) * -6;
+        const rotateY = ((x - centerX) / centerX) * 6;
 
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
-        card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(6px)`;
       });
 
       card.addEventListener('mouseleave', () => {
-        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
       });
     });
   }
@@ -581,27 +674,26 @@
     });
 
     (function loop() {
-      fx += (cx - fx) * 0.15;
-      fy += (cy - fy) * 0.15;
+      fx += (cx - fx) * 0.18;
+      fy += (cy - fy) * 0.18;
       follower.style.transform = `translate(${fx}px, ${fy}px) translate(-50%, -50%)`;
       requestAnimationFrame(loop);
     })();
 
-    // Event delegation for hover states on all interactive elements
     document.addEventListener('mouseover', (e) => {
-      if (e.target.closest('a, button, input, select, textarea, .bento-card, .timeline-content, .skeuo-btn-toggle, .sandbox-tab, .project-filter-btn')) {
+      if (e.target.closest('a, button, input, select, textarea, .bento-card, .landmark-card, .timeline-content, .skeuo-btn-toggle, .sandbox-tab, .project-filter-btn, .cv-btn')) {
         document.body.classList.add('cursor-hover');
       }
     });
 
     document.addEventListener('mouseout', (e) => {
-      if (e.target.closest('a, button, input, select, textarea, .bento-card, .timeline-content, .skeuo-btn-toggle, .sandbox-tab, .project-filter-btn')) {
+      if (e.target.closest('a, button, input, select, textarea, .bento-card, .landmark-card, .timeline-content, .skeuo-btn-toggle, .sandbox-tab, .project-filter-btn, .cv-btn')) {
         document.body.classList.remove('cursor-hover');
       }
     });
   }
 
-  // ─── 7. SYNTHETIC SOUND ENGINE & CONTROLS ──────────────────────────────
+  // ─── 8. SYNTHETIC SOUND ENGINE & HARDWARE CONTROLS ─────────────────────
   function playSound(type) {
     if (!audioContext) {
       audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -616,14 +708,14 @@
     gain.connect(audioContext.destination);
 
     if (type === 'click') {
-      osc.frequency.setValueAtTime(600, audioContext.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.05);
+      osc.frequency.setValueAtTime(650, audioContext.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(220, audioContext.currentTime + 0.05);
       gain.gain.setValueAtTime(0.15, audioContext.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
       osc.start();
       osc.stop(audioContext.currentTime + 0.05);
     } else if (type === 'key') {
-      osc.frequency.setValueAtTime(800, audioContext.currentTime);
+      osc.frequency.setValueAtTime(850, audioContext.currentTime);
       gain.gain.setValueAtTime(0.05, audioContext.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.03);
       osc.start();
@@ -653,7 +745,6 @@
     }
   }
 
-  // Project Category Filters
   function initProjectFilters() {
     const filterBtns = document.querySelectorAll('.project-filter-btn');
     filterBtns.forEach(btn => {
@@ -671,6 +762,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     initData();
     initSpatialCursor();
+    initAtsCvViewer();
     initTerminal();
     initAdminStudio();
     initHardwareControls();
