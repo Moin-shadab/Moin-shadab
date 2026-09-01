@@ -124,8 +124,8 @@
     },
     {
       "id": "proj-7",
-      "title": "Interactive Birthday Wish UI",
-      "icon": "🎂",
+      "title": "Interactive Celebration UI",
+      "icon": "🎉",
       "category": "Creative",
       "featured": false,
       "description": "Vibrant interactive celebration experience featuring canvas particle physics, confetti triggers, audio playback, and custom dynamic greeting elements.",
@@ -177,6 +177,132 @@
       ]
     }
   ],
+  "story": {
+    "headline": "The Blueprint",
+    "alternativeHeadline": "From Industrial Automation to Ground-Up Backend Protocol Engines",
+    "timeRange": "2020 — Today",
+    "lede": "I started where an unhandled condition didn't throw an HTTP 500 error — it caused a pneumatic cylinder in a physical factory line to jam. That discipline in zero-tolerance reliability, deterministic states, and hardware timing shaped my entire approach when stepping into cloud software: building open-source enterprise ERPs, dual-database storage pipelines, and raw IMAP stream socket engines.",
+    "chapters": [
+      {
+        "id": "plc-2020",
+        "year": "2020",
+        "when": "Early 2020",
+        "title": "The Deterministic Floor",
+        "subtitle": "Learning safety interlocking & millisecond scan loops",
+        "content": "Before writing high-throughput REST APIs, my engineering sandbox was industrial control. In factory automation, you don't have the luxury of retrying an asynchronous promise if you miss a physical safety barrier. Every line of ladder logic runs in deterministic scan cycles of 5 to 20 milliseconds.",
+        "quote": "If a backend controller fails in production, an API returns 500. If an industrial PLC interlock fails, machinery stops or breaks. That standard never left me.",
+        "highlight": "Programmed Programmable Logic Controllers (PLCs) with zero-tolerance safety interlocking logic, sensor polling protocols, and discrete hardware registers.",
+        "tags": ["PLC Automation", "Deterministic Logic", "Hardware Interfacing", "Safety Loops"]
+      },
+      {
+        "id": "bridge-2022",
+        "year": "2022",
+        "when": "2022",
+        "title": "From Relays to Distributed Sockets",
+        "subtitle": "Bridging low-level execution with modern software architecture",
+        "content": "Transitioning from physical PLC logic to large-scale backend systems felt natural: memory allocation, lock contention, race conditions, and idempotent transactions are the software twins of electrical relays and interlocking switches. I dove deep into C++, Java, and PHP systems programming, obsessed with understanding what happens under the surface of frameworks.",
+        "quote": "Frameworks come and go, but protocols, buffer allocation, and atomic transactions remain constant.",
+        "highlight": "Mastered concurrency, database indexing internals, TCP/IP packet flows, and foundational Data Structures & Algorithms.",
+        "tags": ["C++", "Java", "Computer Science", "TCP/IP Sockets"]
+      },
+      {
+        "id": "amd-2023",
+        "year": "2023",
+        "when": "Early 2023",
+        "title": "Advanced Microdevices & The Enterprise Reality",
+        "subtitle": "Designing software where inventory mistakes cost millions",
+        "content": "Joining Advanced Microdevices Pvt. Ltd. as a backend developer, I took ownership of core enterprise software suites. In an industrial enterprise, inventory isn't a simple counter in a database: items move across multiple physical warehouses, get locked in transit, require GST-compliant invoicing, and integrate with barcode scanners on the factory floor.",
+        "quote": "A single race condition in warehouse checkout can corrupt physical stock counts across continents. Pessimistic database locks are non-negotiable.",
+        "highlight": "Engineered multi-warehouse inventory systems using row-level pessimistic locking, automated GST ledger calculation engines, and barcode verification pipelines.",
+        "tags": ["Advanced Microdevices", "Laravel", "MySQL Transactions", "Warehouse Engine"]
+      },
+      {
+        "id": "email-2023",
+        "year": "2023",
+        "when": "Late 2023",
+        "title": "The Dual-DB International Email Engine",
+        "subtitle": "Refusing SaaS wrappers: RFC-3501 IMAP sockets + Hybrid Storage",
+        "content": "Most web teams that need email capabilities pay for Mailgun, Sendgrid, or third-party wrappers. When tasked with building an internal international email client, I chose to construct it from first principles. I opened raw SSL stream sockets directly to remote IMAP/SMTP servers (`stream_socket_client`), hand-crafted the RFC-3501 state machine, wrote MIME multi-part chunk decoders, and designed a hybrid Dual-Database architecture.",
+        "quote": "MySQL manages indexed folder metadata and foreign keys; CouchDB stores unstructured JSON mail payloads and raw document attachments. Fast indexing with infinite document scalability.",
+        "highlight": "Built an International Email Client bypassing SaaS dependencies: raw socket streams + MySQL relational indexing + CouchDB NoSQL message documents + Redis background queue workers.",
+        "tags": ["IMAP RFC-3501", "Dual-DB", "MySQL + CouchDB", "Raw Sockets", "MIME Parser"]
+      },
+      {
+        "id": "mserp-2024",
+        "year": "2024",
+        "when": "2024",
+        "title": "MSERP: Open Source Enterprise ERP",
+        "subtitle": "Giving back a production-grade suite with working modules",
+        "content": "Commercial ERPs like SAP and Oracle charge exorbitant licensing fees, locking small manufacturing and healthcare businesses out. I architected and open-sourced MSERP — a fully functional, complete enterprise ERP platform featuring multi-warehouse inventory, double-entry GST billing, hospital management (EMR), sales pipelines, and payroll.",
+        "quote": "Enterprise software should not be an inaccessible fortress. MSERP proves that clean architecture, deterministic transactions, and modern backends can be completely open.",
+        "highlight": "Shipped MSERP on GitHub with complete working modules, test coverage, and documentation for community deployment.",
+        "tags": ["MSERP", "Open Source", "GST Billing", "Hospital EMR", "Laravel Enterprise"]
+      },
+      {
+        "id": "phonepe-2024",
+        "year": "2024",
+        "when": "Mid 2024",
+        "title": "Payment Sockets & Financial Integrity",
+        "subtitle": "Securing high-volume transactions with cryptographic checksums",
+        "content": "Integrated Indian PhonePe payment gateway API with strict SHA-256 webhook signature verification, replay attack prevention, and idempotent reconciliation routines. Published public integration reference guides to help fellow engineers handle webhook state machines without leaking transactions.",
+        "quote": "When money is moving across wire APIs, assume every network packet can be delayed, duplicated, or spoofed. Verify every checksum at the gate.",
+        "highlight": "Architected zero-drop payment processing pipelines with automatic reconciliation and published the open reference guide.",
+        "tags": ["PhonePe API", "Cryptographic Signatures", "Webhooks", "Payment Security"]
+      },
+      {
+        "id": "now-2026",
+        "year": "2026",
+        "when": "Present Day",
+        "title": "Architecting for Concurrency & Scale",
+        "subtitle": "Available for high-impact backend & systems engineering",
+        "content": "Today, I continue to push the boundaries of backend engineering — building high-concurrency systems, exploring distributed messaging, and contributing to open-source infrastructure. I bring the rare combination of low-level hardware discipline and high-level enterprise software craftsmanship to every team I join.",
+        "quote": "Software is only as good as its failure modes. I build systems designed to stay standing.",
+        "highlight": "Actively seeking ambitious backend, infrastructure, and systems engineering roles globally.",
+        "tags": ["High Concurrency", "Systems Architecture", "Available for Hire", "Distributed Systems"]
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Why use a Dual-Database architecture (MySQL + CouchDB) for the email engine?",
+        "a": "Relational databases (MySQL) excel at structured queries, foreign keys, unread counts, and folder trees. However, storing varied MIME multipart structures, arbitrary email attachments, and nested JSON payloads in relational tables causes table bloat and schema migration headaches. CouchDB provides document-level JSON storage and revision tracking, while MySQL handles lightning-fast relational queries."
+      },
+      {
+        "q": "How does your 2-year background in PLC automation benefit software engineering?",
+        "a": "PLC programming teaches zero-tolerance discipline: you cannot afford unhandled edge cases when physical machines are moving. It instills an instinct for deterministic states, race conditions, hardware timeouts, and sensor polling loops — all of which directly translate into building resilient, crash-proof backend systems."
+      },
+      {
+        "q": "What makes MSERP different from other open-source ERP projects?",
+        "a": "Many open-source ERP templates are shallow starter kits with mock data. MSERP is engineered with production-ready business logic: pessimistic database locks (`lockForUpdate`) for inventory deduction, automatic GST tax tier calculations, and full hospital EMR workflows."
+      },
+      {
+        "q": "Are you open to remote or international backend roles?",
+        "a": "Yes! I am available for full-time backend engineering, systems architecture, and infrastructure roles with high-impact teams across the globe."
+      }
+    ]
+  },
+  "music": [
+    { "id": "track-1", "title": "Neon Protocol", "artist": "Moin Shadab", "genre": "Synthwave / Cyber Arp", "tempo": 120, "rootNote": 220 },
+    { "id": "track-2", "title": "Deep Socket Stream", "artist": "Moin Shadab", "genre": "Lo-Fi Buffer Mix", "tempo": 95, "rootNote": 174.61 },
+    { "id": "track-3", "title": "Dual-DB Pulse", "artist": "Moin Shadab", "genre": "Ambient Systems Flow", "tempo": 105, "rootNote": 196 }
+  ],
+  "toolCategories": [
+    {
+      "name": "Backend & Core",
+      "tools": ["PHP 8.2+", "Laravel 10/11", "Node.js", "C++", "Java", "Python", "REST APIs", "Socket Streams"]
+    },
+    {
+      "name": "Databases & Storage",
+      "tools": ["MySQL", "MariaDB", "CouchDB (NoSQL)", "Redis", "Dual-DB Engine", "Pessimistic Locks"]
+    },
+    {
+      "name": "Protocols & Systems",
+      "tools": ["IMAP RFC-3501", "SMTP", "MIME Decoders", "TCP/IP Sockets", "PLC Ladder Logic", "PhonePe API"]
+    },
+    {
+      "name": "Infrastructure & Craft",
+      "tools": ["Git & GitHub", "Docker", "Linux / Bash", "Web Audio API", "HTML5 Canvas", "Performance Profiling"]
+    }
+  ],
   "codeSnippets": [
     {
       "title": "MoinShadabSystemArchitecture.php",
@@ -195,13 +321,14 @@
     }
   ],
   "terminalCommands": {
-    "help": "Available commands:\n  • dino / play - Launch Playable Neo-Brutalist 2D Dino Runner Game!\n  • matrix      - Toggle Live Digital Matrix Rain Effect\n  • cv / ats    - Print plain-text ATS resume for job portals\n  • mserp       - Details on MSERP Open Source ERP\n  • email       - Architecture of Dual DB International Email Client\n  • projects    - List all shipped projects\n  • exp         - Show work experience history\n  • skills      - Display core technical stack\n  • bio         - Print developer manifesto\n  • contact     - Print contact handles & email\n  • stats       - Show live engineering telemetry\n  • sudo hire   - Launch hiring protocol & contact action\n  • clear       - Clear terminal buffer",
+    "help": "Available commands:\n  • dino / play - Launch Playable Neo-Brutalist 2D Dino Runner Game!\n  • matrix      - Toggle Live Digital Matrix Rain Effect\n  • cv / ats    - Print plain-text ATS resume for job portals\n  • mserp       - Details on MSERP Open Source ERP\n  • email       - Architecture of Dual DB International Email Client\n  • projects    - List all shipped projects\n  • exp         - Show work experience history\n  • skills      - Display core technical stack\n  • story       - View engineering narrative memoir\n  • bio         - Print developer manifesto\n  • contact     - Print contact handles & email\n  • stats       - Show live engineering telemetry\n  • sudo hire   - Launch hiring protocol & contact action\n  • clear       - Clear terminal buffer",
     "dino": "🎮 LAUNCHING PLAYABLE DINO RUNNER GAME...",
     "matrix": "🟢 TOGGLING MATRIX DIGITAL RAIN EFFECT...",
     "cv": "MOIN SHADAB — BACKEND DEVELOPER & SYSTEMS BUILDER\nEmail: moinshadab.dev@gmail.com | Phone/India | GitHub: github.com/Moin-shadab | LinkedIn: linkedin.com/in/moin-shadab-8a491b1b1/\n\nPROFESSIONAL SUMMARY:\nBackend Developer with 3+ years of experience building high-concurrency enterprise platforms and protocol engines. Creator of MSERP (open-source ERP) and a Dual-DB International Email Client (MySQL + CouchDB).\n\nEXPERIENCE:\n• Backend Developer @ Advanced Microdevices Pvt. Ltd. (2023 - Present)\n  - Engineered ERP modules, hospital suites, barcode inventory tools.\n  - Built Dual-DB Email Client with raw IMAP stream sockets and NoSQL CouchDB storage.\n• PLC Programmer @ Industrial Automation (2020 - 2022)\n  - Built zero-tolerance safety interlocking logic for manufacturing plants.",
     "ats": "MOIN SHADAB ATS RESUME SUMMARY:\nCore Stack: PHP 8+, Laravel, MySQL, CouchDB, Redis, JavaScript, C++, IMAP RFC-3501, REST APIs, PhonePe API.\nKey Landmark Systems: MSERP (Open Source ERP), Dual-DB International Email Engine.\nStatus: Ready to ship high-impact backend code.",
     "mserp": "MSERP — Open Source Enterprise ERP\nGitHub: https://github.com/Moin-shadab/MSERP\nModules: Inventory, GST Billing & Accounting, Hospital Suite, CRM, Payroll",
     "email": "Dual DB International Email Client\nArchitecture: MySQL (relational indexing, folders) + CouchDB (NoSQL mail documents, MIME)\nSockets: Direct IMAP/SMTP raw stream sockets (RFC-3501 compliance)",
+    "story": "The Blueprint — From Industrial PLCs to Resilient Backend Engines (2020 — Today)\nRead the full chaptered memoir on the Story view!",
     "bio": "Moin Shadab — Backend Developer & Systems Builder\n3+ years architecting enterprise software, creator of MSERP and ground-up Dual-DB International Email Client. Low-level PLC industrial discipline.",
     "contact": "Email: moinshadab.dev@gmail.com\nGitHub: https://github.com/Moin-shadab\nLinkedIn: https://www.linkedin.com/in/moin-shadab-8a491b1b1/\nStatus: Available for backend opportunities",
     "sudo hire": ">>> ACCESS GRANTED <<<\nExecuting hiring protocol...\nOpening direct communication path to moinshadab.dev@gmail.com!\nStatus: READY TO SHIP CODE"

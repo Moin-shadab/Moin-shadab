@@ -1,5 +1,9 @@
 /* ==========================================================================
-   MOIN SHADAB — HIGH-IMPACT NEO-BRUTALIST PORTFOLIO ENGINE (SMOOTH & STABLE)
+   MOIN SHADAB — MULTI-DESIGN PORTFOLIO ENGINE & UNIVERSAL DATA CONTROLLER
+   Supports: 
+   1. Neo-Brutalist Cyber (Current)
+   2. Kinetic Pixel & Brutalism (Inspired by runrobrun.com)
+   3. Editorial Memoir & Timeline Thread (Inspired by tej.as/story)
    ========================================================================== */
 
 (function () {
@@ -7,9 +11,9 @@
 
   // ─── 1. GLOBAL STATE ────────────────────────────────────────────────────
   let portfolioData = null;
+  let activeDesign = 'cyber'; // 'cyber' | 'runrob' | 'story'
   let activeProjectFilter = 'All';
   let activeArchTab = 'email';
-  let audioContext = null;
   let crtEnabled = false;
   let matrixActive = false;
   let currentZoom = 1.0;
@@ -20,7 +24,13 @@
   let dinoHiScore = localStorage.getItem('ms_dino_hiscore') || 0;
   let dinoAnimationId = null;
 
-  // Architecture Diagram Definitions
+  // Audio Synthesizer State
+  let audioCtx = null;
+  let isAudioPlaying = false;
+  let audioInterval = null;
+  let activeTrackIdx = 0;
+
+  // Architecture Diagram Flows
   const archFlows = {
     email: [
       { title: "IMAP/SMTP Stream", sub: "RFC-3501 Raw Sockets" },
@@ -39,7 +49,7 @@
   };
 
   // Fallback default dataset
-  const defaultDataset = {
+  const fallbackData = {
     profile: {
       name: "Moin Shadab",
       handle: "moin-shadab",
@@ -151,28 +161,6 @@
         tags: ["Web Audio API", "Polyphony", "JavaScript", "Spatial UI"],
         link: "https://moin-shadab.github.io/web-piano/",
         github: "https://github.com/Moin-shadab/web-piano"
-      },
-      {
-        id: "proj-6",
-        title: "Text to Handwriting Generator",
-        icon: "✍️",
-        category: "Tools",
-        featured: false,
-        description: "Python utility that transforms digital text into customized realistic handwritten notebook pages with line noise, natural ink variance, and custom font mapping.",
-        tags: ["Python", "OpenCV", "Image Processing", "Automation"],
-        link: "https://github.com/Moin-shadab/Text_To_Hand-Writing",
-        github: "https://github.com/Moin-shadab/Text_To_Hand-Writing"
-      },
-      {
-        id: "proj-7",
-        title: "Interactive Birthday Wish UI",
-        icon: "🎂",
-        category: "Creative",
-        featured: false,
-        description: "Vibrant interactive celebration experience featuring canvas particle physics, confetti triggers, audio playback, and custom dynamic greeting elements.",
-        tags: ["HTML5 Canvas", "Particles", "Audio FX", "CSS Animations"],
-        link: "https://moin-shadab.github.io/girlfriend-friend-birthday-wish/",
-        github: "https://github.com/Moin-shadab/girlfriend-friend-birthday-wish"
       }
     ],
     skills: [
@@ -218,156 +206,417 @@
         ]
       }
     ],
+    story: {
+      headline: "The Blueprint",
+      alternativeHeadline: "From Industrial Automation to Ground-Up Backend Protocol Engines",
+      timeRange: "2020 — TODAY",
+      lede: "I started where an unhandled condition didn't throw an HTTP 500 error — it caused a pneumatic cylinder in a physical factory line to jam. That discipline in zero-tolerance reliability, deterministic states, and hardware timing shaped my entire approach when stepping into cloud software: building open-source enterprise ERPs, dual-database storage pipelines, and raw IMAP stream socket engines.",
+      chapters: [
+        {
+          id: "plc-2020",
+          year: "2020",
+          when: "Early 2020",
+          title: "The Deterministic Floor",
+          subtitle: "Learning safety interlocking & millisecond scan loops",
+          content: "Before writing high-throughput REST APIs, my engineering sandbox was industrial control. In factory automation, you don't have the luxury of retrying an asynchronous promise if you miss a physical safety barrier. Every line of ladder logic runs in deterministic scan cycles of 5 to 20 milliseconds.",
+          quote: "If a backend controller fails in production, an API returns 500. If an industrial PLC interlock fails, machinery stops or breaks. That standard never left me.",
+          highlight: "Programmed Programmable Logic Controllers (PLCs) with zero-tolerance safety interlocking logic, sensor polling protocols, and discrete hardware registers.",
+          tags: ["PLC Automation", "Deterministic Logic", "Hardware Interfacing", "Safety Loops"]
+        },
+        {
+          id: "bridge-2022",
+          year: "2022",
+          when: "2022",
+          title: "From Relays to Distributed Sockets",
+          subtitle: "Bridging low-level execution with modern software architecture",
+          content: "Transitioning from physical PLC logic to large-scale backend systems felt natural: memory allocation, lock contention, race conditions, and idempotent transactions are the software twins of electrical relays and interlocking switches. I dove deep into C++, Java, and PHP systems programming, obsessed with understanding what happens under the surface of frameworks.",
+          quote: "Frameworks come and go, but protocols, buffer allocation, and atomic transactions remain constant.",
+          highlight: "Mastered concurrency, database indexing internals, TCP/IP packet flows, and foundational Data Structures & Algorithms.",
+          tags: ["C++", "Java", "Computer Science", "TCP/IP Sockets"]
+        },
+        {
+          id: "amd-2023",
+          year: "2023",
+          when: "Early 2023",
+          title: "Advanced Microdevices & The Enterprise Reality",
+          subtitle: "Designing software where inventory mistakes cost millions",
+          content: "Joining Advanced Microdevices Pvt. Ltd. as a backend developer, I took ownership of core enterprise software suites. In an industrial enterprise, inventory isn't a simple counter in a database: items move across multiple physical warehouses, get locked in transit, require GST-compliant invoicing, and integrate with barcode scanners on the factory floor.",
+          quote: "A single race condition in warehouse checkout can corrupt physical stock counts across continents. Pessimistic database locks are non-negotiable.",
+          highlight: "Engineered multi-warehouse inventory systems using row-level pessimistic locking, automated GST ledger calculation engines, and barcode verification pipelines.",
+          tags: ["Advanced Microdevices", "Laravel", "MySQL Transactions", "Warehouse Engine"]
+        },
+        {
+          id: "email-2023",
+          year: "2023",
+          when: "Late 2023",
+          title: "The Dual-DB International Email Engine",
+          subtitle: "Refusing SaaS wrappers: RFC-3501 IMAP sockets + Hybrid Storage",
+          content: "Most web teams that need email capabilities pay for Mailgun, Sendgrid, or third-party wrappers. When tasked with building an internal international email client, I chose to construct it from first principles. I opened raw SSL stream sockets directly to remote IMAP/SMTP servers (`stream_socket_client`), hand-crafted the RFC-3501 state machine, wrote MIME multi-part chunk decoders, and designed a hybrid Dual-Database architecture.",
+          quote: "MySQL manages indexed folder metadata and foreign keys; CouchDB stores unstructured JSON mail payloads and raw document attachments. Fast indexing with infinite document scalability.",
+          highlight: "Built an International Email Client bypassing SaaS dependencies: raw socket streams + MySQL relational indexing + CouchDB NoSQL message documents + Redis background queue workers.",
+          tags: ["IMAP RFC-3501", "Dual-DB", "MySQL + CouchDB", "Raw Sockets", "MIME Parser"]
+        },
+        {
+          id: "mserp-2024",
+          year: "2024",
+          when: "2024",
+          title: "MSERP: Open Source Enterprise ERP",
+          subtitle: "Giving back a production-grade suite with working modules",
+          content: "Commercial ERPs like SAP and Oracle charge exorbitant licensing fees, locking small manufacturing and healthcare businesses out. I architected and open-sourced MSERP — a fully functional, complete enterprise ERP platform featuring multi-warehouse inventory, double-entry GST billing, hospital management (EMR), sales pipelines, and payroll.",
+          quote: "Enterprise software should not be an inaccessible fortress. MSERP proves that clean architecture, deterministic transactions, and modern backends can be completely open.",
+          highlight: "Shipped MSERP on GitHub with complete working modules, test coverage, and documentation for community deployment.",
+          tags: ["MSERP", "Open Source", "GST Billing", "Hospital EMR", "Laravel Enterprise"]
+        },
+        {
+          id: "phonepe-2024",
+          year: "2024",
+          when: "Mid 2024",
+          title: "Payment Sockets & Financial Integrity",
+          subtitle: "Securing high-volume transactions with cryptographic checksums",
+          content: "Integrated Indian PhonePe payment gateway API with strict SHA-256 webhook signature verification, replay attack prevention, and idempotent reconciliation routines. Published public integration reference guides to help fellow engineers handle webhook state machines without leaking transactions.",
+          quote: "When money is moving across wire APIs, assume every network packet can be delayed, duplicated, or spoofed. Verify every checksum at the gate.",
+          highlight: "Architected zero-drop payment processing pipelines with automatic reconciliation and published the open reference guide.",
+          tags: ["PhonePe API", "Cryptographic Signatures", "Webhooks", "Payment Security"]
+        },
+        {
+          id: "now-2026",
+          year: "2026",
+          when: "Present Day",
+          title: "Architecting for Concurrency & Scale",
+          subtitle: "Available for high-impact backend & systems engineering",
+          content: "Today, I continue to push the boundaries of backend engineering — building high-concurrency systems, exploring distributed messaging, and contributing to open-source infrastructure. I bring the rare combination of low-level hardware discipline and high-level enterprise software craftsmanship to every team I join.",
+          quote: "Software is only as good as its failure modes. I build systems designed to stay standing.",
+          highlight: "Actively seeking ambitious backend, infrastructure, and systems engineering roles globally.",
+          tags: ["High Concurrency", "Systems Architecture", "Available for Hire", "Distributed Systems"]
+        }
+      ],
+      faqs: [
+        {
+          q: "Why use a Dual-Database architecture (MySQL + CouchDB) for the email engine?",
+          a: "Relational databases (MySQL) excel at structured queries, foreign keys, unread counts, and folder trees. However, storing varied MIME multipart structures, arbitrary email attachments, and nested JSON payloads in relational tables causes table bloat and schema migration headaches. CouchDB provides document-level JSON storage and revision tracking, while MySQL handles lightning-fast relational queries."
+        },
+        {
+          q: "How does your 2-year background in PLC automation benefit software engineering?",
+          a: "PLC programming teaches zero-tolerance discipline: you cannot afford unhandled edge cases when physical machines are moving. It instills an instinct for deterministic states, race conditions, hardware timeouts, and sensor polling loops — all of which directly translate into building resilient, crash-proof backend systems."
+        },
+        {
+          q: "What makes MSERP different from other open-source ERP projects?",
+          a: "Many open-source ERP templates are shallow starter kits with mock data. MSERP is engineered with production-ready business logic: pessimistic database locks (`lockForUpdate`) for inventory deduction, automatic GST tax tier calculations, and full hospital EMR workflows."
+        },
+        {
+          q: "Are you open to remote or international backend roles?",
+          a: "Yes! I am available for full-time backend engineering, systems architecture, and infrastructure roles with high-impact teams across the globe."
+        }
+      ]
+    },
+    music: [
+      { id: "track-1", title: "Neon Protocol", artist: "Moin Shadab", genre: "Synthwave / Cyber Arp", tempo: 120, rootNote: 220 },
+      { id: "track-2", title: "Deep Socket Stream", artist: "Moin Shadab", genre: "Lo-Fi Buffer Mix", tempo: 95, rootNote: 174.61 },
+      { id: "track-3", title: "Dual-DB Pulse", artist: "Moin Shadab", genre: "Ambient Systems Flow", tempo: 105, rootNote: 196 }
+    ],
+    toolCategories: [
+      {
+        name: "Backend & Core",
+        tools: ["PHP 8.2+", "Laravel 10/11", "Node.js", "C++", "Java", "Python", "REST APIs", "Socket Streams"]
+      },
+      {
+        name: "Databases & Storage",
+        tools: ["MySQL", "MariaDB", "CouchDB (NoSQL)", "Redis", "Dual-DB Engine", "Pessimistic Locks"]
+      },
+      {
+        name: "Protocols & Systems",
+        tools: ["IMAP RFC-3501", "SMTP", "MIME Decoders", "TCP/IP Sockets", "PLC Ladder Logic", "PhonePe API"]
+      },
+      {
+        name: "Infrastructure & Craft",
+        tools: ["Git & GitHub", "Docker", "Linux / Bash", "Web Audio API", "HTML5 Canvas", "Performance Profiling"]
+      }
+    ],
     codeSnippets: [
       {
         title: "MoinShadabSystemArchitecture.php",
         language: "php",
-        code: `<?php\nnamespace Developer\\MoinShadab;\n\n// Complete Systems Architecture & Profile Specification\nclass SystemsArchitect {\n    public string $name = "Moin Shadab";\n    public string $role = "Backend Engineer & Systems Builder";\n    public string $email = "moinshadab.dev@gmail.com";\n    public int $yearsExperience = 3;\n\n    public array $landmarkSystems = [\n        'MSERP' => [\n            'type' => 'Open Source Enterprise ERP',\n            'modules' => ['Inventory', 'GST Billing', 'EMR Hospital', 'CRM', 'Payroll'],\n            'repo' => 'https://github.com/Moin-shadab/MSERP'\n        ],\n        'DualDbEmailEngine' => [\n            'type' => 'International Mail Client',\n            'storage' => 'MySQL (Metadata) + CouchDB (NoSQL Message Documents)',\n            'protocol' => 'Raw Stream Sockets (RFC-3501 IMAP/SMTP)'\n        ]\n    ];\n\n    public function executeCoreStack(): array {\n        return [\n            'Languages' => ['PHP 8+', 'JavaScript (ES6+)', 'C++', 'Java', 'Python'],\n            'Frameworks' => ['Laravel', 'REST APIs', 'Node'],\n            'Databases' => ['MySQL', 'CouchDB', 'Redis'],\n            'Automation' => ['PLC Ladder Logic', 'Safety Interlocks']\n        ];\n    }\n\n    public function getSystemStatus(): string {\n        return "SYSTEM_ONLINE_READY_TO_SHIP_CODE";\n    }\n}`
+        code: "<?php\nnamespace Developer\\MoinShadab;\n\n// Complete Systems Architecture & Profile Specification\nclass SystemsArchitect {\n    public string $name = \"Moin Shadab\";\n    public string $role = \"Backend Engineer & Systems Builder\";\n    public string $email = \"moinshadab.dev@gmail.com\";\n    public int $yearsExperience = 3;\n\n    public array $landmarkSystems = [\n        'MSERP' => [\n            'type' => 'Open Source Enterprise ERP',\n            'modules' => ['Inventory', 'GST Billing', 'EMR Hospital', 'CRM', 'Payroll'],\n            'repo' => 'https://github.com/Moin-shadab/MSERP'\n        ],\n        'DualDbEmailEngine' => [\n            'type' => 'International Mail Client',\n            'storage' => 'MySQL (Metadata) + CouchDB (NoSQL Message Documents)',\n            'protocol' => 'Raw Stream Sockets (RFC-3501 IMAP/SMTP)'\n        ]\n    ];\n\n    public function executeCoreStack(): array {\n        return [\n            'Languages' => ['PHP 8+', 'JavaScript (ES6+)', 'C++', 'Java', 'Python'],\n            'Frameworks' => ['Laravel', 'REST APIs', 'Node'],\n            'Databases' => ['MySQL', 'CouchDB', 'Redis'],\n            'Automation' => ['PLC Ladder Logic', 'Safety Interlocks']\n        ];\n    }\n\n    public function getSystemStatus(): string {\n        return \"SYSTEM_ONLINE_READY_TO_SHIP_CODE\";\n    }\n}"
       },
       {
         title: "imap_socket_parser.php",
         language: "php",
-        code: `<?php\nnamespace App\\Services\\Mail;\n\nclass ImapSocketClient {\n    private $stream;\n    private int $tagCount = 0;\n\n    public function connect(string $host, int $port = 993): bool {\n        $context = stream_context_create(['ssl' => ['verify_peer' => false]]);\n        $this->stream = @stream_socket_client(\n            "ssl://{$host}:{$port}", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context\n        );\n        if (!$this->stream) throw new \\RuntimeException("IMAP socket failed: {$errstr}");\n        return true;\n    }\n\n    public function fetchMessageToCouchDB(string $msgId, \\App\\Services\\CouchDbClient $couch) {\n        $rawPayload = $this->command("FETCH {$msgId} (BODY[])");\n        $parsed = \\App\\Services\\MimeParser::decode($rawPayload);\n        return $couch->insertDocument([\n            'msg_id' => $msgId,\n            'headers' => $parsed['headers'],\n            'html_body' => $parsed['html'],\n            'plain_body' => $parsed['text'],\n            'attachments' => $parsed['attachments']\n        ]);\n    }\n}`
-      },
-      {
-        title: "MsErpCoreController.php",
-        language: "php",
-        code: `<?php\nnamespace App\\Http\\Controllers\\Api;\n\nuse App\\Models\\Inventory;\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\DB;\n\nclass MsErpCoreController extends Controller {\n    public function deductStock(Request $req) {\n        $validated = $req->validate([\n            'sku' => 'required|string',\n            'qty' => 'required|integer|min:1'\n        ]);\n\n        return DB::transaction(function() use ($validated) {\n            $item = Inventory::where('sku', $validated['sku'])->lockForUpdate()->firstOrFail();\n            if ($item->stock_qty < $validated['qty']) {\n                return response()->json(['error' => 'Insufficient Stock'], 422);\n            }\n            $item->decrement('stock_qty', $validated['qty']);\n            return response()->json(['status' => 'MSERP_SUCCESS', 'remaining' => $item->stock_qty]);\n        });\n    }\n}`
+        code: "<?php\nnamespace App\\Services\\Mail;\n\nclass ImapSocketClient {\n    private $stream;\n    private int $tagCount = 0;\n\n    public function connect(string $host, int $port = 993): bool {\n        $context = stream_context_create(['ssl' => ['verify_peer' => false]]);\n        $this->stream = @stream_socket_client(\n            \"ssl://{$host}:{$port}\", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context\n        );\n        if (!$this->stream) throw new \\RuntimeException(\"IMAP socket failed: {$errstr}\");\n        return true;\n    }\n\n    public function fetchMessageToCouchDB(string $msgId, \\App\\Services\\CouchDbClient $couch) {\n        $rawPayload = $this->command(\"FETCH {$msgId} (BODY[])\");\n        $parsed = \\App\\Services\\MimeParser::decode($rawPayload);\n        return $couch->insertDocument([\n            'msg_id' => $msgId,\n            'headers' => $parsed['headers'],\n            'html_body' => $parsed['html'],\n            'plain_body' => $parsed['text'],\n            'attachments' => $parsed['attachments']\n        ]);\n    }\n}"
       }
     ],
     terminalCommands: {
-      "help": "Available commands:\n  • dino / play - Launch Playable Neo-Brutalist 2D Dino Runner Game!\n  • matrix      - Toggle Live Digital Matrix Rain Effect\n  • cv / ats    - Print plain-text ATS resume for job portals\n  • mserp       - Details on MSERP Open Source ERP\n  • email       - Architecture of Dual DB International Email Client\n  • projects    - List all shipped projects\n  • exp         - Show work experience history\n  • skills      - Display core technical stack\n  • bio         - Print developer manifesto\n  • contact     - Print contact handles & email\n  • stats       - Show live engineering telemetry\n  • sudo hire   - Launch hiring protocol & contact action\n  • clear       - Clear terminal buffer",
+      "help": "Available commands:\n  • cyber       - Switch to Neo-Brutalist Cyber layout\n  • runrob      - Switch to Kinetic Pixel (Rob Aperios style)\n  • story       - Switch to Editorial Memoir (Tejas style)\n  • dino / play - Launch Playable 2D Dino Runner Game\n  • matrix      - Toggle Live Digital Matrix Rain Effect\n  • cv / ats    - Print plain-text ATS resume\n  • mserp       - Details on MSERP Open Source ERP\n  • email       - Architecture of Dual DB Email Client\n  • projects    - List all shipped systems\n  • exp         - Show work experience history\n  • skills      - Display technical stack\n  • bio         - Print developer manifesto\n  • contact     - Print contact handles\n  • sudo hire   - Launch direct hiring protocol\n  • clear       - Clear terminal buffer",
       "dino": "🎮 LAUNCHING PLAYABLE DINO RUNNER GAME...",
       "matrix": "🟢 TOGGLING MATRIX DIGITAL RAIN EFFECT...",
-      "cv": "MOIN SHADAB — BACKEND DEVELOPER & SYSTEMS BUILDER\nEmail: moinshadab.dev@gmail.com | Phone/India | GitHub: github.com/Moin-shadab | LinkedIn: linkedin.com/in/moin-shadab-8a491b1b1/\n\nPROFESSIONAL SUMMARY:\nBackend Developer with 3+ years of experience building high-concurrency enterprise platforms and protocol engines. Creator of MSERP (open-source ERP) and a Dual-DB International Email Client (MySQL + CouchDB).\n\nEXPERIENCE:\n• Backend Developer @ Advanced Microdevices Pvt. Ltd. (2023 - Present)\n  - Engineered ERP modules, hospital suites, barcode inventory tools.\n  - Built Dual-DB Email Client with raw IMAP stream sockets and NoSQL CouchDB storage.\n• PLC Programmer @ Industrial Automation (2020 - 2022)\n  - Built zero-tolerance safety interlocking logic for manufacturing plants.",
-      "ats": "MOIN SHADAB ATS RESUME SUMMARY:\nCore Stack: PHP 8+, Laravel, MySQL, CouchDB, Redis, JavaScript, C++, IMAP RFC-3501, REST APIs, PhonePe API.\nKey Landmark Systems: MSERP (Open Source ERP), Dual-DB International Email Engine.\nStatus: Ready to ship high-impact backend code.",
-      "mserp": "MSERP — Open Source Enterprise ERP\nGitHub: https://github.com/Moin-shadab/MSERP\nModules: Inventory, GST Billing & Accounting, Hospital Suite, CRM, Payroll",
-      "email": "Dual DB International Email Client\nArchitecture: MySQL (relational indexing, folders) + CouchDB (NoSQL mail documents, MIME)\nSockets: Direct IMAP/SMTP raw stream sockets (RFC-3501 compliance)",
-      "bio": "Moin Shadab — Backend Developer & Systems Builder\n3+ years architecting enterprise software, creator of MSERP and ground-up Dual-DB International Email Client. Low-level PLC industrial discipline.",
-      "contact": "Email: moinshadab.dev@gmail.com\nGitHub: https://github.com/Moin-shadab\nLinkedIn: https://www.linkedin.com/in/moin-shadab-8a491b1b1/\nStatus: Available for backend opportunities",
-      "sudo hire": ">>> ACCESS GRANTED <<<\nExecuting hiring protocol...\nOpening direct communication path to moinshadab.dev@gmail.com!\nStatus: READY TO SHIP CODE"
+      "cyber": "⚡ SWITCHING TO NEO-BRUTALIST CYBER LAYOUT...",
+      "runrob": "⬛ SWITCHING TO KINETIC PIXEL LAYOUT...",
+      "story": "📖 SWITCHING TO EDITORIAL STORY MEMOIR LAYOUT...",
+      "cv": "MOIN SHADAB — BACKEND DEVELOPER & SYSTEMS BUILDER\nEmail: moinshadab.dev@gmail.com | India | GitHub: github.com/Moin-shadab | LinkedIn: linkedin.com/in/moin-shadab-8a491b1b1/\n\nPROFESSIONAL SUMMARY:\nBackend Developer with 3+ years experience building high-concurrency enterprise platforms and protocol engines. Creator of MSERP (open-source ERP) and a Dual-DB International Email Client (MySQL + CouchDB).\n\nEXPERIENCE:\n• Backend Developer @ Advanced Microdevices Pvt. Ltd. (2023 - Present)\n  - Engineered ERP modules, hospital suites, barcode inventory tools.\n  - Built Dual-DB Email Client with raw IMAP stream sockets and NoSQL CouchDB storage.\n• PLC Programmer @ Industrial Automation (2020 - 2022)\n  - Built zero-tolerance safety interlocking logic for manufacturing plants."
     }
   };
 
-  // ─── 2. DATA INITIALIZATION ─────────────────────────────────────────────
-  async function initData() {
-    const local = localStorage.getItem('ms_portfolio_data');
-    if (local) {
-      try {
-        portfolioData = JSON.parse(local);
-        renderAll();
-        return;
-      } catch (e) {
-        // Fallback silently
-      }
-    }
-
-    if (window.location.protocol === 'file:' || !window.location.protocol.startsWith('http')) {
-      portfolioData = defaultDataset;
-      renderAll();
-      return;
-    }
-
+  // ─── 2. INITIALIZATION & DATA LOADING ──────────────────────────────────
+  async function initApplication() {
     try {
       const res = await fetch('./data/portfolio-data.json');
       if (res.ok) {
         portfolioData = await res.json();
       } else {
-        portfolioData = defaultDataset;
+        portfolioData = fallbackData;
       }
-    } catch (err) {
-      portfolioData = defaultDataset;
+    } catch (e) {
+      console.warn('Using local fallback dataset:', e);
+      portfolioData = fallbackData;
     }
 
-    renderAll();
-  }
-
-  // ─── 3. DOM RENDERERS ───────────────────────────────────────────────────
-  function renderAll() {
-    if (!portfolioData) return;
-    renderProfileInfo();
-    renderHeroCodeViewer();
-    renderBentoProjects();
-    renderTimeline();
-    renderSkills();
-    renderCodeSandbox();
-    renderArchVisualizer();
-  }
-
-  function renderProfileInfo() {
-    const p = portfolioData.profile;
-    const nameEl = document.getElementById('profile-name');
-    const taglineEl = document.getElementById('profile-tagline');
-    const bioEl = document.getElementById('profile-bio');
-    const availEl = document.getElementById('profile-availability');
-
-    if (nameEl) nameEl.textContent = p.name.toUpperCase();
-    if (taglineEl) taglineEl.innerHTML = `Backend Developer &amp; <strong>${(p.role || '').split('& ')[1] || 'Systems Builder'}</strong>`;
-    if (bioEl) bioEl.textContent = p.bio;
-    if (availEl) availEl.textContent = p.availability;
-  }
-
-  function renderHeroCodeViewer() {
-    const lineNumsEl = document.getElementById('hero-line-numbers');
-    const textEl = document.getElementById('hero-code-text');
-    const copyBtn = document.getElementById('copy-hero-code-btn');
-
-    if (!textEl || !portfolioData.codeSnippets) return;
-
-    const mainSnippet = portfolioData.codeSnippets[0] ? portfolioData.codeSnippets[0].code : '';
-    const lines = mainSnippet.split('\n');
-
-    if (lineNumsEl) {
-      lineNumsEl.innerHTML = lines.map((_, i) => i + 1).join('<br />');
+    // Determine initial design
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryDesign = urlParams.get('design');
+    const savedDesign = localStorage.getItem('ms_active_design');
+    
+    if (queryDesign && ['cyber', 'runrob', 'story'].includes(queryDesign)) {
+      activeDesign = queryDesign;
+    } else if (savedDesign && ['cyber', 'runrob', 'story'].includes(savedDesign)) {
+      activeDesign = savedDesign;
+    } else {
+      activeDesign = 'cyber';
     }
 
-    let highlighted = mainSnippet
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/(\/\/.+)/g, '<span class="php-comment">$1</span>')
-      .replace(/\b(class|namespace|public|string|int|array|function|return|new)\b/g, '<span class="php-kw">$1</span>')
-      .replace(/(\$[a-zA-Z0-9_]+)/g, '<span class="php-var">$1</span>')
-      .replace(/("[^"]*")/g, '<span class="php-str">$1</span>')
-      .replace(/('[^']*')/g, '<span class="php-str">$1</span>');
+    // Setup Components
+    setupDesignSwitcher();
+    setupSpatialCursor();
+    setupMatrixRain();
+    setupDinoGame();
+    setupHackerCLI();
+    setupAdminStudio();
+    setupATSResumeStudio();
 
-    textEl.innerHTML = highlighted;
+    // Render All 3 Views
+    renderCyberView();
+    renderRunRobView();
+    renderStoryView();
 
-    if (copyBtn) {
-      copyBtn.addEventListener('click', () => {
-        playSound('click');
-        navigator.clipboard.writeText(mainSnippet).then(() => {
-          alert('📋 MoinShadabSystemArchitecture.php copied to clipboard!');
-        });
+    // Switch to active design
+    switchDesign(activeDesign, false);
+  }
+
+  // ─── 3. DESIGN SWITCHER ENGINE ──────────────────────────────────────────
+  function setupDesignSwitcher() {
+    const switcherDock = document.getElementById('design-switcher-dock');
+    if (!switcherDock) return;
+
+    switcherDock.querySelectorAll('.switcher-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetDesign = btn.getAttribute('data-design');
+        if (targetDesign && targetDesign !== activeDesign) {
+          triggerPixelTransition(() => {
+            switchDesign(targetDesign, true);
+          });
+        }
+      });
+    });
+
+    const openCvBtn = document.getElementById('switcher-open-cv');
+    if (openCvBtn) {
+      openCvBtn.addEventListener('click', () => {
+        // If on story or runrob, jump to resume section or open CV modal
+        if (activeDesign !== 'cyber') {
+          switchDesign('cyber', true);
+          setTimeout(() => {
+            const resumeEl = document.getElementById('resume');
+            if (resumeEl) resumeEl.scrollIntoView({ behavior: 'smooth' });
+          }, 300);
+        } else {
+          const resumeEl = document.getElementById('resume');
+          if (resumeEl) resumeEl.scrollIntoView({ behavior: 'smooth' });
+        }
       });
     }
   }
 
-  function renderBentoProjects() {
-    const grid = document.getElementById('bento-grid-container');
-    if (!grid || !portfolioData.projects) return;
+  function triggerPixelTransition(callback) {
+    const wipe = document.getElementById('rr-pixel-wipe');
+    if (!wipe) {
+      if (callback) callback();
+      return;
+    }
 
-    const filtered = portfolioData.projects.filter(p => {
-      if (activeProjectFilter === 'All') return true;
-      return p.category === activeProjectFilter;
+    // Populate wipe grid cells if empty
+    if (wipe.children.length === 0) {
+      for (let i = 0; i < 96; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'rr-pixel-cell';
+        cell.style.transitionDelay = `${(i % 12) * 0.02 + Math.floor(i / 12) * 0.025}s`;
+        wipe.appendChild(cell);
+      }
+    }
+
+    wipe.classList.add('active');
+    setTimeout(() => {
+      if (callback) callback();
+      setTimeout(() => {
+        wipe.classList.remove('active');
+      }, 350);
+    }, 280);
+  }
+
+  function switchDesign(designKey, updateUrl = true) {
+    activeDesign = designKey;
+    localStorage.setItem('ms_active_design', designKey);
+
+    document.body.setAttribute('data-active-design', designKey);
+
+    // Update views visibility
+    document.querySelectorAll('.design-view').forEach(view => {
+      view.classList.remove('active');
     });
 
-    grid.innerHTML = filtered.map(p => {
-      const colClass = p.featured ? 'col-span-8' : 'col-span-4';
-      return `
-        <div class="bento-card ${colClass} spatial-card" data-category="${p.category}">
-          <div class="bento-icon">${p.icon || '🚀'}</div>
-          <h3 class="bento-title">${p.title}</h3>
-          <p class="bento-desc">${p.description}</p>
-          <div class="clay-tags">
-            ${(p.tags || []).map(t => `<span class="clay-tag">${t}</span>`).join('')}
-          </div>
-          <a href="${p.link}" target="_blank" class="bento-link">
-            Explore Project ↗
-          </a>
-        </div>
-      `;
-    }).join('');
+    const targetView = document.getElementById(`view-${designKey}`);
+    if (targetView) {
+      targetView.classList.add('active');
+    }
 
-    initSpatialTilt();
+    // Update switcher buttons
+    document.querySelectorAll('.switcher-btn').forEach(btn => {
+      if (btn.getAttribute('data-design') === designKey) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Update URL query param cleanly without reloading
+    if (updateUrl && window.history.replaceState) {
+      const url = new URL(window.location);
+      url.searchParams.set('design', designKey);
+      window.history.replaceState({}, '', url);
+    }
+
+    // Re-initialize specific view components if needed
+    if (designKey === 'runrob') {
+      initRunRobCanvas();
+    } else if (designKey === 'story') {
+      updateStoryScrollProgress();
+    }
+
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  // ─── 4. RENDER DESIGN 1: NEO-BRUTALIST CYBER ────────────────────────────
+  function renderCyberView() {
+    const p = portfolioData.profile;
+    if (!p) return;
+
+    // Profile elements
+    const nameEl = document.getElementById('profile-name');
+    if (nameEl) nameEl.textContent = p.name.toUpperCase();
+
+    const taglineEl = document.getElementById('profile-tagline');
+    if (taglineEl) taglineEl.innerHTML = `Backend Engineer &amp; <strong>${p.role}</strong>`;
+
+    const bioEl = document.getElementById('profile-bio');
+    if (bioEl) bioEl.textContent = p.bio;
+
+    const availEl = document.getElementById('profile-availability');
+    if (availEl) availEl.textContent = p.availability;
+
+    // Hero Code Viewer
+    renderHeroCodeCard();
+
+    // Architecture Visualizer
+    renderArchVisualizer(activeArchTab);
+    document.querySelectorAll('.arch-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.arch-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeArchTab = btn.getAttribute('data-arch');
+        renderArchVisualizer(activeArchTab);
+      });
+    });
+
+    // Bento Grid Projects
+    renderBentoGrid(activeProjectFilter);
+    document.querySelectorAll('.project-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.project-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeProjectFilter = btn.getAttribute('data-filter');
+        renderBentoGrid(activeProjectFilter);
+      });
+    });
+
+    // Timeline Experience
+    renderTimeline();
+
+    // Skills Grid
+    renderSkills();
+
+    // Code Sandbox
+    renderCodeSandbox();
+  }
+
+  function renderHeroCodeCard() {
+    const snippet = portfolioData.codeSnippets && portfolioData.codeSnippets[0];
+    if (!snippet) return;
+
+    const lineNumsEl = document.getElementById('hero-line-numbers');
+    const codeTextEl = document.getElementById('hero-code-text');
+    if (!lineNumsEl || !codeTextEl) return;
+
+    const lines = snippet.code.split('\n');
+    lineNumsEl.innerHTML = lines.map((_, i) => `<span>${i + 1}</span>`).join('');
+    codeTextEl.textContent = snippet.code;
+
+    const copyBtn = document.getElementById('copy-hero-code-btn');
+    if (copyBtn) {
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(snippet.code);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => copyBtn.textContent = 'Copy Code', 2000);
+      };
+    }
+  }
+
+  function renderArchVisualizer(type) {
+    const container = document.getElementById('arch-flow-content');
+    if (!container) return;
+
+    const items = archFlows[type] || archFlows.email;
+    container.innerHTML = items.map((step, idx) => `
+      <div class="arch-node">
+        <div class="arch-node-num">0${idx + 1}</div>
+        <div class="arch-node-title">${step.title}</div>
+        <div class="arch-node-sub">${step.sub}</div>
+      </div>
+      ${idx < items.length - 1 ? '<div class="arch-arrow">➔</div>' : ''}
+    `).join('');
+  }
+
+  function renderBentoGrid(filter) {
+    const container = document.getElementById('bento-grid-container');
+    if (!container || !portfolioData.projects) return;
+
+    const filtered = filter === 'All' 
+      ? portfolioData.projects 
+      : portfolioData.projects.filter(p => p.category.toLowerCase() === filter.toLowerCase());
+
+    container.innerHTML = filtered.map(proj => `
+      <div class="bento-card ${proj.featured ? 'featured' : ''}">
+        <div class="bento-card-top">
+          <div class="bento-icon">${proj.icon || '⚡'}</div>
+          <span class="bento-badge">${proj.category}</span>
+        </div>
+        <h3 class="bento-title">${proj.title}</h3>
+        <p class="bento-desc">${proj.description}</p>
+        <div class="clay-tags" style="margin-bottom: 20px;">
+          ${(proj.tags || []).map(t => `<span class="clay-tag">${t}</span>`).join('')}
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: auto;">
+          ${proj.link ? `<a href="${proj.link}" target="_blank" class="btn-brutal" style="flex:1; text-align:center; padding: 8px 12px; font-size: 0.8rem;">Explore Live ↗</a>` : ''}
+          ${proj.github ? `<a href="${proj.github}" target="_blank" class="btn-secondary" style="padding: 8px 14px; font-size: 0.8rem;">🐙 Code</a>` : ''}
+        </div>
+      </div>
+    `).join('');
   }
 
   function renderTimeline() {
@@ -377,21 +626,17 @@
     container.innerHTML = portfolioData.experiences.map(exp => `
       <div class="timeline-item">
         <div class="timeline-dot"></div>
-        <div class="timeline-content spatial-card">
+        <div class="timeline-content">
           <div class="timeline-header">
             <div>
-              <div class="timeline-role">${exp.role}</div>
-              <div class="timeline-co">${exp.company}</div>
+              <h3 class="timeline-role">${exp.role}</h3>
+              <div class="timeline-company">${exp.company} • ${exp.location}</div>
             </div>
-            <span class="timeline-period">${exp.period}</span>
+            <span class="timeline-badge">${exp.badge || 'Verified'}</span>
           </div>
+          <div class="timeline-period">${exp.period}</div>
           <p class="timeline-desc">${exp.description}</p>
-          ${exp.highlight ? `
-            <div class="timeline-highlight">
-              <strong>🏆 Key Engineering Achievement</strong>
-              ${exp.highlight}
-            </div>
-          ` : ''}
+          ${exp.highlight ? `<div class="timeline-highlight"><strong>Key Landmark:</strong> ${exp.highlight}</div>` : ''}
           <div class="clay-tags">
             ${(exp.tags || []).map(t => `<span class="clay-tag">${t}</span>`).join('')}
           </div>
@@ -405,22 +650,24 @@
     if (!container || !portfolioData.skills) return;
 
     container.innerHTML = portfolioData.skills.map(cat => `
-      <div class="skill-category-card spatial-card">
-        <div class="sc-header">
-          <span class="sc-icon">${cat.icon || '⚙️'}</span>
-          <h3 class="sc-title">${cat.category}</h3>
+      <div class="skill-category-card">
+        <div class="skill-cat-header">
+          <span class="skill-cat-icon">${cat.icon}</span>
+          <h3 class="skill-cat-title">${cat.category}</h3>
         </div>
-        ${cat.items.map(item => `
-          <div class="skill-row">
-            <div class="skill-info">
-              <span>${item.name}</span>
-              <span>${item.level}%</span>
+        <div class="skill-bars">
+          ${cat.items.map(item => `
+            <div class="skill-bar-group">
+              <div class="skill-bar-info">
+                <span>${item.name}</span>
+                <span>${item.level}%</span>
+              </div>
+              <div class="skill-bar-track">
+                <div class="skill-bar-fill" style="width: ${item.level}%; background: ${item.color};"></div>
+              </div>
             </div>
-            <div class="skill-track">
-              <div class="skill-bar" style="width: ${item.level}%; background: ${item.color || 'var(--neon-cyan)'};"></div>
-            </div>
-          </div>
-        `).join('')}
+          `).join('')}
+        </div>
       </div>
     `).join('');
   }
@@ -430,254 +677,432 @@
     const contentEl = document.getElementById('sandbox-code-content');
     if (!tabsContainer || !contentEl || !portfolioData.codeSnippets) return;
 
-    const snippets = portfolioData.codeSnippets;
-    tabsContainer.innerHTML = snippets.map((s, idx) => `
-      <button class="sandbox-tab ${idx === 0 ? 'active' : ''}" data-index="${idx}">
+    tabsContainer.innerHTML = portfolioData.codeSnippets.map((s, idx) => `
+      <button class="sandbox-tab-btn ${idx === 0 ? 'active' : ''}" data-index="${idx}">
         ${s.title}
       </button>
     `).join('');
 
-    contentEl.textContent = snippets[0] ? snippets[0].code : '';
+    contentEl.textContent = portfolioData.codeSnippets[0].code;
 
-    tabsContainer.querySelectorAll('.sandbox-tab').forEach(btn => {
+    tabsContainer.querySelectorAll('.sandbox-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        playSound('click');
-        tabsContainer.querySelectorAll('.sandbox-tab').forEach(t => t.classList.remove('active'));
+        tabsContainer.querySelectorAll('.sandbox-tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const idx = parseInt(btn.dataset.index);
-        contentEl.textContent = snippets[idx] ? snippets[idx].code : '';
+        const idx = parseInt(btn.getAttribute('data-index'), 10);
+        contentEl.textContent = portfolioData.codeSnippets[idx].code;
       });
     });
   }
 
-  function renderArchVisualizer() {
-    const container = document.getElementById('arch-flow-content');
-    if (!container) return;
+  // ─── 5. RENDER DESIGN 2: KINETIC BRUTALISM & PIXEL FLOW ─────────────────
+  function renderRunRobView() {
+    // Flagship projects
+    const flagshipGrid = document.getElementById('rr-flagship-grid');
+    if (flagshipGrid && portfolioData.projects) {
+      const featured = portfolioData.projects.filter(p => p.featured);
+      flagshipGrid.innerHTML = featured.map(p => `
+        <div class="rr-project-card">
+          <div class="rr-project-header">
+            <div class="rr-project-icon-box">${p.icon || '⚙️'}</div>
+            <span class="rr-project-badge">FLAGSHIP ARCHITECTURE</span>
+          </div>
+          <div class="rr-project-body">
+            <h3 class="rr-project-title">${p.title}</h3>
+            <p class="rr-project-desc">${p.description}</p>
+            <div class="rr-project-tags">
+              ${(p.tags || []).map(t => `<span class="rr-tag-pill">${t}</span>`).join('')}
+            </div>
+            <div class="rr-project-footer">
+              ${p.link ? `<a href="${p.link}" target="_blank" class="rr-btn-primary">Explore Architecture ↗</a>` : ''}
+              ${p.github ? `<a href="${p.github}" target="_blank" class="rr-btn-ghost">GitHub Code</a>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
 
-    const flow = archFlows[activeArchTab] || archFlows.email;
-    container.innerHTML = flow.map((node, i) => `
-      <div class="arch-node">
-        <div class="arch-node-title">${node.title}</div>
-        <div class="arch-node-sub">${node.sub}</div>
-      </div>
-      ${i < flow.length - 1 ? `<div class="arch-arrow">➔</div>` : ''}
-    `).join('');
+    // Tools matrix
+    const toolsGrid = document.getElementById('rr-tools-grid-container');
+    if (toolsGrid && portfolioData.toolCategories) {
+      toolsGrid.innerHTML = portfolioData.toolCategories.map(group => `
+        <div class="rr-tool-group">
+          <h3 class="rr-tool-group-title">
+            <span class="rr-live-indicator" style="width:5px;height:5px;"></span>
+            <span>${group.name}</span>
+          </h3>
+          <div class="rr-tool-list">
+            ${group.tools.map(tool => `<span class="rr-tool-chip">${tool}</span>`).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Selected Work Bento
+    const projectsGrid = document.getElementById('rr-projects-grid-container');
+    if (projectsGrid && portfolioData.projects) {
+      projectsGrid.innerHTML = portfolioData.projects.map(p => `
+        <div class="rr-project-card">
+          <div class="rr-project-header">
+            <div class="rr-project-icon-box">${p.icon || '🚀'}</div>
+            <span class="rr-tag-pill">${p.category}</span>
+          </div>
+          <div class="rr-project-body">
+            <h3 class="rr-project-title">${p.title}</h3>
+            <p class="rr-project-desc">${p.description}</p>
+            <div class="rr-project-tags">
+              ${(p.tags || []).map(t => `<span class="rr-tag-pill">${t}</span>`).join('')}
+            </div>
+            <div class="rr-project-footer">
+              ${p.link ? `<a href="${p.link}" target="_blank" class="rr-btn-primary">Launch Project ↗</a>` : ''}
+              ${p.github ? `<a href="${p.github}" target="_blank" class="rr-btn-ghost">Source</a>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Experience List
+    const expList = document.getElementById('rr-exp-list-container');
+    if (expList && portfolioData.experiences) {
+      expList.innerHTML = portfolioData.experiences.map(exp => `
+        <div class="rr-exp-item">
+          <div>
+            <div class="rr-exp-period">${exp.period}</div>
+            <div class="rr-exp-company">${exp.company}</div>
+            <div class="rr-exp-role">${exp.role} • ${exp.location}</div>
+          </div>
+          <div>
+            <p class="rr-exp-desc">${exp.description}</p>
+            ${exp.highlight ? `<div class="rr-exp-highlight">${exp.highlight}</div>` : ''}
+            <div class="rr-project-tags">
+              ${(exp.tags || []).map(t => `<span class="rr-tag-pill">${t}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Ambient Audio Synthesizer Setup
+    setupAudioSynth();
   }
 
-  function initArchVisualizer() {
-    const tabBtns = document.querySelectorAll('.arch-tab-btn');
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        playSound('click');
-        tabBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeArchTab = btn.dataset.arch || 'email';
-        renderArchVisualizer();
+  // ─── 6. RENDER DESIGN 3: EDITORIAL MEMOIR & TIMELINE (TEJ.AS) ───────────
+  function renderStoryView() {
+    const s = portfolioData.story;
+    if (!s) return;
+
+    // Header
+    const rangeEl = document.getElementById('story-header-range');
+    if (rangeEl) rangeEl.textContent = s.timeRange || '2020 — TODAY';
+
+    const titleEl = document.getElementById('story-header-title');
+    if (titleEl) titleEl.textContent = s.headline || 'The Blueprint';
+
+    const subEl = document.getElementById('story-header-subtitle');
+    if (subEl) subEl.textContent = s.alternativeHeadline || '';
+
+    const ledeEl = document.getElementById('story-header-lede');
+    if (ledeEl) ledeEl.textContent = s.lede || '';
+
+    // Timeline Rail navigation
+    const railList = document.getElementById('story-rail-list');
+    if (railList && s.chapters) {
+      railList.innerHTML = s.chapters.map((chap, idx) => `
+        <li class="story-rail-item ${idx === 0 ? 'active' : ''}" data-target="${chap.id}">
+          <a href="#${chap.id}" class="story-rail-tick">
+            <span class="story-rail-node"></span>
+            <span class="story-rail-year">${chap.year}</span>
+            <span class="story-rail-chapter-title">${chap.title}</span>
+          </a>
+        </li>
+      `).join('');
+    }
+
+    // Chapter Narrative Content Stream
+    const chaptersStream = document.getElementById('story-chapters-stream');
+    if (chaptersStream && s.chapters) {
+      chaptersStream.innerHTML = s.chapters.map((chap, idx) => `
+        <article class="story-chapter" id="${chap.id}">
+          <div class="story-chapter-meta">
+            <span class="story-chapter-num">CHAPTER 0${idx + 1}</span>
+            <span class="story-chapter-date">${chap.when || chap.year}</span>
+          </div>
+          <h2 class="story-chapter-title">${chap.title}</h2>
+          <div class="story-chapter-subtitle">${chap.subtitle}</div>
+          
+          <div class="story-chapter-body story-dropcap">
+            ${chap.content}
+          </div>
+
+          ${chap.quote ? `<blockquote class="story-quote-block">“${chap.quote}”</blockquote>` : ''}
+
+          ${chap.highlight ? `<div class="story-highlight-pill"><strong>System Milestone:</strong> ${chap.highlight}</div>` : ''}
+
+          <div class="story-tags-row">
+            ${(chap.tags || []).map(t => `<span class="story-tag">${t}</span>`).join('')}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // FAQs Accordion
+    const faqList = document.getElementById('story-faq-list');
+    if (faqList && s.faqs) {
+      faqList.innerHTML = s.faqs.map(faq => `
+        <div class="story-faq-item">
+          <button type="button" class="story-faq-question">
+            <span>${faq.q}</span>
+            <span class="story-faq-chevron">▼</span>
+          </button>
+          <div class="story-faq-answer">
+            <p>${faq.a}</p>
+          </div>
+        </div>
+      `).join('');
+
+      faqList.querySelectorAll('.story-faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const parent = btn.parentElement;
+          parent.classList.toggle('open');
+        });
       });
-    });
-  }
-
-  // ─── 4. INTERACTIVE DINO RUNNER 2D GAME ENGINE ─────────────────────────
-  function initDinoGame() {
-    const modal = document.getElementById('dino-modal');
-    const closeBtn = document.getElementById('dino-close');
-    const restartBtn = document.getElementById('dino-restart-btn');
-    const canvas = document.getElementById('dino-canvas');
-    const scoreEl = document.getElementById('dino-score');
-    const hiScoreEl = document.getElementById('dino-hiscore');
-    const heroDinoBtn = document.getElementById('hero-dino-btn');
-
-    if (!canvas || !modal) return;
-    const ctx = canvas.getContext('2d');
-
-    if (hiScoreEl) hiScoreEl.textContent = dinoHiScore;
-
-    const dino = {
-      x: 50,
-      y: 150,
-      width: 24,
-      height: 32,
-      vy: 0,
-      gravity: 0.7,
-      jumpPower: -12,
-      isGrounded: true
-    };
-
-    let obstacles = [];
-    let frame = 0;
-    let gameSpeed = 5;
-
-    function openDinoModal() {
-      playSound('click');
-      modal.classList.add('active');
-      resetGame();
     }
 
-    if (heroDinoBtn) heroDinoBtn.addEventListener('click', openDinoModal);
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        playSound('click');
-        modal.classList.remove('active');
-        dinoGameRunning = false;
-        if (dinoAnimationId) cancelAnimationFrame(dinoAnimationId);
-      });
-    }
+    // Story Theme Toggle (Dark/Light)
+    const storyThemeBtn = document.getElementById('story-theme-toggle');
+    const viewStory = document.getElementById('view-story');
+    if (storyThemeBtn && viewStory) {
+      storyThemeBtn.addEventListener('click', () => {
+        const currentTheme = viewStory.getAttribute('data-story-theme') || 'dark';
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        viewStory.setAttribute('data-story-theme', nextTheme);
 
-    if (restartBtn) {
-      restartBtn.addEventListener('click', () => {
-        playSound('click');
-        resetGame();
-      });
-    }
-
-    function jump() {
-      if (dino.isGrounded && dinoGameRunning) {
-        dino.vy = dino.jumpPower;
-        dino.isGrounded = false;
-        playSound('key');
-      }
-    }
-
-    window.addEventListener('keydown', (e) => {
-      if ((e.code === 'Space' || e.code === 'ArrowUp') && modal.classList.contains('active')) {
-        e.preventDefault();
-        jump();
-      }
-    });
-
-    canvas.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      jump();
-    });
-
-    function resetGame() {
-      dino.y = 150;
-      dino.vy = 0;
-      dino.isGrounded = true;
-      obstacles = [];
-      dinoScore = 0;
-      frame = 0;
-      gameSpeed = 5;
-      dinoGameRunning = true;
-      if (scoreEl) scoreEl.textContent = '0';
-      if (dinoAnimationId) cancelAnimationFrame(dinoAnimationId);
-      gameLoop();
-    }
-
-    function gameLoop() {
-      if (!dinoGameRunning) return;
-      frame++;
-
-      ctx.fillStyle = '#11141f';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Ground Line
-      ctx.strokeStyle = '#00E5FF';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(0, 182);
-      ctx.lineTo(canvas.width, 182);
-      ctx.stroke();
-
-      // Update Dino Physics
-      dino.vy += dino.gravity;
-      dino.y += dino.vy;
-      if (dino.y >= 150) {
-        dino.y = 150;
-        dino.vy = 0;
-        dino.isGrounded = true;
-      }
-
-      // Draw Dino
-      ctx.fillStyle = '#FFDE59';
-      ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
-      ctx.strokeStyle = '#000000';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(dino.x, dino.y, dino.width, dino.height);
-
-      // Dino Eye
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(dino.x + 14, dino.y + 6, 4, 4);
-
-      // Spawn Obstacles
-      if (frame % 80 === 0) {
-        const height = Math.floor(Math.random() * 20) + 20;
-        obstacles.push({ x: canvas.width, width: 18, height });
-      }
-
-      for (let i = 0; i < obstacles.length; i++) {
-        const obs = obstacles[i];
-        obs.x -= gameSpeed;
-
-        ctx.fillStyle = '#FF2A85';
-        ctx.fillRect(obs.x, 182 - obs.height, obs.width, obs.height);
-        ctx.strokeStyle = '#000000';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(obs.x, 182 - obs.height, obs.width, obs.height);
-
-        // Collision Detection
-        if (
-          dino.x < obs.x + obs.width &&
-          dino.x + dino.width > obs.x &&
-          dino.y < 182 &&
-          dino.y + dino.height > 182 - obs.height
-        ) {
-          dinoGameRunning = false;
-          playSound('click');
-          if (dinoScore > dinoHiScore) {
-            dinoHiScore = dinoScore;
-            localStorage.setItem('ms_dino_hiscore', dinoHiScore);
-            if (hiScoreEl) hiScoreEl.textContent = dinoHiScore;
-          }
-          ctx.fillStyle = '#FF2A85';
-          ctx.font = '24px "Fira Code", monospace';
-          ctx.fillText('GAME OVER!', canvas.width / 2 - 70, canvas.height / 2);
-          return;
+        const iconEl = document.getElementById('story-theme-icon');
+        const labelEl = document.getElementById('story-theme-label');
+        if (iconEl && labelEl) {
+          iconEl.textContent = nextTheme === 'dark' ? '☀️' : '🌙';
+          labelEl.textContent = nextTheme === 'dark' ? 'Light' : 'Dark';
         }
-      }
+      });
+    }
 
-      if (obstacles.length > 0 && obstacles[0].x < -20) {
-        obstacles.shift();
-        dinoScore += 10;
-        if (scoreEl) scoreEl.textContent = dinoScore;
-      }
+    // Story Scroll Progress & Timeline Rail Spy
+    window.addEventListener('scroll', updateStoryScrollProgress, { passive: true });
+  }
 
-      dinoAnimationId = requestAnimationFrame(gameLoop);
+  function updateStoryScrollProgress() {
+    if (activeDesign !== 'story') return;
+
+    const progressBar = document.getElementById('story-progress-bar');
+    const railProgress = document.getElementById('story-rail-progress-line');
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+    if (docHeight > 0) {
+      const scrollPercent = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100));
+      if (progressBar) progressBar.style.width = `${scrollPercent}%`;
+      if (railProgress) railProgress.style.height = `${scrollPercent}%`;
+    }
+
+    // Active Chapter Spy
+    const chapters = document.querySelectorAll('.story-chapter');
+    let activeId = '';
+    chapters.forEach(ch => {
+      const rect = ch.getBoundingClientRect();
+      if (rect.top <= 200 && rect.bottom >= 100) {
+        activeId = ch.getAttribute('id');
+      }
+    });
+
+    if (activeId) {
+      document.querySelectorAll('.story-rail-item').forEach(item => {
+        if (item.getAttribute('data-target') === activeId) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
     }
   }
 
-  // ─── 5. MATRIX DIGITAL RAIN ENGINE ─────────────────────────────────────
-  function initMatrixRain() {
+  // ─── 7. AMBIENT WEB AUDIO SYNTHESIZER (ZERO COPYRIGHT AUDIO ENGINE) ──────
+  function setupAudioSynth() {
+    const playBtn = document.getElementById('rr-audio-play-btn');
+    if (!playBtn) return;
+
+    playBtn.onclick = () => {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      if (isAudioPlaying) {
+        stopAudioSynth();
+        playBtn.textContent = '▶';
+        playBtn.title = 'Play Ambient Sound';
+      } else {
+        startAudioSynth();
+        playBtn.textContent = '❚❚';
+        playBtn.title = 'Pause Ambient Sound';
+      }
+    };
+  }
+
+  function startAudioSynth() {
+    isAudioPlaying = true;
+    const sticks = document.querySelectorAll('.rr-audio-bar-stick');
+    sticks.forEach(s => s.classList.add('playing'));
+
+    const chordFreqs = [
+      [220, 261.63, 329.63, 392.00], // Am7
+      [174.61, 220, 261.63, 329.63], // Fmaj7
+      [196.00, 246.94, 293.66, 392.00], // G
+      [164.81, 196.00, 246.94, 293.66]  // Em7
+    ];
+
+    let chordIndex = 0;
+
+    function playChord() {
+      if (!isAudioPlaying || !audioCtx) return;
+
+      const freqs = chordFreqs[chordIndex % chordFreqs.length];
+      chordIndex++;
+
+      freqs.forEach((freq, idx) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+
+        osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(1400, audioCtx.currentTime + 1.5);
+        filter.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 3.8);
+
+        gain.gain.setValueAtTime(0, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 0.8);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3.8);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 4.0);
+      });
+    }
+
+    playChord();
+    audioInterval = setInterval(playChord, 4000);
+  }
+
+  function stopAudioSynth() {
+    isAudioPlaying = false;
+    if (audioInterval) clearInterval(audioInterval);
+    const sticks = document.querySelectorAll('.rr-audio-bar-stick');
+    sticks.forEach(s => s.classList.remove('playing'));
+  }
+
+  // ─── 8. KINETIC CANVAS MORPH VISUALIZER (RUNROB) ─────────────────────────
+  function initRunRobCanvas() {
+    const canvas = document.getElementById('rr-morph-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = canvas.offsetWidth || window.innerWidth;
+    let height = canvas.height = canvas.offsetHeight || 500;
+
+    const cols = 24;
+    const rows = 12;
+    let time = 0;
+
+    function render() {
+      if (activeDesign !== 'runrob') return;
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 1;
+
+      const cellW = width / cols;
+      const cellH = height / rows;
+
+      for (let x = 0; x <= cols; x++) {
+        ctx.beginPath();
+        for (let y = 0; y <= rows; y++) {
+          const wave = Math.sin(x * 0.3 + time) * Math.cos(y * 0.3 + time) * 12;
+          const px = x * cellW;
+          const py = y * cellH + wave;
+
+          if (y === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+
+      time += 0.02;
+      requestAnimationFrame(render);
+    }
+
+    render();
+  }
+
+  // ─── 9. SPATIAL CURSOR ──────────────────────────────────────────────────
+  function setupSpatialCursor() {
+    const cursor = document.getElementById('spatial-cursor');
+    const follower = document.getElementById('spatial-cursor-follower');
+    if (!cursor || !follower) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let followerX = mouseX;
+    let followerY = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+    });
+
+    function animateFollower() {
+      followerX += (mouseX - followerX) * 0.15;
+      followerY += (mouseY - followerY) * 0.15;
+      follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0)`;
+      requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+  }
+
+  // ─── 10. MATRIX DIGITAL RAIN (SHARED) ───────────────────────────────────
+  function setupMatrixRain() {
     const canvas = document.getElementById('matrix-canvas');
     const toggleBtn = document.getElementById('toggle-matrix');
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZMSERPIMAP';
+    const chars = '01{}[]/*+=~_MSERP_IMAP_PHP_SQL';
     const fontSize = 14;
-    const columns = Math.floor(width / fontSize);
-    const drops = [];
-
-    for (let i = 0; i < columns; i++) {
-      drops[i] = Math.floor(Math.random() * -100);
-    }
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array(columns).fill(1);
 
     function drawMatrix() {
       if (!matrixActive) return;
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, width, height);
-
-      ctx.fillStyle = '#00FF66';
-      ctx.font = `${fontSize}px "Fira Code", monospace`;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00ff66';
+      ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
-        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        const text = chars[Math.floor(Math.random() * chars.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
@@ -685,405 +1110,342 @@
       requestAnimationFrame(drawMatrix);
     }
 
-    function toggleMatrix() {
-      matrixActive = !matrixActive;
-      document.body.classList.toggle('matrix-active', matrixActive);
-      if (toggleBtn) toggleBtn.classList.toggle('active', matrixActive);
-      playSound('click');
-      if (matrixActive) drawMatrix();
+    if (toggleBtn) {
+      toggleBtn.onclick = () => {
+        matrixActive = !matrixActive;
+        canvas.style.display = matrixActive ? 'block' : 'none';
+        if (matrixActive) drawMatrix();
+      };
     }
-
-    if (toggleBtn) toggleBtn.addEventListener('click', toggleMatrix);
-    window.toggleMatrixRain = toggleMatrix;
-
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
   }
 
-  // ─── 6. INTERACTIVE ATS CV RESUME VIEWER ENGINE ─────────────────────────
-  function initAtsCvViewer() {
-    const zoomTarget = document.getElementById('cv-zoom-target');
-    const zoomLevelEl = document.getElementById('cv-zoom-level');
-    const zoomInBtn = document.getElementById('cv-zoom-in');
-    const zoomOutBtn = document.getElementById('cv-zoom-out');
-    const zoomResetBtn = document.getElementById('cv-zoom-reset');
-    const copyTextBtn = document.getElementById('cv-copy-text');
-    const downloadPdfBtn = document.getElementById('cv-download-pdf');
-    const fullscreenBtn = document.getElementById('cv-fullscreen');
-    const cvDoc = document.getElementById('ats-cv-document');
+  // ─── 11. PLAYABLE DINO RUNNER GAME (SHARED) ─────────────────────────────
+  function setupDinoGame() {
+    const dinoBtn = document.getElementById('hero-dino-btn');
+    const dinoModal = document.getElementById('dino-modal');
+    const dinoClose = document.getElementById('dino-close');
+    const restartBtn = document.getElementById('dino-restart-btn');
+    const canvas = document.getElementById('dino-canvas');
+    if (!dinoModal || !canvas) return;
 
-    if (!zoomTarget || !zoomLevelEl) return;
+    const ctx = canvas.getContext('2d');
+    let dinoY = 140;
+    let dinoVY = 0;
+    let isJumping = false;
+    let obstacles = [];
+    let gameLoopId = null;
 
-    function applyZoom(newZoom) {
-      currentZoom = Math.min(Math.max(newZoom, 0.6), 1.5);
-      zoomTarget.style.transform = `scale(${currentZoom})`;
-      zoomLevelEl.textContent = `${Math.round(currentZoom * 100)}%`;
-      playSound('key');
+    function startGame() {
+      dinoModal.classList.add('active');
+      dinoGameRunning = true;
+      dinoScore = 0;
+      dinoY = 140;
+      dinoVY = 0;
+      obstacles = [{ x: 750, w: 20, h: 36 }];
+      updateScoreUI();
+      loop();
     }
 
-    if (zoomInBtn) {
-      zoomInBtn.addEventListener('click', () => applyZoom(currentZoom + 0.1));
-    }
-    if (zoomOutBtn) {
-      zoomOutBtn.addEventListener('click', () => applyZoom(currentZoom - 0.1));
-    }
-    if (zoomResetBtn) {
-      zoomResetBtn.addEventListener('click', () => applyZoom(1.0));
+    function jump() {
+      if (!isJumping && dinoGameRunning) {
+        dinoVY = -12;
+        isJumping = true;
+      }
     }
 
-    if (downloadPdfBtn) {
-      downloadPdfBtn.addEventListener('click', () => {
-        playSound('click');
-        window.print();
-      });
-    }
+    function loop() {
+      if (!dinoGameRunning) return;
 
-    if (copyTextBtn) {
-      copyTextBtn.addEventListener('click', () => {
-        playSound('click');
-        let textToCopy = '';
-        if (cvDoc) {
-          textToCopy = cvDoc.innerText;
-        } else if (portfolioData.terminalCommands && portfolioData.terminalCommands.cv) {
-          textToCopy = portfolioData.terminalCommands.cv;
-        }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (textToCopy) {
-          navigator.clipboard.writeText(textToCopy).then(() => {
-            alert('📋 ATS Resume Plain Text copied to clipboard!\n\nReady to paste directly into Microsoft, Amazon, or company job portals.');
-          }).catch(() => {
-            alert('CV Text: \n\n' + textToCopy);
-          });
-        }
-      });
-    }
+      // Floor
+      ctx.strokeStyle = '#00f0ff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 170);
+      ctx.lineTo(canvas.width, 170);
+      ctx.stroke();
 
-    if (fullscreenBtn) {
-      fullscreenBtn.addEventListener('click', () => {
-        playSound('click');
-        const viewport = document.getElementById('cv-viewport-container');
-        if (viewport) {
-          if (!document.fullscreenElement) {
-            viewport.requestFullscreen().catch(err => {
-              alert(`Error attempting to enable fullscreen mode: ${err.message}`);
-            });
-          } else {
-            document.exitFullscreen();
+      // Physics
+      dinoY += dinoVY;
+      dinoVY += 0.65;
+      if (dinoY >= 140) {
+        dinoY = 140;
+        dinoVY = 0;
+        isJumping = false;
+      }
+
+      // Draw Dino (Cyber character)
+      ctx.fillStyle = '#ffe600';
+      ctx.fillRect(50, dinoY, 26, 30);
+      ctx.fillStyle = '#000';
+      ctx.fillRect(66, dinoY + 6, 4, 4);
+
+      // Obstacles
+      ctx.fillStyle = '#ff0055';
+      obstacles.forEach(obs => {
+        obs.x -= 6;
+        ctx.fillRect(obs.x, 170 - obs.h, obs.w, obs.h);
+
+        // Collision Check
+        if (obs.x < 76 && obs.x + obs.w > 50 && dinoY + 30 > 170 - obs.h) {
+          dinoGameRunning = false;
+          if (dinoScore > dinoHiScore) {
+            dinoHiScore = dinoScore;
+            localStorage.setItem('ms_dino_hiscore', dinoHiScore);
           }
+          alert(`💥 Game Over! Your Score: ${dinoScore}`);
         }
       });
-    }
-  }
 
-  // ─── 7. INTERACTIVE CLI TERMINAL DRAWER ──────────────────────────────────
-  function initTerminal() {
-    const toggleBtn = document.getElementById('cli-toggle');
-    const modal = document.getElementById('cli-modal');
-    const closeBtn = document.getElementById('cli-close');
-    const input = document.getElementById('cli-input');
-    const output = document.getElementById('cli-output');
+      if (obstacles.length && obstacles[0].x < -30) {
+        obstacles.shift();
+        dinoScore += 10;
+        updateScoreUI();
+      }
 
-    if (!toggleBtn || !modal || !input || !output) return;
+      if (obstacles.length === 0 || obstacles[obstacles.length - 1].x < 450) {
+        if (Math.random() < 0.05) {
+          obstacles.push({ x: 750, w: 20 + Math.random() * 15, h: 25 + Math.random() * 20 });
+        }
+      }
 
-    toggleBtn.addEventListener('click', () => {
-      playSound('click');
-      modal.classList.add('active');
-      input.focus();
-    });
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        playSound('click');
-        modal.classList.remove('active');
-      });
+      dinoScore++;
+      updateScoreUI();
+      gameLoopId = requestAnimationFrame(loop);
     }
 
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        modal.classList.remove('active');
-      }
-    });
+    function updateScoreUI() {
+      const s = document.getElementById('dino-score');
+      const hi = document.getElementById('dino-hiscore');
+      if (s) s.textContent = Math.floor(dinoScore / 5);
+      if (hi) hi.textContent = Math.floor(dinoHiScore / 5);
+    }
 
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        const cmd = input.value.trim().toLowerCase();
-        input.value = '';
-        if (!cmd) return;
-
-        appendCliLine(`moin@system:~$ ${cmd}`, 'user');
-        playSound('key');
-
-        if (cmd === 'clear') {
-          output.innerHTML = '';
-          return;
-        }
-
-        if (cmd === 'dino' || cmd === 'play') {
-          modal.classList.remove('active');
-          document.getElementById('dino-modal').classList.add('active');
-          return;
-        }
-
-        if (cmd === 'matrix') {
-          if (window.toggleMatrixRain) window.toggleMatrixRain();
-          appendCliLine('🟢 Matrix rain mode toggled!', 'sys');
-          return;
-        }
-
-        if (cmd === 'projects') {
-          const list = portfolioData.projects.map(p => `  • ${p.title} (${p.category}) -> ${p.link}`).join('\n');
-          appendCliLine(list, 'sys');
-        } else if (cmd === 'exp') {
-          const list = portfolioData.experiences.map(e => `  • ${e.role} @ ${e.company} (${e.period})`).join('\n');
-          appendCliLine(list, 'sys');
-        } else if (cmd === 'skills') {
-          const list = portfolioData.skills.map(s => `[${s.category}]\n  ` + s.items.map(i => i.name).join(', ')).join('\n\n');
-          appendCliLine(list, 'sys');
-        } else if (cmd === 'json') {
-          appendCliLine(JSON.stringify(portfolioData, null, 2), 'sys');
-        } else if (portfolioData.terminalCommands && portfolioData.terminalCommands[cmd]) {
-          appendCliLine(portfolioData.terminalCommands[cmd], 'sys');
-        } else {
-          appendCliLine(`Command not recognized: '${cmd}'. Type 'help', 'dino', 'matrix', or 'cv'.`, 'err');
-        }
-
-        output.scrollTop = output.scrollHeight;
-      }
-    });
-  }
-
-  function appendCliLine(text, type) {
-    const output = document.getElementById('cli-output');
-    if (!output) return;
-    const line = document.createElement('div');
-    line.className = `cli-line cli-${type}`;
-    line.textContent = text;
-    output.appendChild(line);
-  }
-
-  // ─── 8. VISUAL ADMIN STUDIO ENGINE ──────────────────────────────────────
-  function initAdminStudio() {
-    const trigger = document.getElementById('admin-studio-trigger');
-    const modal = document.getElementById('admin-modal');
-    const closeBtn = document.getElementById('admin-close');
-    const exportBtn = document.getElementById('admin-export-json');
-    const addProjectBtn = document.getElementById('admin-save-project');
-
-    if (!modal) return;
-
-    const openAdmin = () => {
-      playSound('click');
-      modal.classList.add('active');
+    if (dinoBtn) dinoBtn.onclick = startGame;
+    if (dinoClose) dinoClose.onclick = () => {
+      dinoModal.classList.remove('active');
+      dinoGameRunning = false;
+      if (gameLoopId) cancelAnimationFrame(gameLoopId);
     };
-
-    if (trigger) trigger.addEventListener('click', openAdmin);
+    if (restartBtn) restartBtn.onclick = startGame;
 
     window.addEventListener('keydown', (e) => {
-      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'e') {
+      if (dinoGameRunning && (e.code === 'Space' || e.code === 'ArrowUp')) {
+        e.preventDefault();
+        jump();
+      }
+    });
+
+    canvas.addEventListener('touchstart', jump);
+    canvas.addEventListener('mousedown', jump);
+  }
+
+  // ─── 12. HACKER CLI SHELL (SHARED) ──────────────────────────────────────
+  function setupHackerCLI() {
+    const cliModal = document.getElementById('cli-modal');
+    const cliToggle = document.getElementById('cli-toggle-btn');
+    const footerCliToggle = document.getElementById('cli-toggle');
+    const cliClose = document.getElementById('cli-close');
+    const cliInput = document.getElementById('cli-input');
+    const cliOutput = document.getElementById('cli-output');
+    if (!cliModal || !cliInput || !cliOutput) return;
+
+    function openCLI() {
+      cliModal.classList.add('active');
+      cliInput.focus();
+    }
+
+    function closeCLI() {
+      cliModal.classList.remove('active');
+    }
+
+    if (cliToggle) cliToggle.onclick = openCLI;
+    if (footerCliToggle) footerCliToggle.onclick = openCLI;
+    if (cliClose) cliClose.onclick = closeCLI;
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && cliModal.classList.contains('active')) {
+        closeCLI();
+      }
+    });
+
+    cliInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = cliInput.value.trim().toLowerCase();
+        cliInput.value = '';
+
+        const cmdLine = document.createElement('div');
+        cmdLine.className = 'cli-line';
+        cmdLine.innerHTML = `<span style="color:#00ff66;">moin@system:~$</span> ${cmd}`;
+        cliOutput.appendChild(cmdLine);
+
+        handleCLICommand(cmd, cliOutput);
+        cliOutput.scrollTop = cliOutput.scrollHeight;
+      }
+    });
+  }
+
+  function handleCLICommand(cmd, outputEl) {
+    const resLine = document.createElement('div');
+    resLine.className = 'cli-line';
+
+    if (cmd === 'clear') {
+      outputEl.innerHTML = '';
+      return;
+    }
+
+    if (cmd === 'cyber') {
+      switchDesign('cyber', true);
+      resLine.textContent = '⚡ Switched to Neo-Brutalist Cyber layout.';
+    } else if (cmd === 'runrob') {
+      switchDesign('runrob', true);
+      resLine.textContent = '⬛ Switched to Kinetic Pixel layout.';
+    } else if (cmd === 'story') {
+      switchDesign('story', true);
+      resLine.textContent = '📖 Switched to Editorial Story Memoir layout.';
+    } else if (cmd === 'dino' || cmd === 'play') {
+      resLine.textContent = '🎮 Launching Dino Runner...';
+      const dinoModal = document.getElementById('dino-modal');
+      if (dinoModal) dinoModal.classList.add('active');
+    } else if (cmd === 'matrix') {
+      const toggleBtn = document.getElementById('toggle-matrix');
+      if (toggleBtn) toggleBtn.click();
+      resLine.textContent = '🟢 Toggled Matrix rain overlay.';
+    } else if (portfolioData.terminalCommands && portfolioData.terminalCommands[cmd]) {
+      resLine.textContent = portfolioData.terminalCommands[cmd];
+    } else {
+      resLine.textContent = `Command not recognized: '${cmd}'. Type 'help' for available commands.`;
+    }
+
+    outputEl.appendChild(resLine);
+  }
+
+  // ─── 13. VISUAL DATA STUDIO ADMIN (SHARED) ──────────────────────────────
+  function setupAdminStudio() {
+    const adminModal = document.getElementById('admin-modal');
+    const adminTrigger = document.getElementById('admin-studio-trigger');
+    const footerAdminBtn = document.getElementById('footer-admin-btn');
+    const adminClose = document.getElementById('admin-close');
+    const saveBtn = document.getElementById('admin-save-project');
+    const exportBtn = document.getElementById('admin-export-json');
+    if (!adminModal) return;
+
+    function openAdmin() { adminModal.classList.add('active'); }
+    function closeAdmin() { adminModal.classList.remove('active'); }
+
+    if (adminTrigger) adminTrigger.onclick = openAdmin;
+    if (footerAdminBtn) footerAdminBtn.onclick = openAdmin;
+    if (adminClose) adminClose.onclick = closeAdmin;
+
+    window.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.shiftKey && (e.key === 'E' || e.key === 'e')) {
         e.preventDefault();
         openAdmin();
       }
     });
 
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        playSound('click');
-        modal.classList.remove('active');
-      });
-    }
-
-    if (addProjectBtn) {
-      addProjectBtn.addEventListener('click', () => {
-        const title = document.getElementById('admin-proj-title').value;
-        const icon = document.getElementById('admin-proj-icon').value || '🚀';
+    if (saveBtn) {
+      saveBtn.onclick = () => {
+        const title = document.getElementById('admin-proj-title').value.trim();
+        const icon = document.getElementById('admin-proj-icon').value.trim() || '⚡';
         const category = document.getElementById('admin-proj-category').value;
-        const desc = document.getElementById('admin-proj-desc').value;
+        const desc = document.getElementById('admin-proj-desc').value.trim();
         const tags = document.getElementById('admin-proj-tags').value.split(',').map(t => t.trim()).filter(Boolean);
-        const link = document.getElementById('admin-proj-link').value;
+        const link = document.getElementById('admin-proj-link').value.trim();
 
-        if (!title || !desc || !link) {
-          alert('Please fill in Title, Description, and Link!');
+        if (!title || !desc) {
+          alert('Please provide at least a project title and description.');
           return;
         }
 
         const newProj = {
-          id: 'proj-' + Date.now(),
+          id: `proj-${Date.now()}`,
           title,
           icon,
           category,
-          featured: true,
+          featured: false,
           description: desc,
-          tags,
-          link,
-          github: link
+          tags: tags.length ? tags : ['Backend', 'Custom System'],
+          link: link || '#'
         };
 
+        if (!portfolioData.projects) portfolioData.projects = [];
         portfolioData.projects.unshift(newProj);
-        localStorage.setItem('ms_portfolio_data', JSON.stringify(portfolioData));
-        renderBentoProjects();
-        playSound('click');
-        alert('🎉 New project added live! Click "Download JSON" to update repository.');
-      });
+
+        // Re-render views live
+        renderBentoGrid(activeProjectFilter);
+        renderRunRobView();
+
+        alert(`✅ Project "${title}" rendered live across all designs!`);
+        closeAdmin();
+      };
     }
 
     if (exportBtn) {
-      exportBtn.addEventListener('click', () => {
+      exportBtn.onclick = () => {
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(portfolioData, null, 2));
-        const downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", "portfolio-data.json");
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-        playSound('click');
-      });
+        const dlAnchor = document.createElement('a');
+        dlAnchor.setAttribute("href", dataStr);
+        dlAnchor.setAttribute("download", "portfolio-data.json");
+        document.body.appendChild(dlAnchor);
+        dlAnchor.click();
+        dlAnchor.remove();
+      };
     }
   }
 
-  // ─── 9. SMOOTH SPATIAL UI 3D TILT ───────────────────────────────────────
-  function initSpatialTilt() {
-    const cards = document.querySelectorAll('.spatial-card, .bento-card, .landmark-card');
-    cards.forEach(card => {
-      let ticking = false;
+  // ─── 14. ATS RESUME CONTROLS (SHARED) ───────────────────────────────────
+  function setupATSResumeStudio() {
+    const zoomIn = document.getElementById('cv-zoom-in');
+    const zoomOut = document.getElementById('cv-zoom-out');
+    const zoomReset = document.getElementById('cv-zoom-reset');
+    const zoomLevel = document.getElementById('cv-zoom-level');
+    const zoomTarget = document.getElementById('cv-zoom-target');
+    const copyTextBtn = document.getElementById('cv-copy-text');
+    const downloadPdfBtn = document.getElementById('cv-download-pdf');
 
-      card.addEventListener('mousemove', (e) => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+    if (zoomIn && zoomOut && zoomTarget && zoomLevel) {
+      zoomIn.onclick = () => {
+        currentZoom = Math.min(1.5, currentZoom + 0.1);
+        zoomTarget.style.transform = `scale(${currentZoom})`;
+        zoomLevel.textContent = `${Math.round(currentZoom * 100)}%`;
+      };
+      zoomOut.onclick = () => {
+        currentZoom = Math.max(0.6, currentZoom - 0.1);
+        zoomTarget.style.transform = `scale(${currentZoom})`;
+        zoomLevel.textContent = `${Math.round(currentZoom * 100)}%`;
+      };
+      zoomReset.onclick = () => {
+        currentZoom = 1.0;
+        zoomTarget.style.transform = 'scale(1)';
+        zoomLevel.textContent = '100%';
+      };
+    }
 
-            const rotateX = ((y - centerY) / centerY) * -4;
-            const rotateY = ((x - centerX) / centerX) * 4;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            ticking = false;
-          });
-          ticking = true;
+    if (copyTextBtn) {
+      copyTextBtn.onclick = () => {
+        const doc = document.getElementById('ats-cv-document');
+        if (doc) {
+          navigator.clipboard.writeText(doc.innerText);
+          copyTextBtn.textContent = '✅ Copied ATS Text!';
+          setTimeout(() => copyTextBtn.textContent = '📋 Copy ATS Text', 2000);
         }
-      });
-
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = 'none';
-      });
-    });
-  }
-
-  function initSpatialCursor() {
-    const cursor = document.getElementById('spatial-cursor');
-    const follower = document.getElementById('spatial-cursor-follower');
-    if (!cursor || !follower) return;
-
-    let cx = -100, cy = -100;
-    let fx = -100, fy = -100;
-
-    window.addEventListener('mousemove', (e) => {
-      cx = e.clientX;
-      cy = e.clientY;
-      cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
-    });
-
-    (function loop() {
-      fx += (cx - fx) * 0.18;
-      fy += (cy - fy) * 0.18;
-      follower.style.transform = `translate(${fx}px, ${fy}px) translate(-50%, -50%)`;
-      requestAnimationFrame(loop);
-    })();
-
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest('a, button, input, select, textarea, .bento-card, .landmark-card, .timeline-content, .skeuo-btn-toggle, .sandbox-tab, .project-filter-btn, .cv-btn, .arch-tab-btn')) {
-        document.body.classList.add('cursor-hover');
-      }
-    });
-
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest('a, button, input, select, textarea, .bento-card, .landmark-card, .timeline-content, .skeuo-btn-toggle, .sandbox-tab, .project-filter-btn, .cv-btn, .arch-tab-btn')) {
-        document.body.classList.remove('cursor-hover');
-      }
-    });
-  }
-
-  // ─── 10. SYNTHETIC SOUND ENGINE & HARDWARE CONTROLS ────────────────────
-  function playSound(type) {
-    if (!audioContext) {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioContext.state === 'suspended') {
-      audioContext.resume();
+      };
     }
 
-    const osc = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-    osc.connect(gain);
-    gain.connect(audioContext.destination);
-
-    if (type === 'click') {
-      osc.frequency.setValueAtTime(650, audioContext.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(220, audioContext.currentTime + 0.05);
-      gain.gain.setValueAtTime(0.15, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
-      osc.start();
-      osc.stop(audioContext.currentTime + 0.05);
-    } else if (type === 'key') {
-      osc.frequency.setValueAtTime(850, audioContext.currentTime);
-      gain.gain.setValueAtTime(0.05, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.03);
-      osc.start();
-      osc.stop(audioContext.currentTime + 0.03);
+    if (downloadPdfBtn) {
+      downloadPdfBtn.onclick = () => {
+        window.print();
+      };
     }
   }
 
-  function initHardwareControls() {
-    const crtBtn = document.getElementById('toggle-crt');
-    const themeBtn = document.getElementById('toggle-theme');
-
-    if (crtBtn) {
-      crtBtn.addEventListener('click', () => {
-        crtEnabled = !crtEnabled;
-        document.body.classList.toggle('crt-enabled', crtEnabled);
-        crtBtn.classList.toggle('active', crtEnabled);
-        playSound('click');
-      });
-    }
-
-    if (themeBtn) {
-      themeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('light-mode');
-        themeBtn.classList.toggle('active');
-        playSound('click');
-      });
-    }
+  // ─── RUN ENGINE ON DOM LOAD ─────────────────────────────────────────────
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApplication);
+  } else {
+    initApplication();
   }
-
-  function initProjectFilters() {
-    const filterBtns = document.querySelectorAll('.project-filter-btn');
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        playSound('click');
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeProjectFilter = btn.dataset.filter || 'All';
-        renderBentoProjects();
-      });
-    });
-  }
-
-  // Initial Load
-  document.addEventListener('DOMContentLoaded', () => {
-    initData();
-    initSpatialCursor();
-    initAtsCvViewer();
-    initArchVisualizer();
-    initDinoGame();
-    initMatrixRain();
-    initTerminal();
-    initAdminStudio();
-    initHardwareControls();
-    initProjectFilters();
-  });
 
 })();

@@ -3,540 +3,763 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Moin Shadab — Backend Engineer & Systems Architect | MSERP ERP & Dual-DB Email Engine</title>
-  <meta name="description" content="High-impact Neo-Brutalist Portfolio & ATS Resume of Moin Shadab. Creator of MSERP open-source ERP and Dual-DB International Email Client (MySQL + CouchDB + raw IMAP sockets). 3+ years enterprise experience." />
+  <title>Moin Shadab — Backend Engineer &amp; Systems Architect | Multi-Design Portfolio</title>
+  <meta name="description" content="Portfolio &amp; Engineering Memoir of Moin Shadab. Creator of MSERP open-source ERP and Dual-DB International Email Client (MySQL + CouchDB + raw IMAP sockets). Switch between Neo-Brutalist, Kinetic Pixel, and Editorial Story designs." />
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Inter, Fira Code, Syne, Space Grotesk, Newsreader -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@500;700&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400;1,600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 
-  <!-- Master Neo-Brutalist Stylesheet -->
+  <!-- Core & Design Specific Stylesheets -->
   <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/switcher.css" />
+  <link rel="stylesheet" href="./css/design-runrob.css" />
+  <link rel="stylesheet" href="./css/design-story.css" />
 
-  <!-- JavaScript Engine -->
+  <!-- Master JavaScript Application Engine -->
   <script src="./js/app.js" defer></script>
 </head>
-<body>
+<body data-active-design="cyber">
 
-  <!-- Spatial Custom Cursor -->
+  <!-- Spatial Custom Cursor (Shared) -->
   <div id="spatial-cursor"></div>
   <div id="spatial-cursor-follower"></div>
 
-  <!-- Background Cyber Mesh, CRT Overlay & Matrix Canvas -->
+  <!-- Background Cyber Mesh, CRT Overlay & Matrix Canvas (Cyber Design) -->
   <div class="bg-mesh-canvas"></div>
   <div class="bg-cyber-grid"></div>
   <canvas id="matrix-canvas"></canvas>
   <div class="crt-overlay"></div>
 
-  <!-- ─── 1. NEO-BRUTALIST TOP NAVIGATION ─────────────────────────────────── -->
-  <nav class="navbar">
-    <a href="#hero" class="nav-brand">
-      <div class="nav-brand-symbol">MS.DEV</div>
-      <span>MOIN SHADAB</span>
-    </a>
-
-    <div class="nav-links">
-      <a href="#hero" class="nav-link active">Home</a>
-      <a href="#landmark" class="nav-link">Landmark Systems</a>
-      <a href="#architecture" class="nav-link">Architecture Visualizer</a>
-      <a href="#projects" class="nav-link">Projects</a>
-      <a href="#resume" class="nav-link" style="color: var(--neon-pink);">📄 Resume &amp; CV</a>
-      <a href="#experience" class="nav-link">Work</a>
-      <a href="#skills" class="nav-link">Skills</a>
-      <a href="#code-sandbox" class="nav-link">Code</a>
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- UNIVERSAL DESIGN SWITCHER FLOATING DOCK                                -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <nav class="design-switcher-dock" id="design-switcher-dock" aria-label="Portfolio Design Switcher">
+    <div class="switcher-pill-label">
+      <span class="pulse-dot"></span>
+      <span>Layout</span>
     </div>
-
-    <div class="nav-actions">
-      <div class="skeuo-control-group">
-        <button id="toggle-matrix" class="skeuo-btn-toggle" title="Toggle Matrix Digital Rain">🟢</button>
-        <button id="toggle-crt" class="skeuo-btn-toggle" title="Toggle CRT Scanline Overlay">📺</button>
-        <button id="toggle-theme" class="skeuo-btn-toggle" title="Toggle Light/Dark Brutalism">🌓</button>
-        <button id="admin-studio-trigger" class="skeuo-btn-toggle" title="Open Visual Data Studio (Ctrl+Shift+E)">⚡</button>
-      </div>
-      <a href="#resume" class="btn-brutal" style="padding: 6px 14px; font-size: 0.8rem; background: var(--neon-cyan);">
-        📄 ATS CV
-      </a>
-    </div>
+    <button class="switcher-btn active" data-design="cyber" title="Switch to Neo-Brutalist Cyber Portfolio">
+      <span class="btn-icon">⚡</span> Cyber Brutal
+    </button>
+    <button class="switcher-btn" data-design="runrob" title="Switch to Kinetic Pixel Grid Portfolio (Rob style)">
+      <span class="btn-icon">⬛</span> Kinetic Pixel
+    </button>
+    <button class="switcher-btn" data-design="story" title="Switch to Editorial Story Memoir (Tejas style)">
+      <span class="btn-icon">📖</span> Story Memoir
+    </button>
+    <button class="switcher-cv-trigger" id="switcher-open-cv" title="Open ATS Resume &amp; CV">
+      <span>📄</span> ATS CV
+    </button>
   </nav>
 
-  <!-- ─── 2. HIGH-SPEED MARQUEE TICKER BANNER ───────────────────────────── -->
-  <div class="marquee-wrapper">
-    <div class="marquee-content">
-      <span class="marquee-item">⚡ BACKEND DEVELOPER &amp; SYSTEMS ARCHITECT <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">🏭 CREATOR OF MSERP OPEN-SOURCE ERP <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">📧 DUAL-DB INTERNATIONAL EMAIL CLIENT (MYSQL + COUCHDB) <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">📡 RAW IMAP RFC-3501 STREAM SOCKETS <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">💼 3+ YEARS ENTERPRISE BACKEND EXP <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">🟢 AVAILABLE FOR HIGH-IMPACT BACKEND ROLES <span class="marquee-separator">///</span></span>
-      <!-- Loop duplicate -->
-      <span class="marquee-item">⚡ BACKEND DEVELOPER &amp; SYSTEMS ARCHITECT <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">🏭 CREATOR OF MSERP OPEN-SOURCE ERP <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">📧 DUAL-DB INTERNATIONAL EMAIL CLIENT (MYSQL + COUCHDB) <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">📡 RAW IMAP RFC-3501 STREAM SOCKETS <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">💼 3+ YEARS ENTERPRISE BACKEND EXP <span class="marquee-separator">///</span></span>
-      <span class="marquee-item">🟢 AVAILABLE FOR HIGH-IMPACT BACKEND ROLES <span class="marquee-separator">///</span></span>
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- DESIGN VIEW 1: NEO-BRUTALIST CYBER (DEFAULT)                           -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-cyber" class="design-view active">
+    
+    <!-- Neo-Brutalist Top Navigation -->
+    <nav class="navbar">
+      <a href="#hero" class="nav-brand">
+        <div class="nav-brand-symbol">MS.DEV</div>
+        <span>MOIN SHADAB</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#landmark" class="nav-link">Landmark Systems</a>
+        <a href="#architecture" class="nav-link">Architecture Visualizer</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#resume" class="nav-link" style="color: var(--neon-pink);">📄 Resume &amp; CV</a>
+        <a href="#experience" class="nav-link">Work</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#code-sandbox" class="nav-link">Code</a>
+      </div>
+
+      <div class="nav-actions">
+        <div class="skeuo-control-group">
+          <button id="toggle-matrix" class="skeuo-btn-toggle" title="Toggle Matrix Digital Rain">🟢</button>
+          <button id="toggle-crt" class="skeuo-btn-toggle" title="Toggle CRT Scanline Overlay">📺</button>
+          <button id="toggle-theme" class="skeuo-btn-toggle" title="Toggle Light/Dark Brutalism">🌓</button>
+          <button id="admin-studio-trigger" class="skeuo-btn-toggle" title="Open Visual Data Studio (Ctrl+Shift+E)">⚡</button>
+        </div>
+        <a href="#resume" class="btn-brutal" style="padding: 6px 14px; font-size: 0.8rem; background: var(--neon-cyan);">
+          📄 ATS CV
+        </a>
+      </div>
+    </nav>
+
+    <!-- Marquee Ticker -->
+    <div class="marquee-wrapper">
+      <div class="marquee-content">
+        <span class="marquee-item">⚡ BACKEND DEVELOPER &amp; SYSTEMS ARCHITECT <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">🏭 CREATOR OF MSERP OPEN-SOURCE ERP <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">📧 DUAL-DB INTERNATIONAL EMAIL CLIENT (MYSQL + COUCHDB) <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">📡 RAW IMAP RFC-3501 STREAM SOCKETS <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">💼 3+ YEARS ENTERPRISE BACKEND EXP <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">🟢 AVAILABLE FOR HIGH-IMPACT BACKEND ROLES <span class="marquee-separator">///</span></span>
+        <!-- Duplicate Loop -->
+        <span class="marquee-item">⚡ BACKEND DEVELOPER &amp; SYSTEMS ARCHITECT <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">🏭 CREATOR OF MSERP OPEN-SOURCE ERP <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">📧 DUAL-DB INTERNATIONAL EMAIL CLIENT (MYSQL + COUCHDB) <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">📡 RAW IMAP RFC-3501 STREAM SOCKETS <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">💼 3+ YEARS ENTERPRISE BACKEND EXP <span class="marquee-separator">///</span></span>
+        <span class="marquee-item">🟢 AVAILABLE FOR HIGH-IMPACT BACKEND ROLES <span class="marquee-separator">///</span></span>
+      </div>
+    </div>
+
+    <main>
+      <!-- Hero Section -->
+      <section id="hero">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero-content">
+              <div class="sticker-badge green">
+                <span class="led-indicator"></span>
+                <span id="profile-availability">Available for high-impact backend engineering roles</span>
+              </div>
+
+              <h1 class="hero-title">
+                <span id="profile-name">MOIN SHADAB</span><br />
+                <span class="gradient-text">SYSTEMS ARCHITECT</span>
+              </h1>
+
+              <p class="hero-sub" id="profile-tagline">
+                Backend Engineer &amp; <strong>Enterprise Infrastructure Architect</strong>
+              </p>
+
+              <p class="hero-bio" id="profile-bio">
+                I build raw backend platforms that scale: an open-source enterprise ERP (MSERP) handling multi-warehouse inventory and GST billing, plus an international email engine built from scratch with raw IMAP stream sockets and a hybrid MySQL + CouchDB architecture. Backed by 2 years of industrial PLC automation discipline.
+              </p>
+
+              <div class="hero-actions">
+                <a href="#resume" class="btn-brutal" style="background: var(--neon-yellow);">
+                  📄 View ATS Resume &amp; CV →
+                </a>
+                <button id="hero-dino-btn" class="btn-secondary" style="border-color: var(--neon-cyan); color: var(--neon-cyan);">
+                  🎮 Play Dino Runner
+                </button>
+                <a href="#contact" class="btn-secondary" style="border-color: var(--neon-pink); color: var(--neon-pink);">
+                  💬 Contact Direct
+                </a>
+              </div>
+            </div>
+
+            <!-- Right Column: Hero Code Card -->
+            <div class="hero-spatial-widget">
+              <div class="hero-code-card">
+                <div class="hero-code-header">
+                  <div class="hero-code-filename">
+                    <span>📄 MoinShadabSystemArchitecture.php</span>
+                    <span class="led-indicator" style="width:7px;height:7px;"></span>
+                  </div>
+                  <div class="hero-code-actions">
+                    <span style="color: var(--text-dim); font-size: 0.75rem;">32 lines</span>
+                    <button id="copy-hero-code-btn" class="hero-code-btn">Copy Code</button>
+                  </div>
+                </div>
+                <div class="hero-code-body">
+                  <div class="hero-line-nums" id="hero-line-numbers"></div>
+                  <div class="hero-code-content" id="hero-code-text"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Impact Telemetry Bar -->
+      <section class="impact-bar">
+        <div class="container">
+          <div class="impact-grid" id="impact-grid-container">
+            <div class="impact-item">
+              <div class="impact-num">3+ YEARS</div>
+              <div class="impact-text">Enterprise Backend Experience</div>
+            </div>
+            <div class="impact-item">
+              <div class="impact-num">DUAL-DB</div>
+              <div class="impact-text">MySQL + CouchDB Architecture</div>
+            </div>
+            <div class="impact-item">
+              <div class="impact-num">MSERP ERP</div>
+              <div class="impact-text">Open Source Modules</div>
+            </div>
+            <div class="impact-item">
+              <div class="impact-num">RFC-3501</div>
+              <div class="impact-text">Raw IMAP Stream Sockets</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Landmark Showcase Section -->
+      <section id="landmark" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="eyebrow">Flagship Engineering</div>
+            <h2 class="section-title">Landmark Shipped Systems.</h2>
+            <p class="section-desc">
+              Deep-dive into the core architectures built from scratch for real-world enterprise execution.
+            </p>
+          </div>
+
+          <div class="landmark-grid">
+            <!-- MSERP ERP -->
+            <div class="landmark-card featured-mserp">
+              <div>
+                <div class="landmark-badge">🏭</div>
+                <h3 class="landmark-title">MSERP — Open Source Enterprise ERP</h3>
+                <p class="landmark-desc">
+                  A completely free, open-source enterprise ERP platform built to digitize core business workflows. Includes working modules for inventory control with pessimistic database locks, GST-compliant billing, EMR hospital healthcare management, CRM pipelines, and employee payroll.
+                </p>
+                <div class="architect-box">
+                  <div class="architect-title">Architecture Specs:</div>
+                  <ul class="architect-list">
+                    <li>Multi-Warehouse Stock Management with transactional locks</li>
+                    <li>GST-Compliant Billing &amp; Automated Ledger Accounting</li>
+                    <li>Integrated Hospital Suite (Patient EMR &amp; Billing)</li>
+                    <li>B2B CRM Pipeline &amp; Employee Payroll Engine</li>
+                  </ul>
+                </div>
+                <div class="clay-tags">
+                  <span class="clay-tag">MSERP</span>
+                  <span class="clay-tag">Laravel</span>
+                  <span class="clay-tag">MySQL</span>
+                  <span class="clay-tag">GST Accounting</span>
+                  <span class="clay-tag">Open Source</span>
+                </div>
+              </div>
+              <a href="https://github.com/Moin-shadab/MSERP" target="_blank" class="btn-brutal" style="margin-top: 20px; text-align: center; justify-content: center;">
+                🐙 View MSERP Code on GitHub ↗
+              </a>
+            </div>
+
+            <!-- Dual-DB Email Client -->
+            <div class="landmark-card featured-email">
+              <div>
+                <div class="landmark-badge">📧</div>
+                <h3 class="landmark-title">Dual-DB International Email Client</h3>
+                <p class="landmark-desc">
+                  Engineered an enterprise email engine completely from scratch without third-party SaaS wrappers. Features a high-performance Dual-Database architecture combining MySQL for fast relational metadata and CouchDB for raw NoSQL message bodies.
+                </p>
+                <div class="architect-box">
+                  <div class="architect-title">Protocol &amp; Storage Specs:</div>
+                  <ul class="architect-list">
+                    <li>Raw IMAP Stream Sockets compliant with RFC-3501</li>
+                    <li>Dual-DB: MySQL (Folders/Meta) + CouchDB (MIME/NoSQL)</li>
+                    <li>Asynchronous Redis Queue dispatch for outgoing mail</li>
+                    <li>MIME Multi-part Stream Parser &amp; Attachment decoders</li>
+                  </ul>
+                </div>
+                <div class="clay-tags">
+                  <span class="clay-tag">MySQL + CouchDB</span>
+                  <span class="clay-tag">IMAP Sockets</span>
+                  <span class="clay-tag">MIME Parser</span>
+                  <span class="clay-tag">Redis Queues</span>
+                  <span class="clay-tag">Protocol Engine</span>
+                </div>
+              </div>
+              <a href="https://moin-shadab.github.io/email-work-flow/" target="_blank" class="btn-brutal" style="background: var(--neon-cyan); margin-top: 20px; text-align: center; justify-content: center;">
+                🌐 Explore Architecture Live ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- Architecture Visualizer Box -->
+          <div id="architecture" class="arch-visualizer-container">
+            <div class="arch-header">
+              <div>
+                <div class="eyebrow" style="background: var(--neon-yellow); color: #000;">Interactive Diagram</div>
+                <h3 style="font-size: 1.6rem; font-weight: 900; text-transform: uppercase;">System Pipeline Visualizer</h3>
+              </div>
+              <div class="arch-nav">
+                <button class="arch-tab-btn active" data-arch="email">Dual-DB Email Pipeline</button>
+                <button class="arch-tab-btn" data-arch="mserp">MSERP ERP Transaction Flow</button>
+              </div>
+            </div>
+            <div class="arch-flow-wrapper" id="arch-flow-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Bento Grid -->
+      <section id="projects" class="section">
+        <div class="container">
+          <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
+            <div>
+              <div class="eyebrow">All Systems &amp; Tools</div>
+              <h2 class="section-title">Shipped Projects.</h2>
+              <p class="section-desc">Interactive portfolio of backend platforms, developer utilities, and reference guides.</p>
+            </div>
+            <div class="skeuo-control-group">
+              <button class="project-filter-btn skeuo-btn-toggle active" style="width:auto; padding: 6px 16px;" data-filter="All">All</button>
+              <button class="project-filter-btn skeuo-btn-toggle" style="width:auto; padding: 6px 16px;" data-filter="Backend">Backend</button>
+              <button class="project-filter-btn skeuo-btn-toggle" style="width:auto; padding: 6px 16px;" data-filter="Web">Web</button>
+              <button class="project-filter-btn skeuo-btn-toggle" style="width:auto; padding: 6px 16px;" data-filter="Tools">Tools</button>
+              <button class="project-filter-btn skeuo-btn-toggle" style="width:auto; padding: 6px 16px;" data-filter="Creative">Creative</button>
+            </div>
+          </div>
+          <div class="bento-grid" id="bento-grid-container"></div>
+        </div>
+      </section>
+
+      <!-- Interactive ATS Resume Studio -->
+      <section id="resume" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="eyebrow" style="background: var(--neon-pink); color: #fff;">Applicant Tracking System (ATS) Verified</div>
+            <h2 class="section-title">Professional ATS Resume &amp; CV.</h2>
+            <p class="section-desc">
+              Clean, high-contrast Microsoft &amp; Amazon style ATS-friendly resume. Use the controls below to zoom, download the PDF, or copy raw ATS text directly.
+            </p>
+          </div>
+
+          <div class="ats-studio-frame">
+            <div class="cv-toolbar">
+              <div class="cv-toolbar-title">
+                <span>📄 ATS_MOIN_SHADAB_CV.PDF</span>
+                <span style="font-size: 0.75rem; background: var(--neon-green); color: #000; padding: 2px 8px; font-weight: 900;">VERIFIED ATS FORMAT</span>
+              </div>
+              <div class="cv-controls">
+                <button id="cv-zoom-out" class="cv-btn" title="Zoom Out">- Zoom</button>
+                <span id="cv-zoom-level" class="zoom-indicator">100%</span>
+                <button id="cv-zoom-in" class="cv-btn" title="Zoom In">+ Zoom</button>
+                <button id="cv-zoom-reset" class="cv-btn" title="Reset Zoom">Reset</button>
+                <button id="cv-copy-text" class="cv-btn" style="background: var(--neon-yellow); color: #000;">
+                  📋 Copy ATS Text
+                </button>
+                <button id="cv-download-pdf" class="cv-btn btn-action-green">
+                  📥 Download ATS CV (PDF)
+                </button>
+              </div>
+            </div>
+
+            <div class="cv-viewport" id="cv-viewport-container">
+              <div class="cv-zoom-wrapper" id="cv-zoom-target">
+                <div class="ats-cv-document" id="ats-cv-document">
+                  <div class="ats-header">
+                    <div class="ats-name">MOIN SHADAB</div>
+                    <div class="ats-title-line">Backend Developer &amp; Systems Builder</div>
+                    <div class="ats-contact-strip">
+                      <span>India</span> • 
+                      <span>moinshadab.dev@gmail.com</span> • 
+                      <span>github.com/Moin-shadab</span> • 
+                      <span>linkedin.com/in/moin-shadab-8a491b1b1/</span>
+                    </div>
+                  </div>
+
+                  <div class="ats-section-title">PROFESSIONAL SUMMARY</div>
+                  <p class="ats-summary">
+                    Backend Developer at Advanced Microdevices Pvt. Ltd. with 3+ years of experience building high-concurrency enterprise platforms, custom ERP modules, and protocol engines. Proven landmark track record includes architecting <strong>MSERP</strong> (a completely free, open-source enterprise ERP) and engineering an <strong>International Email Client</strong> from scratch using raw IMAP stream sockets and a Dual-Database architecture (MySQL for relational metadata + CouchDB for NoSQL mail documents). Grounded in low-level industrial PLC automation discipline.
+                  </p>
+
+                  <div class="ats-section-title">TECHNICAL COMPETENCIES</div>
+                  <div class="ats-skills-grid">
+                    <div class="ats-skill-cat">Backend Engineering:</div>
+                    <div class="ats-skill-val">PHP 8+, Laravel Framework, RESTful API Architecture, Microservices, Object-Oriented Design</div>
+                    <div class="ats-skill-cat">Databases &amp; Storage:</div>
+                    <div class="ats-skill-val">MySQL, MariaDB, CouchDB (NoSQL), Dual-DB Architecture, Redis Caching, Query Tuning</div>
+                    <div class="ats-skill-cat">Protocols &amp; Systems:</div>
+                    <div class="ats-skill-val">Raw IMAP / SMTP Sockets (RFC-3501), MIME Parsers, Async Queues, Payment APIs (PhonePe)</div>
+                    <div class="ats-skill-cat">Languages &amp; Automation:</div>
+                    <div class="ats-skill-val">JavaScript (ES6+), Core Java, C++, Python, PLC Ladder Logic &amp; Industrial Interlocks</div>
+                  </div>
+
+                  <div class="ats-section-title">PROFESSIONAL EXPERIENCE</div>
+                  <div class="ats-job-block">
+                    <div class="ats-job-header">
+                      <div>
+                        <span class="ats-job-role">Backend Developer</span> | 
+                        <span class="ats-job-company">Advanced Microdevices Pvt. Ltd.</span>
+                      </div>
+                      <div class="ats-job-date">2023 — Present · 3 Years</div>
+                    </div>
+                    <ul class="ats-bullets">
+                      <li>Architected enterprise backend platforms serving active operations: hospital management systems, GST-compliant accounting software, and barcode inventory control tools.</li>
+                      <li><strong>Engineered Dual-DB International Email Client</strong> from scratch, bypassing SaaS wrappers to connect directly via raw IMAP stream sockets, asynchronous Redis worker queues, and custom MIME stream decoders.</li>
+                      <li>Combined MySQL (relational metadata/indexing) and CouchDB (NoSQL document storage) to index and retrieve email bodies with zero payload bloat.</li>
+                      <li>Integrated Indian PhonePe Payment Gateway APIs with webhook signature verification and robust reconciliation logic.</li>
+                    </ul>
+                  </div>
+
+                  <div class="ats-job-block">
+                    <div class="ats-job-header">
+                      <div>
+                        <span class="ats-job-role">PLC Programmer &amp; Industrial Systems Engineer</span> | 
+                        <span class="ats-job-company">Freelance &amp; Industrial Systems</span>
+                      </div>
+                      <div class="ats-job-date">2020 — 2022 · 2 Years</div>
+                    </div>
+                    <ul class="ats-bullets">
+                      <li>Programmed Programmable Logic Controllers (PLCs) for manufacturing automation lines under strict zero-tolerance failure constraints.</li>
+                      <li>Developed deterministic hardware safety interlocking logic and real-time sensor polling routines.</li>
+                    </ul>
+                  </div>
+
+                  <div class="ats-section-title">KEY SHIPPED PROJECTS</div>
+                  <div class="ats-job-block">
+                    <div class="ats-job-header">
+                      <span class="ats-job-role">MSERP — Open Source Enterprise ERP</span>
+                      <span class="ats-job-date">https://github.com/Moin-shadab/MSERP</span>
+                    </div>
+                    <ul class="ats-bullets">
+                      <li>Built a completely open-source enterprise ERP platform featuring multi-warehouse stock management with pessimistic database locks, GST billing, hospital suite, CRM pipeline, and payroll.</li>
+                    </ul>
+                  </div>
+
+                  <div class="ats-section-title">EDUCATION &amp; TRAINING</div>
+                  <div class="ats-job-block">
+                    <div class="ats-job-header">
+                      <span class="ats-job-role">Bachelor of Technology / Computer Systems Engineering</span>
+                      <span class="ats-job-date">India</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Career Timeline -->
+      <section id="experience" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="eyebrow">Career History</div>
+            <h2 class="section-title">Where I've Shipped Code.</h2>
+            <p class="section-desc">3+ years building enterprise platforms and industrial control software.</p>
+          </div>
+          <div class="timeline" id="timeline-container"></div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="eyebrow">Tech Radar</div>
+            <h2 class="section-title">Tools &amp; Technical Stack.</h2>
+            <p class="section-desc">Languages, storage engines, and frameworks utilized daily.</p>
+          </div>
+          <div class="skills-grid" id="skills-container"></div>
+        </div>
+      </section>
+
+      <!-- Code Sandbox -->
+      <section id="code-sandbox" class="section">
+        <div class="container">
+          <div class="section-header">
+            <div class="eyebrow">Architecture Code</div>
+            <h2 class="section-title">Live Code Viewer.</h2>
+            <p class="section-desc">Inspect real snippets from IMAP protocol sockets, MSERP controllers, and systems architecture.</p>
+          </div>
+          <div class="code-sandbox-wrapper">
+            <div class="sandbox-tabs" id="sandbox-tabs"></div>
+            <pre class="sandbox-content"><code id="sandbox-code-content"></code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="section" style="text-align: center;">
+        <div class="container">
+          <div class="eyebrow" style="background: var(--neon-green); color: #000; justify-content: center;">Communication Channel</div>
+          <h2 class="section-title" style="margin-bottom: 20px;">Let's Build Something Great.</h2>
+          <p class="section-desc" style="margin: 0 auto 40px;">
+            Available for backend engineering roles, custom enterprise software development, and high-concurrency architecture challenges.
+          </p>
+          <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <a href="mailto:moinshadab.dev@gmail.com" class="btn-brutal">
+              📧 Send Direct Email
+            </a>
+            <a href="https://github.com/Moin-shadab" target="_blank" class="btn-secondary">
+              🐙 GitHub Profile
+            </a>
+            <a href="https://www.linkedin.com/in/moin-shadab-8a491b1b1/" target="_blank" class="btn-secondary">
+              💼 LinkedIn Profile
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container footer-content">
+        <p style="font-weight: 900; font-family: var(--font-mono); color: var(--neon-yellow); letter-spacing: 1px;">
+          MOIN SHADAB &nbsp;©&nbsp; 2026 &nbsp;•&nbsp; BUILT TO LAST &nbsp;•&nbsp; SHIPPED WITH RAW CODE
+        </p>
+        <div class="footer-links">
+          <a href="#hero" class="footer-link">Back to Top ↑</a>
+          <a href="#resume" class="footer-link" style="color: var(--neon-pink);">📄 ATS Resume &amp; CV</a>
+          <button id="cli-toggle" class="footer-link" style="cursor: pointer; background: none; border: none;">💻 Launch Hacker CLI</button>
+          <button id="footer-admin-btn" class="footer-link" style="cursor: pointer; background: none; border: none; color: var(--neon-cyan);">⚡ Data Studio (No-Code)</button>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- DESIGN VIEW 2: KINETIC BRUTALISM & PIXEL FLOW (INSPIRED BY RUNROBRUN)   -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-runrob" class="design-view">
+    
+    <!-- Architectural Corner Crosses -->
+    <div class="rr-corner-cross rr-cross-tl" aria-hidden="true"></div>
+    <div class="rr-corner-cross rr-cross-tr" aria-hidden="true"></div>
+    <div class="rr-corner-cross rr-cross-bl" aria-hidden="true"></div>
+    <div class="rr-corner-cross rr-cross-br" aria-hidden="true"></div>
+
+    <!-- Noise Texture Overlay -->
+    <div class="rr-noise-overlay" aria-hidden="true"></div>
+
+    <!-- Dynamic Pixel Mosaic Transition Grid -->
+    <div class="rr-pixel-wipe" id="rr-pixel-wipe" aria-hidden="true"></div>
+
+    <!-- Minimalist Architectural Topbar -->
+    <header class="rr-topbar">
+      <a href="#rr-hero" class="rr-brand">
+        <span class="rr-brand-badge">ARCH</span>
+        <span class="rr-brand-name">Moin Shadab</span>
+      </a>
+
+      <nav class="rr-nav-links">
+        <a href="#rr-about" class="rr-nav-link">About</a>
+        <a href="#rr-tools" class="rr-nav-link">Stack</a>
+        <a href="#rr-work" class="rr-nav-link">Work</a>
+        <a href="#rr-experience" class="rr-nav-link">History</a>
+        <a href="mailto:moinshadab.dev@gmail.com" class="rr-nav-cta">Let's build</a>
+      </nav>
+    </header>
+
+    <!-- Hero Stage -->
+    <section id="rr-hero" class="rr-hero-stage">
+      <div class="rr-hero-canvas-wrap">
+        <canvas id="rr-morph-canvas"></canvas>
+      </div>
+
+      <div class="rr-container">
+        <!-- Hero Status Meta -->
+        <div class="rr-hero-meta-bar">
+          <div class="rr-hero-meta-status">
+            <span class="rr-live-indicator"></span>
+            <span>AVAILABLE FOR HIGH-IMPACT BACKEND ROLES</span>
+          </div>
+          <div class="rr-mono-font">
+            <span>INDIA // ENTERPRISE SYSTEMS</span>
+          </div>
+        </div>
+
+        <!-- Giant Architectural Hero Title -->
+        <div class="rr-hero-title-group">
+          <h1 class="rr-hero-giant-title">SYSTEMS</h1>
+          <h1 class="rr-hero-giant-title sub">ARCHITECT</h1>
+        </div>
+
+        <!-- Hero Split Row: Description & Ambient Web Audio Player -->
+        <div class="rr-hero-split-row">
+          <p class="rr-hero-desc">
+            Building high-concurrency backend software, open-source enterprise ERPs, and ground-up protocol engines. Engineering systems where failure isn't an option.
+          </p>
+
+          <!-- Ambient Audio Synthesizer Bar -->
+          <div class="rr-audio-bar">
+            <button type="button" id="rr-audio-play-btn" class="rr-audio-toggle" title="Play / Pause Ambient Sound">
+              ▶
+            </button>
+            <div class="rr-audio-info">
+              <div class="rr-audio-track-name">
+                <span id="rr-track-title">Neon Protocol</span>
+                <span class="rr-live-indicator" style="width:5px;height:5px;"></span>
+              </div>
+              <div class="rr-audio-track-genre" id="rr-track-genre">Synthwave / Cyber Arp • Web Audio</div>
+            </div>
+            <div class="rr-audio-waveform" id="rr-waveform">
+              <span class="rr-audio-bar-stick"></span>
+              <span class="rr-audio-bar-stick"></span>
+              <span class="rr-audio-bar-stick"></span>
+              <span class="rr-audio-bar-stick"></span>
+              <span class="rr-audio-bar-stick"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Split Section: Architectural Principles -->
+    <section id="rr-about" class="rr-section">
+      <div class="rr-container">
+        <div class="rr-section-split-title">
+          <div class="rr-split-phrase">Resilient backends crafted from first principles</div>
+          <div class="rr-split-phrase right">Industrial discipline built for massive concurrency</div>
+        </div>
+
+        <!-- Flagship Systems Grid -->
+        <div class="rr-projects-grid" id="rr-flagship-grid">
+          <!-- Dynamic flagship systems rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools & Technical Stack Matrix -->
+    <section id="rr-tools" class="rr-section">
+      <div class="rr-container">
+        <div class="rr-section-split-title">
+          <div class="rr-split-phrase">Engineered Stack</div>
+          <div class="rr-split-phrase right">Languages, Sockets &amp; Storage Engines</div>
+        </div>
+
+        <div class="rr-tools-grid" id="rr-tools-grid-container">
+          <!-- Dynamic tools matrix rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Shipped Work Bento Showcase -->
+    <section id="rr-work" class="rr-section">
+      <div class="rr-container">
+        <div class="rr-section-split-title">
+          <div class="rr-split-phrase">Selected Shipped Systems</div>
+          <div class="rr-split-phrase right">Production Deployments &amp; Tools</div>
+        </div>
+
+        <div class="rr-projects-grid" id="rr-projects-grid-container">
+          <!-- Dynamic projects rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Work Experience Timeline -->
+    <section id="rr-experience" class="rr-section">
+      <div class="rr-container">
+        <div class="rr-section-split-title">
+          <div class="rr-split-phrase">Engineering Experience</div>
+          <div class="rr-split-phrase right">From Hardware PLCs to Enterprise Suites</div>
+        </div>
+
+        <div class="rr-exp-list" id="rr-exp-list-container">
+          <!-- Dynamic experiences rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Kinetic Footer -->
+    <footer class="rr-footer">
+      <div class="rr-container">
+        <h2 class="rr-footer-title">LET'S CREATE.</h2>
+        <p class="rr-footer-sub">
+          Available for full-time backend roles, systems architecture, and distributed infrastructure.
+        </p>
+        <div class="rr-footer-actions">
+          <a href="mailto:moinshadab.dev@gmail.com" class="rr-btn-primary" style="padding: 12px 28px; font-size: 0.9rem;">
+            Send Email
+          </a>
+          <a href="https://github.com/Moin-shadab" target="_blank" class="rr-btn-ghost" style="padding: 12px 28px; font-size: 0.9rem;">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/moin-shadab-8a491b1b1/" target="_blank" class="rr-btn-ghost" style="padding: 12px 28px; font-size: 0.9rem;">
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- DESIGN VIEW 3: EDITORIAL MEMOIR & TIMELINE (INSPIRED BY TEJ.AS/STORY)   -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div id="view-story" class="design-view" data-story-theme="dark">
+    
+    <!-- Top Reading Progress Indicator -->
+    <div class="story-progress-container" aria-hidden="true">
+      <div class="story-progress-bar" id="story-progress-bar"></div>
+    </div>
+
+    <!-- Story Topbar -->
+    <header class="story-topbar">
+      <a href="#story-header" class="story-mark">
+        <span>Moin Shadab</span>
+        <span class="story-mark-dot">.</span>
+      </a>
+
+      <div class="story-topbar-actions">
+        <button type="button" class="story-theme-btn" id="story-theme-toggle" title="Toggle Light / Dark Editorial Reading Mode">
+          <span id="story-theme-icon">☀️</span>
+          <span id="story-theme-label">Light</span>
+        </button>
+        <a href="mailto:moinshadab.dev@gmail.com" class="story-btn-crimson" style="padding: 6px 14px; font-size: 0.78rem;">
+          Get in Touch
+        </a>
+      </div>
+    </header>
+
+    <!-- Story Layout: Left Timeline Rail + Right Chapter Stream -->
+    <div class="story-layout">
+      
+      <!-- Interactive Vertical Timeline Rail -->
+      <aside class="story-rail-wrap" aria-label="Story timeline">
+        <nav class="story-rail" id="story-rail-nav">
+          <div class="story-rail-track"></div>
+          <div class="story-rail-progress-line" id="story-rail-progress-line"></div>
+          <ul class="story-rail-list" id="story-rail-list">
+            <!-- Dynamic timeline rail ticks generated by JS -->
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Narrative Content -->
+      <main class="story-content" id="story-content">
+        
+        <!-- Story Header -->
+        <header class="story-header" id="story-header">
+          <span class="story-time-range" id="story-header-range">2020 — TODAY</span>
+          <h1 class="story-main-title" id="story-header-title">The Blueprint</h1>
+          <p class="story-subtitle" id="story-header-subtitle">From Industrial Automation to Ground-Up Backend Protocol Engines</p>
+          <div class="story-lede" id="story-header-lede">
+            I started where an unhandled condition didn't throw an HTTP 500 error — it caused a pneumatic cylinder in a physical factory line to jam. That discipline in zero-tolerance reliability, deterministic states, and hardware timing shaped my entire approach when stepping into cloud software.
+          </div>
+        </header>
+
+        <!-- Chapter Narrative Blocks -->
+        <div class="story-chapters-stream" id="story-chapters-stream">
+          <!-- Dynamic chapters rendered by JS -->
+        </div>
+
+        <!-- FAQ Section -->
+        <section class="story-faq-section" id="story-faqs">
+          <h2 class="story-faq-heading">Frequently Asked Questions</h2>
+          <div class="story-faq-list" id="story-faq-list">
+            <!-- Dynamic FAQs rendered by JS -->
+          </div>
+        </section>
+
+        <!-- Afterword & Direct Connect -->
+        <div class="story-afterword">
+          <h3 class="story-afterword-title">Let's Build Resilient Systems</h3>
+          <p class="story-afterword-desc">
+            Whether you need a high-concurrency backend architect, an open-source ERP implementation, or custom protocol stream engineering, let's talk.
+          </p>
+          <div class="story-afterword-actions">
+            <a href="mailto:moinshadab.dev@gmail.com" class="story-btn-crimson">
+              Email Moin Shadab
+            </a>
+            <a href="https://github.com/Moin-shadab" target="_blank" class="story-btn-outline">
+              GitHub Profile
+            </a>
+            <a href="https://www.linkedin.com/in/moin-shadab-8a491b1b1/" target="_blank" class="story-btn-outline">
+              LinkedIn Profile
+            </a>
+          </div>
+        </div>
+
+      </main>
     </div>
   </div>
 
-  <main>
-    <!-- ─── 3. HERO SECTION ────────────────────────────────────────────────── -->
-    <section id="hero">
-      <div class="container">
-        <div class="hero-grid">
-          
-          <!-- Left Column: Bio & Direct Action Buttons -->
-          <div class="hero-content">
-            <div class="sticker-badge green">
-              <span class="led-indicator"></span>
-              <span id="profile-availability">Available for high-impact backend engineering roles</span>
-            </div>
-
-            <h1 class="hero-title">
-              <span id="profile-name">MOIN SHADAB</span><br />
-              <span class="gradient-text">SYSTEMS ARCHITECT</span>
-            </h1>
-
-            <p class="hero-sub" id="profile-tagline">
-              Backend Engineer &amp; <strong>Enterprise Infrastructure Architect</strong>
-            </p>
-
-            <p class="hero-bio" id="profile-bio">
-              I build raw backend platforms that scale: an open-source enterprise ERP (MSERP) handling multi-warehouse inventory and GST billing, plus an international email engine built from scratch with raw IMAP stream sockets and a hybrid MySQL + CouchDB architecture. Backed by 2 years of industrial PLC automation discipline.
-            </p>
-
-            <div class="hero-actions">
-              <a href="#resume" class="btn-brutal" style="background: var(--neon-yellow);">
-                📄 View ATS Resume &amp; CV →
-              </a>
-              <button id="hero-dino-btn" class="btn-secondary" style="border-color: var(--neon-cyan); color: var(--neon-cyan);">
-                🎮 Play Dino Runner
-              </button>
-              <a href="#contact" class="btn-secondary" style="border-color: var(--neon-pink); color: var(--neon-pink);">
-                💬 Contact Direct
-              </a>
-            </div>
-          </div>
-
-          <!-- Right Column: Live Hero Code Architecture File Viewer -->
-          <div class="hero-spatial-widget">
-            <div class="hero-code-card">
-              <div class="hero-code-header">
-                <div class="hero-code-filename">
-                  <span>📄 MoinShadabSystemArchitecture.php</span>
-                  <span class="led-indicator" style="width:7px;height:7px;"></span>
-                </div>
-
-                <div class="hero-code-actions">
-                  <span style="color: var(--text-dim); font-size: 0.75rem;">32 lines</span>
-                  <button id="copy-hero-code-btn" class="hero-code-btn">Copy Code</button>
-                </div>
-              </div>
-
-              <div class="hero-code-body">
-                <div class="hero-line-nums" id="hero-line-numbers">
-                  <!-- Line numbers generated by JS -->
-                </div>
-                <div class="hero-code-content" id="hero-code-text">
-                  <!-- Rendered dynamically by JS -->
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 4. IMPACT TELEMETRY BAR ────────────────────────────────────────── -->
-    <section class="impact-bar">
-      <div class="container">
-        <div class="impact-grid">
-          <div class="impact-item">
-            <div class="impact-num">3+ YEARS</div>
-            <div class="impact-text">Enterprise Backend Experience</div>
-          </div>
-          <div class="impact-item">
-            <div class="impact-num">DUAL-DB</div>
-            <div class="impact-text">MySQL + CouchDB Architecture</div>
-          </div>
-          <div class="impact-item">
-            <div class="impact-num">MSERP ERP</div>
-            <div class="impact-text">Open Source Modules</div>
-          </div>
-          <div class="impact-item">
-            <div class="impact-num">RFC-3501</div>
-            <div class="impact-text">Raw IMAP Stream Sockets</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 5. LANDMARK SHOWCASE SECTION ───────────────────────────────────── -->
-    <section id="landmark" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="eyebrow">Flagship Engineering</div>
-          <h2 class="section-title">Landmark Shipped Systems.</h2>
-          <p class="section-desc">
-            Deep-dive into the core architectures built from scratch for real-world enterprise execution.
-          </p>
-        </div>
-
-        <div class="landmark-grid">
-          <!-- MSERP ERP -->
-          <div class="landmark-card featured-mserp">
-            <div>
-              <div class="landmark-badge">🏭</div>
-              <h3 class="landmark-title">MSERP — Open Source Enterprise ERP</h3>
-              <p class="landmark-desc">
-                A completely free, open-source enterprise ERP platform built to digitize core business workflows. Includes working modules for inventory control with pessimistic database locks, GST-compliant billing, EMR hospital healthcare management, CRM pipelines, and employee payroll.
-              </p>
-              <div class="architect-box">
-                <div class="architect-title">Architecture Specs:</div>
-                <ul class="architect-list">
-                  <li>Multi-Warehouse Stock Management with transactional locks</li>
-                  <li>GST-Compliant Billing &amp; Automated Ledger Accounting</li>
-                  <li>Integrated Hospital Suite (Patient EMR &amp; Billing)</li>
-                  <li>B2B CRM Pipeline &amp; Employee Payroll Engine</li>
-                </ul>
-              </div>
-              <div class="clay-tags">
-                <span class="clay-tag">MSERP</span>
-                <span class="clay-tag">Laravel</span>
-                <span class="clay-tag">MySQL</span>
-                <span class="clay-tag">GST Accounting</span>
-                <span class="clay-tag">Open Source</span>
-              </div>
-            </div>
-            <a href="https://github.com/Moin-shadab/MSERP" target="_blank" class="btn-brutal" style="margin-top: 20px; text-align: center; justify-content: center;">
-              🐙 View MSERP Code on GitHub ↗
-            </a>
-          </div>
-
-          <!-- Dual-DB Email Client -->
-          <div class="landmark-card featured-email">
-            <div>
-              <div class="landmark-badge">📧</div>
-              <h3 class="landmark-title">Dual-DB International Email Client</h3>
-              <p class="landmark-desc">
-                Engineered an enterprise email engine completely from scratch without third-party SaaS wrappers. Features a high-performance Dual-Database architecture combining MySQL for fast relational metadata and CouchDB for raw NoSQL message bodies.
-              </p>
-              <div class="architect-box">
-                <div class="architect-title">Protocol &amp; Storage Specs:</div>
-                <ul class="architect-list">
-                  <li>Raw IMAP Stream Sockets compliant with RFC-3501</li>
-                  <li>Dual-DB: MySQL (Folders/Meta) + CouchDB (MIME/NoSQL)</li>
-                  <li>Asynchronous Redis Queue dispatch for outgoing mail</li>
-                  <li>MIME Multi-part Stream Parser &amp; Attachment decoders</li>
-                </ul>
-              </div>
-              <div class="clay-tags">
-                <span class="clay-tag">MySQL + CouchDB</span>
-                <span class="clay-tag">IMAP Sockets</span>
-                <span class="clay-tag">MIME Parser</span>
-                <span class="clay-tag">Redis Queues</span>
-                <span class="clay-tag">Protocol Engine</span>
-              </div>
-            </div>
-            <a href="https://moin-shadab.github.io/email-work-flow/" target="_blank" class="btn-brutal" style="background: var(--neon-cyan); margin-top: 20px; text-align: center; justify-content: center;">
-              🌐 Explore Architecture Live ↗
-            </a>
-          </div>
-        </div>
-
-        <!-- System Architecture Visualizer Box -->
-        <div id="architecture" class="arch-visualizer-container">
-          <div class="arch-header">
-            <div>
-              <div class="eyebrow" style="background: var(--neon-yellow); color: #000;">Interactive Diagram</div>
-              <h3 style="font-size: 1.6rem; font-weight: 900; text-transform: uppercase;">System Pipeline Visualizer</h3>
-            </div>
-
-            <div class="arch-nav">
-              <button class="arch-tab-btn active" data-arch="email">Dual-DB Email Pipeline</button>
-              <button class="arch-tab-btn" data-arch="mserp">MSERP ERP Transaction Flow</button>
-            </div>
-          </div>
-
-          <div class="arch-flow-wrapper" id="arch-flow-content">
-            <!-- Rendered dynamically by JS -->
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ─── 6. PROJECTS BENTO GRID (FILTERABLE) ───────────────────────────── -->
-    <section id="projects" class="section">
-      <div class="container">
-        <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 20px;">
-          <div>
-            <div class="eyebrow">All Systems &amp; Tools</div>
-            <h2 class="section-title">Shipped Projects.</h2>
-            <p class="section-desc">Interactive portfolio of backend platforms, developer utilities, and reference guides.</p>
-          </div>
-
-          <!-- Category Filters -->
-          <div class="skeuo-control-group">
-            <button class="project-filter-btn skeuo-btn-toggle active" style="width:auto; padding: 6px 16px;" data-filter="All">All</button>
-            <button class="project-filter-btn skeuo-btn-toggle" style="width:auto; padding: 6px 16px;" data-filter="Backend">Backend</button>
-            <button class="project-filter-btn skeuo-btn-toggle" style="width:auto; padding: 6px 16px;" data-filter="Web">Web</button>
-            <button class="project-filter-btn skeuo-btn-toggle" style="width:auto; padding: 6px 16px;" data-filter="Tools">Tools</button>
-            <button class="project-filter-btn skeuo-btn-toggle" style="width:auto; padding: 6px 16px;" data-filter="Creative">Creative</button>
-          </div>
-        </div>
-
-        <div class="bento-grid" id="bento-grid-container">
-          <!-- Rendered dynamically from JSON -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 7. INTERACTIVE ATS-FRIENDLY RESUME & CV STUDIO ────────────────── -->
-    <section id="resume" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="eyebrow" style="background: var(--neon-pink); color: #fff;">Applicant Tracking System (ATS) Verified</div>
-          <h2 class="section-title">Professional ATS Resume &amp; CV.</h2>
-          <p class="section-desc">
-            Clean, high-contrast Microsoft &amp; Amazon style ATS-friendly resume. Use the controls below to zoom, download the PDF, or copy raw ATS text directly.
-          </p>
-        </div>
-
-        <!-- ATS Resume Frame -->
-        <div class="ats-studio-frame">
-          <!-- Toolbar Header -->
-          <div class="cv-toolbar">
-            <div class="cv-toolbar-title">
-              <span>📄 ATS_MOIN_SHADAB_CV.PDF</span>
-              <span style="font-size: 0.75rem; background: var(--neon-green); color: #000; padding: 2px 8px; font-weight: 900;">VERIFIED ATS FORMAT</span>
-            </div>
-
-            <div class="cv-controls">
-              <button id="cv-zoom-out" class="cv-btn" title="Zoom Out">- Zoom</button>
-              <span id="cv-zoom-level" class="zoom-indicator">100%</span>
-              <button id="cv-zoom-in" class="cv-btn" title="Zoom In">+ Zoom</button>
-              <button id="cv-zoom-reset" class="cv-btn" title="Reset Zoom">Reset</button>
-
-              <button id="cv-copy-text" class="cv-btn" style="background: var(--neon-yellow); color: #000;">
-                📋 Copy ATS Text
-              </button>
-
-              <button id="cv-download-pdf" class="cv-btn btn-action-green">
-                📥 Download ATS CV (PDF)
-              </button>
-
-              <button id="cv-fullscreen" class="cv-btn">
-                🖥️ Fullscreen
-              </button>
-            </div>
-          </div>
-
-          <!-- Zoomable Viewport -->
-          <div class="cv-viewport" id="cv-viewport-container">
-            <div class="cv-zoom-wrapper" id="cv-zoom-target">
-              
-              <!-- Pristine Black & White ATS Resume Document -->
-              <div class="ats-cv-document" id="ats-cv-document">
-                
-                <!-- ATS Header -->
-                <div class="ats-header">
-                  <div class="ats-name">MOIN SHADAB</div>
-                  <div class="ats-title-line">Backend Developer &amp; Systems Builder</div>
-                  <div class="ats-contact-strip">
-                    <span>India</span> • 
-                    <span>moinshadab.dev@gmail.com</span> • 
-                    <span>github.com/Moin-shadab</span> • 
-                    <span>linkedin.com/in/moin-shadab-8a491b1b1/</span>
-                  </div>
-                </div>
-
-                <!-- Section: Executive Summary -->
-                <div class="ats-section-title">PROFESSIONAL SUMMARY</div>
-                <p class="ats-summary">
-                  Backend Developer at Advanced Microdevices Pvt. Ltd. with 3+ years of experience building high-concurrency enterprise platforms, custom ERP modules, and protocol engines. Proven landmark track record includes architecting <strong>MSERP</strong> (a completely free, open-source enterprise ERP) and engineering an <strong>International Email Client</strong> from scratch using raw IMAP stream sockets and a Dual-Database architecture (MySQL for relational metadata + CouchDB for NoSQL mail documents). Grounded in low-level industrial PLC automation discipline.
-                </p>
-
-                <!-- Section: Core Technical Stack -->
-                <div class="ats-section-title">TECHNICAL COMPETENCIES</div>
-                <div class="ats-skills-grid">
-                  <div class="ats-skill-cat">Backend Engineering:</div>
-                  <div class="ats-skill-val">PHP 8+, Laravel Framework, RESTful API Architecture, Microservices, Object-Oriented Design</div>
-                  
-                  <div class="ats-skill-cat">Databases &amp; Storage:</div>
-                  <div class="ats-skill-val">MySQL, MariaDB, CouchDB (NoSQL), Dual-DB Architecture, Redis Caching, Query Tuning</div>
-                  
-                  <div class="ats-skill-cat">Protocols &amp; Systems:</div>
-                  <div class="ats-skill-val">Raw IMAP / SMTP Sockets (RFC-3501), MIME Parsers, Async Queues, Payment APIs (PhonePe)</div>
-                  
-                  <div class="ats-skill-cat">Languages &amp; Automation:</div>
-                  <div class="ats-skill-val">JavaScript (ES6+), Core Java, C++, Python, PLC Ladder Logic &amp; Industrial Interlocks</div>
-                </div>
-
-                <!-- Section: Professional Experience -->
-                <div class="ats-section-title">PROFESSIONAL EXPERIENCE</div>
-                
-                <!-- Job 1 -->
-                <div class="ats-job-block">
-                  <div class="ats-job-header">
-                    <div>
-                      <span class="ats-job-role">Backend Developer</span> | 
-                      <span class="ats-job-company">Advanced Microdevices Pvt. Ltd.</span>
-                    </div>
-                    <div class="ats-job-date">2023 — Present · 3 Years</div>
-                  </div>
-                  <ul class="ats-bullets">
-                    <li>Architected and developed enterprise backend platforms serving active daily operations, including hospital management systems, GST-compliant accounting software, and barcode inventory control tools.</li>
-                    <li><strong>Engineered Dual-DB International Email Client</strong> from scratch, bypassing third-party SaaS wrappers to connect directly via raw IMAP stream sockets, asynchronous Redis worker queues, and custom MIME stream decoders.</li>
-                    <li>Combined MySQL (relational metadata/indexing) and CouchDB (NoSQL document storage) to process, index, and retrieve email bodies with high throughput.</li>
-                    <li>Integrated Indian PhonePe Payment Gateway APIs with webhook signature verification and robust failure fallback logic.</li>
-                  </ul>
-                </div>
-
-                <!-- Job 2 -->
-                <div class="ats-job-block">
-                  <div class="ats-job-header">
-                    <div>
-                      <span class="ats-job-role">PLC Programmer &amp; Industrial Systems Engineer</span> | 
-                      <span class="ats-job-company">Freelance &amp; Industrial Systems</span>
-                    </div>
-                    <div class="ats-job-date">2020 — 2022 · 2 Years</div>
-                  </div>
-                  <ul class="ats-bullets">
-                    <li>Programmed Programmable Logic Controllers (PLCs) for manufacturing automation lines under strict zero-tolerance failure constraints.</li>
-                    <li>Developed deterministic hardware safety interlocking logic and real-time sensor polling routines.</li>
-                  </ul>
-                </div>
-
-                <!-- Section: Shipped Projects -->
-                <div class="ats-section-title">KEY SHIPPED PROJECTS</div>
-                <div class="ats-job-block">
-                  <div class="ats-job-header">
-                    <span class="ats-job-role">MSERP — Open Source Enterprise ERP</span>
-                    <span class="ats-job-date">https://github.com/Moin-shadab/MSERP</span>
-                  </div>
-                  <ul class="ats-bullets">
-                    <li>Built a completely open-source enterprise ERP platform featuring multi-warehouse stock management with pessimistic database locks, GST billing, hospital suite, CRM pipeline, and payroll.</li>
-                  </ul>
-                </div>
-
-                <div class="ats-job-block">
-                  <div class="ats-job-header">
-                    <span class="ats-job-role">DSA Master Roadmap</span>
-                    <span class="ats-job-date">https://moin-shadab.github.io/dsa-roadmap/</span>
-                  </div>
-                  <ul class="ats-bullets">
-                    <li>Interactive algorithmic problem track and system design preparation guide built for developers.</li>
-                  </ul>
-                </div>
-
-                <!-- Section: Education -->
-                <div class="ats-section-title">EDUCATION &amp; TRAINING</div>
-                <div class="ats-job-block">
-                  <div class="ats-job-header">
-                    <span class="ats-job-role">Bachelor of Technology / Computer Systems Engineering</span>
-                    <span class="ats-job-date">India</span>
-                  </div>
-                </div>
-
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 8. WORK EXPERIENCE TIMELINE ────────────────────────────────────── -->
-    <section id="experience" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="eyebrow">Career History</div>
-          <h2 class="section-title">Where I've Shipped Code.</h2>
-          <p class="section-desc">3+ years building enterprise platforms and industrial control software.</p>
-        </div>
-
-        <div class="timeline" id="timeline-container">
-          <!-- Rendered dynamically from JSON -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 9. SKILLS & TECHNICAL STACK ────────────────────────────────────── -->
-    <section id="skills" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="eyebrow">Tech Radar</div>
-          <h2 class="section-title">Tools &amp; Technical Stack.</h2>
-          <p class="section-desc">Languages, storage engines, and frameworks utilized daily.</p>
-        </div>
-
-        <div class="skills-grid" id="skills-container">
-          <!-- Rendered dynamically from JSON -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 10. INTERACTIVE CODE SANDBOX ───────────────────────────────────── -->
-    <section id="code-sandbox" class="section">
-      <div class="container">
-        <div class="section-header">
-          <div class="eyebrow">Architecture Code</div>
-          <h2 class="section-title">Live Code Viewer.</h2>
-          <p class="section-desc">Inspect real snippets from IMAP protocol sockets, MSERP controllers, and PLC logic.</p>
-        </div>
-
-        <div class="code-sandbox-wrapper">
-          <div class="sandbox-tabs" id="sandbox-tabs">
-            <!-- Tabs dynamically rendered -->
-          </div>
-          <pre class="sandbox-content"><code id="sandbox-code-content"></code></pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 11. CONTACT SECTION ────────────────────────────────────────────── -->
-    <section id="contact" class="section" style="text-align: center;">
-      <div class="container">
-        <div class="eyebrow" style="background: var(--neon-green); color: #000; justify-content: center;">Communication Channel</div>
-        <h2 class="section-title" style="margin-bottom: 20px;">Let's Build Something Great.</h2>
-        <p class="section-desc" style="margin: 0 auto 40px;">
-          Available for backend engineering roles, custom enterprise software development, and high-concurrency architecture challenges.
-        </p>
-
-        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-          <a href="mailto:moinshadab.dev@gmail.com" class="btn-brutal">
-            📧 Send Direct Email
-          </a>
-          <a href="https://github.com/Moin-shadab" target="_blank" class="btn-secondary">
-            🐙 GitHub Profile
-          </a>
-          <a href="https://www.linkedin.com/in/moin-shadab-8a491b1b1/" target="_blank" class="btn-secondary">
-            💼 LinkedIn Profile
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ─── FOOTER ─────────────────────────────────────────────────────────── -->
-  <footer>
-    <div class="container footer-content">
-      <p style="font-weight: 900; font-family: var(--font-mono); color: var(--neon-yellow); letter-spacing: 1px;">
-        MOIN SHADAB &nbsp;©&nbsp; 2026 &nbsp;•&nbsp; BUILT TO LAST &nbsp;•&nbsp; SHIPPED WITH RAW CODE
-      </p>
-      <div class="footer-links">
-        <a href="#hero" class="footer-link">Back to Top ↑</a>
-        <a href="#resume" class="footer-link" style="color: var(--neon-pink);">📄 ATS Resume &amp; CV</a>
-        <button id="cli-toggle" class="footer-link" style="cursor: pointer; background: none; border: none;">💻 Launch Hacker CLI</button>
-        <button id="footer-admin-btn" onclick="document.getElementById('admin-modal').classList.add('active')" class="footer-link" style="cursor: pointer; background: none; border: none; color: var(--neon-cyan);">⚡ Data Studio (No-Code)</button>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ─── PLAYABLE DINO RUNNER GAME ARCADE MODAL ──────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- PLAYABLE DINO RUNNER GAME ARCADE MODAL (SHARED)                        -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <div id="dino-modal" class="dino-modal">
     <div class="dino-window">
       <div class="dino-header">
@@ -545,7 +768,7 @@
           <span style="color: var(--neon-green);">SCORE: <span id="dino-score">0</span></span>
           <span style="color: var(--neon-pink);">HI: <span id="dino-hiscore">0</span></span>
         </div>
-        <button id="dino-close" style="color: #fff; font-size: 1.2rem; cursor: pointer;">✕</button>
+        <button id="dino-close" style="color: #fff; font-size: 1.2rem; cursor: pointer; background:none; border:none;">✕</button>
       </div>
 
       <canvas id="dino-canvas" width="750" height="200"></canvas>
@@ -560,7 +783,9 @@
     </div>
   </div>
 
-  <!-- ─── HACKER CLI TERMINAL DRAWER MODAL ───────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- HACKER CLI TERMINAL DRAWER MODAL (SHARED)                              -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <div id="cli-modal" class="cli-modal">
     <div class="cli-window">
       <div class="skeuo-terminal-header">
@@ -569,39 +794,41 @@
           <span class="tdot tdot-yellow"></span>
           <span class="tdot tdot-green"></span>
         </div>
-        <span class="terminal-title">moin_hacker_cli.sh — NEO-BRUTALIST SHELL</span>
+        <span class="terminal-title">moin_hacker_cli.sh — MULTI-DESIGN SHELL</span>
         <span>ESC to exit</span>
       </div>
       <div class="cli-body" id="cli-output">
-        <div class="cli-line cli-sys">Welcome to Moin Shadab's Hacker CLI Terminal v3.2.0</div>
-        <div class="cli-line cli-sys">Type 'help', 'dino' (play game), 'matrix' (digital rain), or 'cv' for ATS resume.</div>
+        <div class="cli-line cli-sys">Welcome to Moin Shadab's Universal Engineering Shell v4.0.0</div>
+        <div class="cli-line cli-sys">Type 'help', 'dino', 'cyber', 'runrob', 'story', or 'cv' for plain-text resume.</div>
       </div>
       <div class="cli-prompt-row">
         <span style="color: var(--neon-green); font-family: var(--font-mono); font-size: 0.85rem;">moin@system:~$</span>
-        <input type="text" id="cli-input" class="cli-input" placeholder="type command (e.g. dino, matrix, cv, mserp, email, help)..." autocomplete="off" />
+        <input type="text" id="cli-input" class="cli-input" placeholder="type command (e.g. runrob, story, dino, cv, mserp, email, help)..." autocomplete="off" />
       </div>
     </div>
   </div>
 
-  <!-- ─── VISUAL DATA STUDIO ADMIN MODAL ──────────────────────────────────── -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- VISUAL DATA STUDIO ADMIN MODAL (SHARED)                                -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <div id="admin-modal" class="admin-modal">
     <div class="admin-card">
       <div class="admin-header">
         <div class="admin-title">
-          <span>⚡ Developer Data Studio</span>
-          <span style="font-size: 0.75rem; font-weight: 900; color: #000; background: var(--neon-cyan); padding: 4px 10px; border: 1px solid #000;">Zero-Code Editor</span>
+          <span>⚡ Universal Portfolio Studio</span>
+          <span style="font-size: 0.75rem; font-weight: 900; color: #000; background: var(--neon-cyan); padding: 4px 10px; border: 1px solid #000;">Live Sync</span>
         </div>
-        <button id="admin-close" style="font-size: 1.2rem; cursor: pointer; color: var(--text-muted);">✕</button>
+        <button id="admin-close" style="font-size: 1.2rem; cursor: pointer; color: var(--text-muted); background:none; border:none;">✕</button>
       </div>
 
       <div class="admin-body">
         <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
-          Add or edit portfolio projects below. Your edits update the live page instantly. Click <strong>"Download portfolio-data.json"</strong> to save the updated JSON file!
+          Add or edit portfolio projects below. Your edits update all 3 designs live. Click <strong>"Download portfolio-data.json"</strong> to persist changes.
         </p>
 
         <div class="admin-form-group">
           <label class="admin-label">Project Title</label>
-          <input type="text" id="admin-proj-title" class="admin-input" placeholder="e.g. Microservices API Gateway" />
+          <input type="text" id="admin-proj-title" class="admin-input" placeholder="e.g. Distributed Message Queue Broker" />
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
@@ -638,7 +865,7 @@
 
       <div class="admin-footer">
         <button id="admin-save-project" class="btn-brutal">
-          ➕ Render Live Project
+          ➕ Render Across All Designs
         </button>
         <button id="admin-export-json" class="btn-secondary" style="border-color: var(--neon-green); color: var(--neon-green);">
           📥 Download portfolio-data.json
@@ -648,7 +875,7 @@
   </div>
 
   <!-- Floating CLI Launcher Button -->
-  <button id="cli-toggle" class="cli-drawer-toggle" title="Open Hacker CLI Terminal">
+  <button id="cli-toggle-btn" class="cli-drawer-toggle" title="Open Multi-Design CLI Terminal">
     <span>💻</span> CLI Console
   </button>
 
